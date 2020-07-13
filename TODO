@@ -1,7 +1,7 @@
 Todos:
     FW_Basic: @TuyenDao
         ✔ Collect tut @TuyenDao @done(20-05-07 15:08)
-        ☐ BLE_Client_OLED
+        ✔ BLE_Client_OLED @done(20-07-13 16:12)
         ☐ BLE_Examples
         ☐ BLE_Server_DHT
     FW_Iot: @TuyenDao
