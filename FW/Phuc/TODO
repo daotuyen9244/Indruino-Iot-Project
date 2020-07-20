@@ -1,0 +1,14 @@
+Todos:
+FW_Iot: @TuyenDao @Phuc 
+    ☐ BLE_Client_OLED
+    ☐ BLE_Examples
+    ☐ BLE_Server_DHT
+    ☐ IdleTaskHookFunction
+SW_Web_App: @TuyenDao @Phuc
+        ☐ Update bài webserver
+        ✘ Tut WPS @cancelled(20-05-09 22:06)
+        ✔ Wifi manager @done(20-05-09 22:06)
+        ☐ MQTT JS
+Done:
+
+Cancelled:
