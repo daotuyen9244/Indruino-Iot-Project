@@ -1,11 +1,10 @@
 # Indruino-Iot-Project
 Todos:
     FW_Basic: @TuyenDao @Tuan
-        ✔ Create TODO @done(20-07-20 10:16)
-        ☐ Test TODO
-        ✘ Cancel @cancelled(20-07-20 10:16)
+        ☐ Tìm hiểu về OLED
+        ☐ Show DATA lên OLED
     SW_Web_App:@TuyenDao @Tuan
-        ✔ Nothing @done(20-07-20 10:16)
+        
 Done:
 
 Cancelled:
