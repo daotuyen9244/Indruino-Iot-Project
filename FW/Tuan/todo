@@ -2,7 +2,12 @@
 Todos:
     FW_Basic: @TuyenDao @Tuan
         ☐ Tìm hiểu về OLED
+            ✔ Tìm hiểu giao thức I2C @done(20-07-20 13:37)
+            ☐ Thư viện hỗ trợ OLED + Example
+            ☐ Các hàm hổ trợ, xử lý
         ☐ Show DATA lên OLED
+            ☐ Show Data
+            ☐ Các hàm hỗ trợ, xử lý
     SW_Web_App:@TuyenDao @Tuan
         
 Done:
