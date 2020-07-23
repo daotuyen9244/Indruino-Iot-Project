@@ -1,7 +1,7 @@
 Todos:
 FW_Basic: @TuyenDao @Minh
     ✔ Tìm hiểu các chế độ wifi (ap, sta) --> cách sử dụng, các hàm hỗ trợ, xử lý. @done(20-07-22 19:26)
-    ☐ Tìm hiểu các chế độ webclient (http, post, get) --> cách sử dụng, các hàm hỗ trợ, xử lý.
+    ✔ Tìm hiểu các chế độ webclient (http, post, get) --> cách sử dụng, các hàm hỗ trợ, xử lý. @done(20-07-23 12:45)
 Done:
 
 Cancelled:
