@@ -1,13 +1,13 @@
 # Indruino-Iot-Project
 Todos:
     FW_Basic: @TuyenDao @Tuan
-        ☐ Tìm hiểu về OLED
+        ✔ Tìm hiểu về OLED @done(20-07-31 13:29)
             ✔ Tìm hiểu giao thức I2C @done(20-07-20 13:37)
-            ☐ Thư viện hỗ trợ OLED + Example
-            ☐ Các hàm hổ trợ, xử lý
-        ☐ Show DATA lên OLED
-            ☐ Show Data
-            ☐ Các hàm hỗ trợ, xử lý
+            ✔ Thư viện hỗ trợ OLED + Example @done(20-07-22 10:26)
+            ✔ Các hàm hổ trợ, xử lý @done(20-07-22 10:26)
+        ✔ Show DATA lên OLED @done(20-07-31 13:29)
+            ✔ Show Data @done(20-07-22 10:26)
+            ✔ Các hàm hỗ trợ, xử lý @done(20-07-22 10:26)
     SW_Web_App:@TuyenDao @Tuan
         
 Done:
