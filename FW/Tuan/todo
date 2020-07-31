@@ -8,6 +8,13 @@ Todos:
         ✔ Show DATA lên OLED @done(20-07-31 13:29)
             ✔ Show Data @done(20-07-22 10:26)
             ✔ Các hàm hỗ trợ, xử lý @done(20-07-22 10:26)
+        ☐ Tìm hiểu RTC 
+            ✔ RTC online, Show data OLED @done(20-07-31 16:35)
+            ☐ RTC use chip, Show data OLED
+        ✔ Show Data OLED tuần 3 @done(20-07-31 16:37)
+            ✔ Show IP, Time @done(20-07-31 16:37)
+            ✔ Show Data Float, String, Bool @done(20-07-31 16:37)
+            ✔ Show trạng thái nút nhấn, vùng nhớ @done(20-07-31 16:37)
     SW_Web_App:@TuyenDao @Tuan
         
 Done:
