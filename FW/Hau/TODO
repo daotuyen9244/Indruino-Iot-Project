@@ -2,6 +2,7 @@ Todos:
 FW_Basic: @TuyenDao @Hau
     ✔ Tìm hiểu Json là gì ? Thư viện hỗ trợ xử lý (Arduino) @done(20-07-23 00:23)
     ✔ MQTT -> pubsubclient (ex: push,get 1json) // @done(20-07-26 23:23)
+    ☐ Send & receive data between Node and MQTTlens
 Done:
 
 Cancelled:
