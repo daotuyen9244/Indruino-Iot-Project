@@ -1,0 +1,4 @@
+https://www.instructables.com/id/Managing-Configurations-on-Your-ESP8266-Using-WiFi/
+https://medium.com/@modcumram/nodemcu-mqtt-wifi-manger-line-notify-7bbcad771ff0
+https://www.instructables.com/id/Introduction-Library-WifiManager-for-Esp8266/
+https://docs.openmqttgateway.com/upload/portal.html
