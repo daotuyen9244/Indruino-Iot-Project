@@ -1,11 +1,11 @@
 #include "Arduino.h"
 #define USE_EPPROM
 
-#define R8BIT 256
-#define R16BIT 256
-#define R32BIT 256    // float memory
-#define RFLOAT 256    // float memory
-#define RLONG 256     // long memory
+#define R8BIT 32
+#define R16BIT 32
+#define R32BIT 20    // float memory
+#define RFLOAT 20    // float memory
+#define RDBL 10     // long memory
 #define ADD_LENS R8BIT
 #ifdef USE_EPPROM
 #include "EEPROM.h"
@@ -28,10 +28,12 @@
 #define EFLOAT_START (EINT32_START+EINT32)
 #define EDBL_START (EFLOAT_START + EFLOAT)
 #endif
-static unsigned char _maxOut =1;
 static unsigned char _maxIn =1;
-static unsigned char _OutputStart =1;
+static unsigned char _maxOut =1;
+
 static unsigned char _InputStart =0;
+static unsigned char _OutputStart =_maxIn+1;
+
 
 static unsigned char DevUChar[R8BIT];
 static char DevChar[R8BIT];
@@ -43,7 +45,7 @@ static unsigned long DevUInt32[R32BIT];
 static long DevInt32[R32BIT];
 
 static float DevFloat[RFLOAT];
-static double DevDouble[RFLOAT];
+static double DevDouble[RDBL];
 
 class DevMemory
 {
@@ -145,5 +147,4 @@ public:
 #endif
 private:
 protected:
-    static long offset;
 };
