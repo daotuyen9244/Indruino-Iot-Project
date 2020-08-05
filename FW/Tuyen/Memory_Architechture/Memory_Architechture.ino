@@ -2,7 +2,7 @@
 #include "heltec.h" 
 #include "DevMemory.h"
 DevMemory myMemory;
-
+DevMemoryMap UserMemMap;
 /// User define inout
 #define SIZE_INPUT 8
 #define IN0 0
@@ -25,6 +25,7 @@ DevMemory myMemory;
 #define OUT7 255
 char inputButton[SIZE_INPUT]={IN0,IN1,IN2,IN3,IN4,IN5,IN6,IN7};
 char outputControl[SIZE_INPUT]={OUT0,OUT1,OUT2,OUT3,OUT4,OUT5,OUT6,OUT7};
+
 ///
 void setup() {
   Heltec.begin(true /*DisplayEnable Enable*/, true /*Serial Enable*/);
@@ -49,6 +50,81 @@ void setup() {
   {
     pinMode(outputControl[i],OUTPUT);
   }
+  
+  int sum=0;
+  Serial.print("Sizeof MemMap: ");
+  Serial.println(sizeof(MemMap));
+
+  sum+= sizeof(MemMap.DevChar);
+  Serial.print("Sizeof MemMap.DevChar: ");
+  Serial.println(sizeof(MemMap.DevChar));
+
+  sum+= sizeof(MemMap.DevUChar);
+  Serial.print("Sizeof MemMap.DevUChar: ");
+  Serial.println(sizeof(MemMap.DevUChar));
+
+  sum+= sizeof(MemMap.DevInt);
+  Serial.print("Sizeof MemMap.DevInt: ");
+  Serial.println(sizeof(MemMap.DevInt));
+
+  sum+= sizeof(MemMap.DevUInt);
+  Serial.print("Sizeof MemMap.DevUInt: ");
+  Serial.println(sizeof(MemMap.DevUInt));
+
+  sum+= sizeof(MemMap.DevInt32);
+  Serial.print("Sizeof MemMap.DevInt32: ");
+  Serial.println(sizeof(MemMap.DevInt32));
+
+  sum+= sizeof(MemMap.DevUInt32);
+  Serial.print("Sizeof MemMap.DevUInt32: ");
+  Serial.println(sizeof(MemMap.DevUInt32));
+
+  sum+= sizeof(MemMap.DevFloat);
+  Serial.print("Sizeof MemMap.DevFloat: ");
+  Serial.println(sizeof(MemMap.DevFloat));
+
+  sum+= sizeof(MemMap.DevDouble);
+  Serial.print("Sizeof MemMap.DevDouble: ");
+  Serial.println(sizeof(MemMap.DevDouble));
+  Serial.print("total sizeof MemMap: " );
+  Serial.println(sum);
+
+  for(int i=0;i<sizeof(MemMap);i++)
+  {
+    *((char*)&MemMap +i ) = i;
+  }
+  for(int i=0;i<sizeof(MemMap);i++)
+  {
+    Serial.print(i);
+    Serial.print("\t");
+    Serial.println(*((char*)&MemMap +i ),HEX);
+  }
+  Serial.println("print user mem map>>>>>>>>>>>>>>>>>> ");
+  byte diff=0;
+  myMemory.initEPPROM();
+  myMemory.write_rom_Block(0,512,(unsigned char*)&MemMap);
+  myMemory.read_rom_Block(0,512,(unsigned char*)&UserMemMap);
+  for(int i=0;i<sizeof(UserMemMap);i++)
+  {
+    Serial.print(i);
+    Serial.print("\t");
+    Serial.println(*((char*)&UserMemMap +i ),HEX);
+  }
+  for(int i=0;i<sizeof(UserMemMap);i++)
+  {
+    if(*((unsigned char*)&UserMemMap +i ) != *((unsigned char*)&UserMemMap +i ) )
+    {
+      diff =1;
+    }
+  }
+  if(diff)
+  {
+    Serial.println("diff");
+  }
+  else
+  {
+    Serial.println("correct");
+  }
 }
 
 void loop() 
@@ -71,13 +147,13 @@ void readInput()
     {
       if(digitalRead(inputButton[i]))
       {
-        //bitSet(DevUChar[_InputStart] ,i);
-        DevUChar[_InputStart+k] |= 1<<j;
+        //bitSet(MemMap.DevUChar[_InputStart] ,i);
+        MemMap.DevUChar[_InputStart+k] |= 1<<j;
       }
       else
       {
-        //bitClear(DevUChar[_InputStart] ,i);
-        DevUChar[_InputStart+k] &= ~(1<<j);
+        //bitClear(MemMap.DevUChar[_InputStart] ,i);
+        MemMap.DevUChar[_InputStart+k] &= ~(1<<j);
       }
       j++;
       if(j>7)
@@ -91,7 +167,7 @@ void readInput()
 }
 void process()
 {
-  DevUChar[_OutputStart] = DevUChar[_InputStart]  ;
+  MemMap.DevUChar[_OutputStart] = MemMap.DevUChar[_InputStart]  ;
 }
 void exportOutput()
 {
@@ -101,7 +177,7 @@ void exportOutput()
   {
     for(byte i=0;i<SIZE_OUTPUT;i++)
     { 
-      digitalWrite(outputControl[i],DevUChar[_OutputStart+k]&(0xff >> j));
+      digitalWrite(outputControl[i],MemMap.DevUChar[_OutputStart+k]&(0xff >> j));
       j++;
       if(j>7)
       {

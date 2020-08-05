@@ -1,76 +1,91 @@
 #include "DevMemory.h"
 
+void write_ram_Block(unsigned char add, unsigned int lens, unsigned char *data)
+{
+    for (unsigned int t = 0; t < lens; t++)
+    {
+        *((char *)&MemMap + t) = *(data + t - add);
+    }
+}
+unsigned char read_ram_Block(unsigned char add, unsigned int lens, unsigned char *data)
+{
+    for (unsigned int t = add; t < lens; t++)
+    {
+        *(data + t - add) = *((char *)&MemMap + t);
+    }
+}
+
 void DevMemory::write_ram_UChar(byte add, unsigned char data)
 {
-    DevUChar[add] = data;
+    MemMap.DevUChar[add] = data;
 }
 unsigned char DevMemory::read_ram_UChar(byte add)
 {
 
-    return DevUChar[add];
+    return MemMap.DevUChar[add];
 }
 
 void DevMemory::write_ram_Char(unsigned char add, char data)
 {
-    DevChar[add] = data;
+    MemMap.DevChar[add] = data;
 }
 char DevMemory::read_ram_Char(unsigned char add)
 {
-    return DevChar[add];
+    return MemMap.DevChar[add];
 }
 
 void DevMemory::write_ram_UInt(unsigned char add, unsigned int data)
 {
-    DevUInt[add] = data;
+    MemMap.DevUInt[add] = data;
 }
 unsigned int DevMemory::read_ram_UInt(unsigned char add)
 {
-    return DevUInt[add];
+    return MemMap.DevUInt[add];
 }
 
 void DevMemory::write_ram_Int(unsigned char add, int data)
 {
-    DevInt[add] = data;
+    MemMap.DevInt[add] = data;
 }
 int DevMemory::read_ram_Int(unsigned char add)
 {
-    return DevInt[add];
+    return MemMap.DevInt[add];
 }
 
 void DevMemory::write_ram_UInt32(unsigned char add, unsigned long data)
 {
-    DevUInt32[add] = data;
+    MemMap.DevUInt32[add] = data;
 }
 unsigned long DevMemory::read_ram_UInt32(unsigned char add)
 {
-    return DevUInt32[add];
+    return MemMap.DevUInt32[add];
 }
 
 void DevMemory::write_ram_Int32(unsigned char add, long data)
 {
-    DevInt32[add] = data;
+    MemMap.DevInt32[add] = data;
 }
 long DevMemory::read_ram_Int32(unsigned char add)
 {
-    return DevInt32[add];
+    return MemMap.DevInt32[add];
 }
 
 void DevMemory::write_ram_Float(unsigned char add, float data)
 {
-    DevFloat[add] = data;
+    MemMap.DevFloat[add] = data;
 }
 float DevMemory::read_ram_Float(unsigned char add)
 {
-    return DevFloat[add];
+    return MemMap.DevFloat[add];
 }
 
 void DevMemory::write_ram_Double(unsigned char add, double data)
 {
-    DevDouble[add] = data;
+    MemMap.DevDouble[add] = data;
 }
 double DevMemory::read_ram_Double(unsigned char add)
 {
-    return DevDouble[add];
+    return MemMap.DevDouble[add];
 }
 bool DevMemory::setOutputAdd(unsigned char add, unsigned char lens)
 {
@@ -118,17 +133,17 @@ unsigned char DevMemory::OutputLens()
 }
 unsigned char DevMemory::ReadInPut(unsigned char add)
 {
-    return DevChar[_InputStart + add];
+    return MemMap.DevChar[_InputStart + add];
 }
 unsigned char DevMemory::ReadOutPut(unsigned char add)
 {
-    return DevChar[_OutputStart + add];
+    return MemMap.DevChar[_OutputStart + add];
 }
 bool DevMemory::WriteOutPut(unsigned char add, unsigned char data)
 {
     if (add <= _maxOut) // Dem tu 0
     {
-        DevChar[_OutputStart + add] = data;
+        MemMap.DevChar[_OutputStart + add] = data;
         return 1;
     }
     else
@@ -263,90 +278,119 @@ double DevMemory::read_rom_Double(unsigned char add)
 }
 void DevMemory::copy_rom_to_ram_UChar(unsigned char radd, unsigned char fadd)
 {
-    DevUChar[fadd] = DevMemory::read_rom_UChar(radd);
+    MemMap.DevUChar[fadd] = DevMemory::read_rom_UChar(radd);
 }
 void DevMemory::copy_ram_to_rom_UChar(unsigned char fadd, unsigned char radd)
 {
-    DevMemory::write_rom_UChar(radd, DevUChar[fadd]);
+    DevMemory::write_rom_UChar(radd, MemMap.DevUChar[fadd]);
 }
 
 void DevMemory::copy_rom_to_ram_Char(unsigned char radd, unsigned char fadd)
 {
-    DevChar[fadd] = DevMemory::read_rom_Char(radd);
+    MemMap.DevChar[fadd] = DevMemory::read_rom_Char(radd);
 }
 void DevMemory::copy_ram_to_rom_Char(unsigned char fadd, unsigned char radd)
 {
-    DevMemory::write_rom_Char(radd, DevChar[fadd]);
+    DevMemory::write_rom_Char(radd, MemMap.DevChar[fadd]);
 }
 
 void DevMemory::copy_rom_to_ram_UInt(unsigned char radd, unsigned char fadd)
 {
-    DevUInt[radd] = DevMemory::read_rom_UInt(radd);
+    MemMap.DevUInt[radd] = DevMemory::read_rom_UInt(radd);
 }
 void DevMemory::copy_ram_to_rom_Uint(unsigned char fadd, unsigned char radd)
 {
-    DevMemory::write_rom_UInt(radd, DevUInt[fadd]);
+    DevMemory::write_rom_UInt(radd, MemMap.DevUInt[fadd]);
 }
 
 void DevMemory::copy_rom_to_ram_Int(unsigned char radd, unsigned char fadd)
 {
-    DevInt[radd] = DevMemory::read_rom_Int(radd);
+    MemMap.DevInt[radd] = DevMemory::read_rom_Int(radd);
 }
 void DevMemory::copy_ram_to_rom_int(unsigned char fadd, unsigned char radd)
 {
-    DevMemory::write_rom_Int(radd, DevInt[fadd]);
+    DevMemory::write_rom_Int(radd, MemMap.DevInt[fadd]);
 }
 
 void DevMemory::copy_rom_to_ram_UInt32(unsigned char radd, unsigned char fadd)
 {
-    DevUInt32[radd] = DevMemory::read_rom_UInt32(radd);
+    MemMap.DevUInt32[radd] = DevMemory::read_rom_UInt32(radd);
 }
 void DevMemory::copy_ram_to_rom_UInt32(unsigned char fadd, unsigned char radd)
 {
-    DevMemory::write_rom_UInt32(radd, DevUInt32[fadd]);
+    DevMemory::write_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
 }
 
 void DevMemory::copy_rom_to_ram_Int32(unsigned char radd, unsigned char fadd)
 {
-    DevInt32[radd] = DevMemory::read_rom_Int32(radd);
+    MemMap.DevInt32[radd] = DevMemory::read_rom_Int32(radd);
 }
 void DevMemory::copy_ram_to_rom_Int32(unsigned char fadd, unsigned char radd)
 {
-    DevMemory::write_rom_UInt32(radd, DevUInt32[fadd]);
+    DevMemory::write_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
 }
 
 void DevMemory::copy_rom_to_ram_ULong(unsigned char radd, unsigned char fadd)
 {
-    DevUInt32[radd] = DevMemory::read_rom_UInt32(radd);
+    MemMap.DevUInt32[radd] = DevMemory::read_rom_UInt32(radd);
 }
 void DevMemory::copy_ram_to_rom_ULong(unsigned char fadd, unsigned char radd)
 {
-    DevMemory::write_rom_UInt32(radd, DevUInt32[fadd]);
+    DevMemory::write_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
 }
 
 void DevMemory::copy_rom_to_ram_Long(unsigned char radd, unsigned char fadd)
 {
-    DevInt32[radd] = DevMemory::read_rom_Int32(radd);
+    MemMap.DevInt32[radd] = DevMemory::read_rom_Int32(radd);
 }
 void DevMemory::copy_ram_to_rom_Long(unsigned char fadd, unsigned char radd)
 {
-    DevMemory::write_rom_Int32(radd, DevInt32[fadd]);
+    DevMemory::write_rom_Int32(radd, MemMap.DevInt32[fadd]);
 }
 
 void DevMemory::copy_rom_to_ram_Float(unsigned char radd, unsigned char fadd)
 {
-    DevFloat[radd] = DevMemory::read_rom_Float(radd);
+    MemMap.DevFloat[radd] = DevMemory::read_rom_Float(radd);
 }
 void DevMemory::copy_ram_to_rom_Float(unsigned char fadd, unsigned char radd)
 {
-    DevMemory::write_rom_Float(radd, DevFloat[fadd]);
+    DevMemory::write_rom_Float(radd, MemMap.DevFloat[fadd]);
 }
 void DevMemory::copy_rom_to_ram_Double(unsigned char radd, unsigned char fadd)
 {
-    DevDouble[radd] = DevMemory::read_rom_Double(radd);
+    MemMap.DevDouble[radd] = DevMemory::read_rom_Double(radd);
 }
 void DevMemory::copy_ram_to_rom_Double(unsigned char fadd, unsigned char radd)
 {
-    DevMemory::write_rom_Double(radd, DevDouble[fadd]);
+    DevMemory::write_rom_Double(radd, MemMap.DevDouble[fadd]);
+}
+void DevMemory::write_rom_Block(unsigned char add, unsigned int lens, unsigned char *data)
+{
+    //unsigned char _x=0;
+    for (unsigned int t = add; t < lens; t++)
+    {
+        EEPROM.write(t, *(data + (t - add)));
+        //_x = *(data +t-add);
+        //EEPROM.write(t, _x);
+        //Serial.print(t);
+        //Serial.print("\t");
+        //Serial.println(_x,HEX);
+    }
+#ifdef ESP32 || ESP8266
+    EEPROM.commit();
+#endif
+}
+unsigned char DevMemory::read_rom_Block(unsigned char add, unsigned int lens, unsigned char *data)
+{
+    //unsigned char _x=0;
+    for (unsigned int t = add; t < lens; t++)
+    {
+       // _x = EEPROM.read(t);
+       // *((char *)data + t-add) = _x;
+       // Serial.print(t);
+       // Serial.print("\t");
+       // Serial.println(_x,HEX);
+       *((char *)data + t-add) = EEPROM.read(t);
+    }
 }
 #endif

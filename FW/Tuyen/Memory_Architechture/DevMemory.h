@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #define USE_EPPROM
-
+#define ESP32
 #define R8BIT 32
 #define R16BIT 32
 #define R32BIT 20    // float memory
@@ -34,23 +34,30 @@ static unsigned char _maxOut =1;
 static unsigned char _InputStart =0;
 static unsigned char _OutputStart =_maxIn+1;
 
+struct DevMemoryMap
+{
+   unsigned char DevUChar[R8BIT];
+   char DevChar[R8BIT];
 
-static unsigned char DevUChar[R8BIT];
-static char DevChar[R8BIT];
+   uint16_t DevUInt[R16BIT];
+   int16_t DevInt[R16BIT];
 
-static unsigned int DevUInt[R16BIT];
-static int DevInt[R16BIT];
+   uint32_t DevUInt32[R32BIT];
+   int32_t DevInt32[R32BIT];
 
-static unsigned long DevUInt32[R32BIT];
-static long DevInt32[R32BIT];
-
-static float DevFloat[RFLOAT];
-static double DevDouble[RDBL];
-
+   float DevFloat[RFLOAT];
+   double DevDouble[RDBL];
+} ; 
+static DevMemoryMap MemMap;
 class DevMemory
 {
 public:
-    static void write_ram_UChar(unsigned char add, unsigned char data);
+    
+    void write_ram_Block(unsigned char add, unsigned int lens,unsigned char *data);
+    unsigned char read_ram_Block(unsigned char add, unsigned int lens,unsigned char *data);
+
+    
+    void write_ram_UChar(unsigned char add, unsigned char data);
     unsigned char read_ram_UChar(unsigned char add);
 
     void write_ram_Char(unsigned char add, char data);
@@ -144,6 +151,9 @@ public:
 
     void copy_rom_to_ram_Double(unsigned char radd,unsigned char fadd);
     void copy_ram_to_rom_Double(unsigned char fadd,unsigned char radd);
+
+    void write_rom_Block(unsigned char add, unsigned int lens,unsigned char *data);
+    unsigned char read_rom_Block(unsigned char add, unsigned int lens,unsigned char *data);
 #endif
 private:
 protected:
