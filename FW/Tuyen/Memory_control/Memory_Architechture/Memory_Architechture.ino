@@ -154,6 +154,10 @@ void setup()
   {
     Serial.println("correct");
   }
+  float a =5.0,b=0.0;
+  myMemory.write_I2C_rom_Float(0,a);
+  b = myMemory.read_I2C_rom_Float(0);
+  Serial.println(b);
 #endif
 }
 

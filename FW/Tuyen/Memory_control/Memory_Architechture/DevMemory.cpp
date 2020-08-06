@@ -366,15 +366,9 @@ void DevMemory::copy_ram_to_rom_Double(unsigned char fadd, unsigned char radd)
 }
 void DevMemory::write_rom_Block(unsigned char add, unsigned int lens, unsigned char *data)
 {
-    //unsigned char _x=0;
     for (unsigned int t = add; t < lens; t++)
     {
         EEPROM.write(t, *(data + (t - add)));
-        //_x = *(data +t-add);
-        //EEPROM.write(t, _x);
-        //Serial.print(t);
-        //Serial.print("\t");
-        //Serial.println(_x,HEX);
     }
 #ifdef ESP32 || ESP8266
     EEPROM.commit();
@@ -382,21 +376,15 @@ void DevMemory::write_rom_Block(unsigned char add, unsigned int lens, unsigned c
 }
 unsigned char DevMemory::read_rom_Block(unsigned char add, unsigned int lens, unsigned char *data)
 {
-    //unsigned char _x=0;
     for (unsigned int t = add; t < lens; t++)
     {
-        // _x = EEPROM.read(t);
-        // *((char *)data + t-add) = _x;
-        // Serial.print(t);
-        // Serial.print("\t");
-        // Serial.println(_x,HEX);
         *((char *)data + t - add) = EEPROM.read(t);
     }
 }
 #ifdef USE_ExI2C
 bool DevMemory::initI2CEPPROM()
 {
-     eeprom.initialize();
+    eeprom.initialize();
     return 1;
 }
 unsigned char DevMemory::readI2C_rom(unsigned char add)
@@ -427,79 +415,89 @@ char DevMemory::read_I2C_rom_Char(unsigned char add)
 
 void DevMemory::write_I2C_rom_UInt(unsigned char add, unsigned int data)
 {
-    eeprom.writeBytes(add, 2, (byte*)data);
+    eeprom.writeBytes(add, 2, (byte *)data);
 }
 unsigned int DevMemory::read_I2C_rom_UInt(unsigned char add)
 {
     uint16_t _x = 0;
-    eeprom.readBytes(add,2,(byte*)_x);
+    eeprom.readBytes(add, 2, (byte *)_x);
     return _x;
 }
 
 void DevMemory::write_I2C_rom_Int(unsigned char add, int data)
 {
-    eeprom.writeBytes(add, 2, (byte*)data);
+    eeprom.writeBytes(add, 2, (byte *)data);
 }
 int DevMemory::read_I2C_rom_Int(unsigned char add)
 {
     int16_t _x = 0;
-    eeprom.readBytes(add,2,(byte* )_x);
+    eeprom.readBytes(add, 2, (byte *)_x);
     return _x;
 }
 
 void DevMemory::write_I2C_rom_UInt32(unsigned char add, unsigned long data)
 {
-    eeprom.writeBytes(add, 4, (byte* )data);
+    eeprom.writeBytes(add, 4, (byte *)data);
 }
 unsigned long DevMemory::read_I2C_rom_UInt32(unsigned char add)
 {
     uint32_t _x = 0;
-    eeprom.readBytes(add,4,(byte* )_x);
+    eeprom.readBytes(add, 4, (byte *)_x);
     return _x;
 }
 
 void DevMemory::write_I2C_rom_Int32(unsigned char add, long data)
 {
-    eeprom.writeBytes(add, 4, (byte* )data);
+    eeprom.writeBytes(add, 4, (byte *)data);
 }
 long DevMemory::read_I2C_rom_Int32(unsigned char add)
 {
     int32_t _x = 0;
-    eeprom.readBytes(add,4,(byte* )_x);
+    eeprom.readBytes(add, 4, (byte *)_x);
     return _x;
 }
 
 void DevMemory::write_I2C_rom_Float(unsigned char add, float data)
 {
-    char my_array[10];
-    
-     *( (float*)(my_array + 3) )= data;           // from array to float
-    eeprom.writeBytes(add, 4, (byte*)my_array);
+    union {
+        float a;
+        unsigned char bytes[4];
+    } thing;
+    thing.a = data;
+    eeprom.writeBytes(add, 4, (byte *)(thing.bytes));
 }
 float DevMemory::read_I2C_rom_Float(unsigned char add)
 {
     float _x = 0;
-    char my_array[10];
-    eeprom.readBytes(add, 4, (byte*)my_array);
-    _x=  *( (float*)(my_array + 3) );           // from array to float
+    union {
+        float a;
+        unsigned char bytes[4];
+    } thing;
+
+    eeprom.readBytes(add, 4, (byte *)(thing.bytes));
+    _x = thing.a;
     return _x;
 }
 
 void DevMemory::write_I2C_rom_Double(unsigned char add, double data)
 {
-    char my_array[10];
-    
-     *( (double*)(my_array + 7) )= data;           // from array to float
-    eeprom.writeBytes(add, 8, (byte*)my_array);
+    union {
+        double a;
+        unsigned char bytes[8];
+    } thing;
+    thing.a = data;
+    eeprom.writeBytes(add, 8, (byte *)(thing.bytes));
 }
 double DevMemory::read_I2C_rom_Double(unsigned char add)
 {
-    
     double _x = 0;
-    char my_array[10];
-    
-    eeprom.readBytes(add, 8, (byte*)my_array);
-    _x=  *( (float*)(my_array + 3) );           // from array to float
+    union {
+        float a;
+        unsigned char bytes[8];
+    } thing;
+
+    eeprom.readBytes(add, 8, (byte *)(thing.bytes));
+    _x = thing.a;
     return _x;
 }
 void DevMemory::copy_I2C_rom_to_ram_UChar(unsigned char radd, unsigned char fadd)
