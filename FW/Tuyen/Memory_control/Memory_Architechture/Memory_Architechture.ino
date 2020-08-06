@@ -141,6 +141,7 @@ void setup()
   }
   for (int i = 0; i < sizeof(UserMemMap1); i++)
   {
+    *((unsigned char *)&UserMemMap1 + i) +=1;
     if (*((unsigned char *)&UserMemMap + i) != *((unsigned char *)&UserMemMap1 + i))
     {
       diff = 1;
@@ -154,13 +155,25 @@ void setup()
   {
     Serial.println("correct");
   }
+  Serial.println("test >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
+  UserMemMap1.DevUChar[0] = 99;
+  setAddPointer(UserMemMap1);
+  for (int i = 0; i < sizeof(UserMemMap1); i++)
+  {
+   Serial.println(*(CData+i),HEX);
+  }
+  
   float a =5.0,b=0.0;
   myMemory.write_I2C_rom_Float(0,a);
   b = myMemory.read_I2C_rom_Float(0);
   Serial.println(b);
+  Serial.println(CData[6]);
 #endif
 }
-
+void setAddPointer(DevMemoryMap S)
+{
+  CData=(uint8_t*)&(S.DevUChar[0]);
+}
 void loop()
 {
   IPOProcess();

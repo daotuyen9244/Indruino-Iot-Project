@@ -2,6 +2,7 @@
 #define USE_EPPROM
 #define USE_ExI2C
 #define ESP32
+#define RAM_SIZE 1024
 #define R8BIT 32
 #define R16BIT 32
 #define R32BIT 20    // float memory
@@ -20,7 +21,7 @@ static Eeprom24C32_64 eeprom(I2CEEPROM_ADDRESS);
 #endif
 
 #include "EEPROM.h"
-#define EEPROM_SIZE 512
+#define EEPROM_SIZE 1024
 #define EUCHAR 32
 #define ECHAR 32
 #define EUINT 32
@@ -58,8 +59,14 @@ struct DevMemoryMap
 
    float DevFloat[RFLOAT];
    double DevDouble[RDBL];
+   //uint8_t Data[RAM_SIZE];
+   //uint8_t DevMCommon[2*R8BIT + 2*R16BIT +2*R32BIT+RFLOAT+RDBL];
 } ; 
+
+
 static DevMemoryMap MemMap;
+//static uint8_t *CData = (uint8_t*)&MemMap;
+static uint8_t *CData ;
 class DevMemory
 {
 public:
@@ -91,10 +98,9 @@ public:
 
     void write_ram_Double(unsigned char add, double data);
     double read_ram_Double(unsigned char add);
-
     bool setOutputAdd(unsigned char add,unsigned char lens);
     bool setInputAdd(unsigned char add,unsigned char lens);
-
+    
     unsigned char InputAddBegin();
     unsigned char OutputAddBegin();
 
