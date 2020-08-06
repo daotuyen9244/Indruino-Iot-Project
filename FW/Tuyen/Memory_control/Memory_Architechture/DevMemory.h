@@ -67,39 +67,69 @@ struct DevMemoryMap
 static DevMemoryMap MemMap;
 //static uint8_t *CData = (uint8_t*)&MemMap;
 static uint8_t *CData ;
+template <class T> 
+int write_ram(uint8_t *D,int add, const T& value)
+{
+   const uint8_t* p = (const uint8_t*)(const void*)&value;
+   int i;
+   for (i = 0; i < sizeof(value); i++)
+   {
+     *(D+add+i) = *p++;
+   }
+   return i;
+}
+
+template <class T> 
+int read_ram(uint8_t *D,int add, T& value)
+{
+   uint8_t* p = (uint8_t*)(void*)&value;
+   int i;
+   for (i = 0; i < sizeof(value); i++)
+   {
+     *p++ = D[add+i];
+   }
+       //*p++ = addPROM.read(add++);
+   return i;
+}
+
+static void setAddPointer(DevMemoryMap &S)
+{
+  //CData=(uint8_t*)&(S.DevUChar[0]);
+  CData=(uint8_t*)&S;
+}
 class DevMemory
 {
 public:
     
-    void write_ram_Block(unsigned char add, unsigned int lens,unsigned char *data);
-    unsigned char read_ram_Block(unsigned char add, unsigned int lens,unsigned char *data);
-
+    void write_ram_Block(uint16_t add, unsigned int lens,unsigned char *data);
+    unsigned char read_ram_Block(uint16_t add, unsigned int lens,unsigned char *data);
     
-    void write_ram_UChar(unsigned char add, unsigned char data);
-    unsigned char read_ram_UChar(unsigned char add);
+    
+    void write_ram_UChar(uint16_t add, unsigned char data);
+    unsigned char read_ram_UChar(uint16_t add);
+    
+    void write_ram_Char(uint16_t add, char data);
+    char read_ram_Char(uint16_t add);
 
-    void write_ram_Char(unsigned char add, char data);
-    char read_ram_Char(unsigned char add);
+    void write_ram_UInt(uint16_t add, unsigned int data);
+    unsigned int read_ram_UInt(uint16_t add);
 
-    void write_ram_UInt(unsigned char add, unsigned int data);
-    unsigned int read_ram_UInt(unsigned char add);
+    void write_ram_Int(uint16_t add, int data);
+    int read_ram_Int(uint16_t add);
 
-    void write_ram_Int(unsigned char add, int data);
-    int read_ram_Int(unsigned char add);
+    void write_ram_UInt32(uint16_t add, unsigned long data);
+    unsigned long read_ram_UInt32(uint16_t add);
 
-    void write_ram_UInt32(unsigned char add, unsigned long data);
-    unsigned long read_ram_UInt32(unsigned char add);
+    void write_ram_Int32(uint16_t add, long data);
+    long read_ram_Int32(uint16_t add);
 
-    void write_ram_Int32(unsigned char add, long data);
-    long read_ram_Int32(unsigned char add);
+    void write_ram_Float(uint16_t add, float data);
+    float read_ram_Float(uint16_t add);
 
-    void write_ram_Float(unsigned char add, float data);
-    float read_ram_Float(unsigned char add);
-
-    void write_ram_Double(unsigned char add, double data);
-    double read_ram_Double(unsigned char add);
-    bool setOutputAdd(unsigned char add,unsigned char lens);
-    bool setInputAdd(unsigned char add,unsigned char lens);
+    void write_ram_Double(uint16_t add, double data);
+    double read_ram_Double(uint16_t add);
+    bool setOutputAdd(uint16_t add,unsigned char lens);
+    bool setInputAdd(uint16_t add,unsigned char lens);
     
     unsigned char InputAddBegin();
     unsigned char OutputAddBegin();
@@ -107,37 +137,37 @@ public:
     unsigned char InputLens();
     unsigned char OutputLens();
 
-    unsigned char ReadInPut(unsigned char add);
-    unsigned char ReadOutPut(unsigned char add);
-    bool WriteOutPut(unsigned char add,unsigned char data);
+    unsigned char ReadInPut(uint16_t add);
+    unsigned char ReadOutPut(uint16_t add);
+    bool WriteOutPut(uint16_t add,unsigned char data);
 #ifdef USE_EPPROM
     bool initEPPROM();
-    unsigned char readEPPROM(unsigned char add);
-    bool writeEPPROM(unsigned char add,unsigned char data);
+    unsigned char readEPPROM(uint16_t add);
+    bool writeEPPROM(uint16_t add,unsigned char data);
     void saveEPPROM();
-    void write_rom_UChar(unsigned char add, unsigned char data);
-    unsigned char read_rom_UChar(unsigned char add);
+    void write_rom_UChar(uint16_t add, unsigned char data);
+    unsigned char read_rom_UChar(uint16_t add);
 
-    void write_rom_Char(unsigned char add, char data);
-    char read_rom_Char(unsigned char add);
+    void write_rom_Char(uint16_t add, char data);
+    char read_rom_Char(uint16_t add);
 
-    void write_rom_UInt(unsigned char add, unsigned int data);
-    unsigned int read_rom_UInt(unsigned char add);
+    void write_rom_UInt(uint16_t add, unsigned int data);
+    unsigned int read_rom_UInt(uint16_t add);
 
-    void write_rom_Int(unsigned char add, int data);
-    int read_rom_Int(unsigned char add);
+    void write_rom_Int(uint16_t add, int data);
+    int read_rom_Int(uint16_t add);
 
-    void write_rom_UInt32(unsigned char add, unsigned long data);
-    unsigned long read_rom_UInt32(unsigned char add);
+    void write_rom_UInt32(uint16_t add, unsigned long data);
+    unsigned long read_rom_UInt32(uint16_t add);
 
-    void write_rom_Int32(unsigned char add, long data);
-    long read_rom_Int32(unsigned char add);
+    void write_rom_Int32(uint16_t add, long data);
+    long read_rom_Int32(uint16_t add);
 
-    void write_rom_Float(unsigned char add, float data);
-    float read_rom_Float(unsigned char add);
+    void write_rom_Float(uint16_t add, float data);
+    float read_rom_Float(uint16_t add);
 
-    void write_rom_Double(unsigned char add, double data);
-    double read_rom_Double(unsigned char add);
+    void write_rom_Double(uint16_t add, double data);
+    double read_rom_Double(uint16_t add);
     
     void copy_rom_to_ram_UChar(unsigned char radd,unsigned char fadd);
     void copy_ram_to_rom_UChar(unsigned char fadd,unsigned char radd);
@@ -169,35 +199,35 @@ public:
     void copy_rom_to_ram_Double(unsigned char radd,unsigned char fadd);
     void copy_ram_to_rom_Double(unsigned char fadd,unsigned char radd);
 
-    void write_rom_Block(unsigned char add, unsigned int lens,unsigned char *data);
-    unsigned char read_rom_Block(unsigned char add, unsigned int lens,unsigned char *data);
+    void write_rom_Block(uint16_t add, unsigned int lens,unsigned char *data);
+    unsigned char read_rom_Block(uint16_t add, unsigned int lens,unsigned char *data);
     #ifdef USE_ExI2C
     bool initI2CEPPROM();
-    unsigned char readI2C_rom(unsigned char add);
-    bool writeI2C_rom(unsigned char add,unsigned char data);
-    void write_I2C_rom_UChar(unsigned char add, unsigned char data);
-    unsigned char read_I2C_rom_UChar(unsigned char add);
+    unsigned char readI2C_rom(uint16_t add);
+    bool writeI2C_rom(uint16_t add,unsigned char data);
+    void write_I2C_rom_UChar(uint16_t add, unsigned char data);
+    unsigned char read_I2C_rom_UChar(uint16_t add);
 
-    void write_I2C_rom_Char(unsigned char add, char data);
-    char read_I2C_rom_Char(unsigned char add);
+    void write_I2C_rom_Char(uint16_t add, char data);
+    char read_I2C_rom_Char(uint16_t add);
 
-    void write_I2C_rom_UInt(unsigned char add, unsigned int data);
-    unsigned int read_I2C_rom_UInt(unsigned char add);
+    void write_I2C_rom_UInt(uint16_t add, unsigned int data);
+    unsigned int read_I2C_rom_UInt(uint16_t add);
 
-    void write_I2C_rom_Int(unsigned char add, int data);
-    int read_I2C_rom_Int(unsigned char add);
+    void write_I2C_rom_Int(uint16_t add, int data);
+    int read_I2C_rom_Int(uint16_t add);
 
-    void write_I2C_rom_UInt32(unsigned char add, unsigned long data);
-    unsigned long read_I2C_rom_UInt32(unsigned char add);
+    void write_I2C_rom_UInt32(uint16_t add, unsigned long data);
+    unsigned long read_I2C_rom_UInt32(uint16_t add);
 
-    void write_I2C_rom_Int32(unsigned char add, long data);
-    long read_I2C_rom_Int32(unsigned char add);
+    void write_I2C_rom_Int32(uint16_t add, long data);
+    long read_I2C_rom_Int32(uint16_t add);
 
-    void write_I2C_rom_Float(unsigned char add, float data);
-    float read_I2C_rom_Float(unsigned char add);
+    void write_I2C_rom_Float(uint16_t add, float data);
+    float read_I2C_rom_Float(uint16_t add);
 
-    void write_I2C_rom_Double(unsigned char add, double data);
-    double read_I2C_rom_Double(unsigned char add);
+    void write_I2C_rom_Double(uint16_t add, double data);
+    double read_I2C_rom_Double(uint16_t add);
     
     void copy_I2C_rom_to_ram_UChar(unsigned char radd,unsigned char fadd);
     void copy_ram_to_I2C_rom_UChar(unsigned char fadd,unsigned char radd);
@@ -229,8 +259,8 @@ public:
     void copy_I2C_rom_to_ram_Double(unsigned char radd,unsigned char fadd);
     void copy_ram_to_I2C_rom_Double(unsigned char fadd,unsigned char radd);
 
-    void write_I2C_rom_Block(unsigned char add, unsigned int lens,unsigned char *data);
-    unsigned char read_I2C_rom_Block(unsigned char add, unsigned int lens,unsigned char *data);
+    void write_I2C_rom_Block(uint16_t add, unsigned int lens,unsigned char *data);
+    unsigned char read_I2C_rom_Block(uint16_t add, unsigned int lens,unsigned char *data);
     #endif
 #endif
 private:

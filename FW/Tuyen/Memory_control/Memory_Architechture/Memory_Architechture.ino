@@ -44,11 +44,11 @@ void setup()
 
   Heltec.display->drawString(0, 30, data);
   Heltec.display->display();
-  for (byte i = 0; i < SIZE_INPUT; i++)
+  for (uint8_t i = 0; i < SIZE_INPUT; i++)
   {
     pinMode(inputButton[i], INPUT);
   }
-  for (byte i = 0; i < SIZE_OUTPUT; i++)
+  for (uint8_t i = 0; i < SIZE_OUTPUT; i++)
   {
     pinMode(outputControl[i], OUTPUT);
   }
@@ -102,7 +102,7 @@ void setup()
     Serial.println(*((char *)&MemMap + i), HEX);
   }
   Serial.println("print user mem map>>>>>>>>>>>>>>>>>> ");
-  byte diff = 0;
+  uint8_t diff = 0;
   myMemory.initEPPROM();
   myMemory.write_rom_Block(0, sizeof(MemMap), (unsigned char *)&MemMap);
   myMemory.read_rom_Block(0, sizeof(UserMemMap), (unsigned char *)&UserMemMap);
@@ -168,12 +168,24 @@ void setup()
   b = myMemory.read_I2C_rom_Float(0);
   Serial.println(b);
   Serial.println(CData[6]);
+  int n = 0;
+  float _xxx =5.777;
+  float kq=0.0;
+   n = write_ram(CData,0, _xxx);
+   //n = write_ram((uint8_t*)&(UserMemMap1.DevUChar[0]),0, _xxx);
+   Serial.print("Wrote n byte: ");
+   Serial.println(n);
+
+   //n = read_ram(CData,0, kq);
+   n = read_ram((uint8_t*)&(UserMemMap1),0, kq);
+   Serial.print("Read n byte: ");
+   Serial.println(n);
+   Serial.print("kq: ");
+   Serial.println(kq);
 #endif
 }
-void setAddPointer(DevMemoryMap S)
-{
-  CData=(uint8_t*)&(S.DevUChar[0]);
-}
+
+
 void loop()
 {
   IPOProcess();
@@ -187,10 +199,10 @@ void IPOProcess()
 void readInput()
 {
   static long checkRTime = 0;
-  byte j = 0, k = 0;
+  uint8_t j = 0, k = 0;
   if (millis() - checkRTime > 150)
   {
-    for (byte i = 0; i < SIZE_INPUT; i++)
+    for (uint8_t i = 0; i < SIZE_INPUT; i++)
     {
       if (digitalRead(inputButton[i]))
       {
@@ -219,10 +231,10 @@ void process()
 void exportOutput()
 {
   static long checkETime = 0;
-  byte j = 0, k = 0;
+  uint8_t j = 0, k = 0;
   if (millis() - checkETime > 150)
   {
-    for (byte i = 0; i < SIZE_OUTPUT; i++)
+    for (uint8_t i = 0; i < SIZE_OUTPUT; i++)
     {
       digitalWrite(outputControl[i], MemMap.DevUChar[_OutputStart + k] & (0xff >> j));
       j++;
