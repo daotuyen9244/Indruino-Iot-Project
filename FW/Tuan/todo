@@ -16,7 +16,7 @@ Todos:
             ✔ Show Data Float, String, Bool @done(20-07-31 16:37)
             ✔ Show trạng thái nút nhấn, vùng nhớ @done(20-07-31 16:37)
         ☐ Task tuần 4
-            ☐ 1. Nghiên cứu giao thức modbus RTU
+            ✔ 1. Nghiên cứu giao thức modbus RTU @done(20-08-06 18:21)
             ☐ 2. Khảo sát các loại cảm biến môi trường ( nhiệt độ,độ ẩm, áp suất, chuyển động …..): tên, chức năng, cách thức giao tiếp, dạng dữ liệu trả về,link 
             ✔ 3. Nghiên cứu các giao thức: I2C,SPI,1 wire… @done(20-08-05 15:34)
             ☐ 4. Nghiên cứu giao thức AT Command ( dùng UART2 của esp32 --> dùng thêm 1 board USB --> TTL để giao tiếp)
