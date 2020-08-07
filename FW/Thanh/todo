@@ -1,9 +1,10 @@
 Todos:
-    ✔ Giao thức TCP @done(20-07-29 23:46)
-    ✔ Giao thức UDP @done(20-07-29 23:46)
-    ✔ Phần mềm Hercules @done(20-07-29 23:46)
-    ✔ Phương thức get_post @done(20-08-03 09:28)
-    ✔ Tìm hiểu restApi @done(20-08-03 09:28)
-    ☐ Dùng nodejs để tạo server, xử lí get/post/restapi
+    SW Server Api:
+        ✔ Giao thức TCP @done(20-07-29 23:46)
+        ✔ Giao thức UDP @done(20-07-29 23:46)
+        ✔ Phần mềm Hercules @done(20-07-29 23:46)
+        ✔ Phương thức get_post @done(20-08-03 09:28)
+        ✔ Tìm hiểu restApi @done(20-08-03 09:28)
+        ✔ Dùng nodejs để tạo server, xử lí get/post/restapi @done(20-08-07 08:35)
 Done:
 Cancelled:
