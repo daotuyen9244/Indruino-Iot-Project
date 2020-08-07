@@ -37,7 +37,33 @@ void setup()
   Heltec.display->drawString(0, 0, "Ten: ");
   Heltec.display->drawString(0, 10, "Sdt: ");
   Heltec.display->drawString(0, 20, "Mail:");
-  myMemory.write_ram_Int(0, -100);
+  
+  
+  Serial.println("____________________________");
+  myMemory.write_ram_UChar(0, 10);
+  Serial.println(myMemory.read_ram_UChar(0));
+
+  myMemory.write_ram_Char(1, -99);
+  Serial.println(myMemory.read_ram_Char(1));
+
+  myMemory.write_ram_UInt(2, 100);
+  Serial.println(myMemory.read_ram_UInt(2));
+
+  myMemory.write_ram_Int(4, -100);
+  Serial.println(myMemory.read_ram_Int(4));
+  
+  myMemory.write_ram_UInt32(6, 100);
+  Serial.println(myMemory.read_ram_UInt32(6));
+
+  myMemory.write_ram_Int32(10, -100);
+  Serial.println(myMemory.read_ram_Int32(10));
+
+  myMemory.write_ram_Float(14, 100.0);
+  Serial.println(myMemory.read_ram_Float(14));
+  myMemory.write_ram_Double(18, -99.9);
+  Serial.println(myMemory.read_ram_Double(18));
+  Serial.println("____________________________");
+  
   //myMemory.get_ram_Int(0);
   String data = "";
   data = (String)EUCHAR_START + " " + ECHAR_START + " " + EUINT_START + " " + EINT_START + " " + EUINT32_START + " " + EINT32_START + " " + EFLOAT_START + " " + EDBL_START;
@@ -56,40 +82,6 @@ void setup()
   int sum = 0;
   Serial.print("Sizeof MemMap: ");
   Serial.println(sizeof(MemMap));
-
-  sum += sizeof(MemMap.DevChar);
-  Serial.print("Sizeof MemMap.DevChar: ");
-  Serial.println(sizeof(MemMap.DevChar));
-
-  sum += sizeof(MemMap.DevUChar);
-  Serial.print("Sizeof MemMap.DevUChar: ");
-  Serial.println(sizeof(MemMap.DevUChar));
-
-  sum += sizeof(MemMap.DevInt);
-  Serial.print("Sizeof MemMap.DevInt: ");
-  Serial.println(sizeof(MemMap.DevInt));
-
-  sum += sizeof(MemMap.DevUInt);
-  Serial.print("Sizeof MemMap.DevUInt: ");
-  Serial.println(sizeof(MemMap.DevUInt));
-
-  sum += sizeof(MemMap.DevInt32);
-  Serial.print("Sizeof MemMap.DevInt32: ");
-  Serial.println(sizeof(MemMap.DevInt32));
-
-  sum += sizeof(MemMap.DevUInt32);
-  Serial.print("Sizeof MemMap.DevUInt32: ");
-  Serial.println(sizeof(MemMap.DevUInt32));
-
-  sum += sizeof(MemMap.DevFloat);
-  Serial.print("Sizeof MemMap.DevFloat: ");
-  Serial.println(sizeof(MemMap.DevFloat));
-
-  sum += sizeof(MemMap.DevDouble);
-  Serial.print("Sizeof MemMap.DevDouble: ");
-  Serial.println(sizeof(MemMap.DevDouble));
-  Serial.print("total sizeof MemMap: ");
-  Serial.println(sum);
 
   for (int i = 0; i < sizeof(MemMap); i++)
   {
@@ -141,7 +133,7 @@ void setup()
   }
   for (int i = 0; i < sizeof(UserMemMap1); i++)
   {
-    *((unsigned char *)&UserMemMap1 + i) +=1;
+    //*((unsigned char *)&UserMemMap1 + i) +=1;
     if (*((unsigned char *)&UserMemMap + i) != *((unsigned char *)&UserMemMap1 + i))
     {
       diff = 1;
@@ -156,7 +148,7 @@ void setup()
     Serial.println("correct");
   }
   Serial.println("test >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
-  UserMemMap1.DevUChar[0] = 99;
+  UserMemMap1.Data[0] = 99;
   setAddPointer(UserMemMap1);
   for (int i = 0; i < sizeof(UserMemMap1); i++)
   {
@@ -183,6 +175,7 @@ void setup()
    Serial.print("kq: ");
    Serial.println(kq);
 #endif
+
 }
 
 
@@ -206,13 +199,13 @@ void readInput()
     {
       if (digitalRead(inputButton[i]))
       {
-        //bitSet(MemMap.DevUChar[_InputStart] ,i);
-        MemMap.DevUChar[_InputStart + k] |= 1 << j;
+        //bitSet(MemMap.Data[_InputStart] ,i);
+        MemMap.Data[_InputStart + k] |= 1 << j;
       }
       else
       {
-        //bitClear(MemMap.DevUChar[_InputStart] ,i);
-        MemMap.DevUChar[_InputStart + k] &= ~(1 << j);
+        //bitClear(MemMap.Data[_InputStart] ,i);
+        MemMap.Data[_InputStart + k] &= ~(1 << j);
       }
       j++;
       if (j > 7)
@@ -226,7 +219,7 @@ void readInput()
 }
 void process()
 {
-  MemMap.DevUChar[_OutputStart] = MemMap.DevUChar[_InputStart];
+  MemMap.Data[_OutputStart] = MemMap.Data[_InputStart];
 }
 void exportOutput()
 {
@@ -236,7 +229,7 @@ void exportOutput()
   {
     for (uint8_t i = 0; i < SIZE_OUTPUT; i++)
     {
-      digitalWrite(outputControl[i], MemMap.DevUChar[_OutputStart + k] & (0xff >> j));
+      digitalWrite(outputControl[i], MemMap.Data[_OutputStart + k] & (0xff >> j));
       j++;
       if (j > 7)
       {

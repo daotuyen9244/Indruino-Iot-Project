@@ -1,92 +1,117 @@
 #include "DevMemory.h"
 
-void DevMemory::write_ram_Block(uint16_t add, unsigned int lens, unsigned char *data)
+void DevMemory::write_ram_Block(uint16_t add, uint16_t  lens, uint8_t *data)
 {
-    for (unsigned int t = 0; t < lens; t++)
+    for (uint16_t  t = 0; t < lens; t++)
     {
         *((char *)&MemMap + t) = *(data + t - add);
     }
 }
-unsigned char DevMemory::read_ram_Block(uint16_t add, unsigned int lens, unsigned char *data)
+uint8_t DevMemory::read_ram_Block(uint16_t add, uint16_t  lens, uint8_t *data)
 {
-    for (unsigned int t = add; t < lens; t++)
+    for (uint16_t  t = add; t < lens; t++)
     {
         *(data + t - add) = *((char *)&MemMap + t);
     }
 }
-void DevMemory::write_ram_UChar(uint16_t add, unsigned char data)
+void DevMemory::write_ram_UChar(uint16_t add, uint8_t data)
 {
-    MemMap.DevUChar[add] = data;
+    //MemMap.DevUChar[add] = data;
+    //DevMemory::write_ram_Block(add,1,&data);
+    write_ram(CData,add,data);
 }
-unsigned char DevMemory::read_ram_UChar(uint16_t add)
+uint8_t DevMemory::read_ram_UChar(uint16_t add)
 {
-
-    return MemMap.DevUChar[add];
-}
-
-void DevMemory::write_ram_Char(uint16_t add, char data)
-{
-    MemMap.DevChar[add] = data;
-}
-char DevMemory::read_ram_Char(uint16_t add)
-{
-    return MemMap.DevChar[add];
+    uint8_t _data=0x00;
+    read_ram(CData,add,_data);
+    return _data;
 }
 
-void DevMemory::write_ram_UInt(uint16_t add, unsigned int data)
+void DevMemory::write_ram_Char(uint16_t add, int8_t data)
 {
-    MemMap.DevUInt[add] = data;
+    //MemMap.Data[add] = data;
+    write_ram(CData,add,data);
 }
-unsigned int DevMemory::read_ram_UInt(uint16_t add)
+int8_t DevMemory::read_ram_Char(uint16_t add)
 {
-    return MemMap.DevUInt[add];
-}
-
-void DevMemory::write_ram_Int(uint16_t add, int data)
-{
-    MemMap.DevInt[add] = data;
-}
-int DevMemory::read_ram_Int(uint16_t add)
-{
-    return MemMap.DevInt[add];
+    int8_t _data=0x00;
+    read_ram(CData,add,_data);
+    return _data;
 }
 
-void DevMemory::write_ram_UInt32(uint16_t add, unsigned long data)
+void DevMemory::write_ram_UInt(uint16_t add, uint16_t  data)
 {
-    MemMap.DevUInt32[add] = data;
+    write_ram(CData,add,data);
 }
-unsigned long DevMemory::read_ram_UInt32(uint16_t add)
+uint16_t  DevMemory::read_ram_UInt(uint16_t add)
 {
-    return MemMap.DevUInt32[add];
+    //return MemMap.DevUInt[add];
+    uint16_t  _data=0x00;
+    read_ram(CData,add,_data);
+    return _data;
 }
 
-void DevMemory::write_ram_Int32(uint16_t add, long data)
+void DevMemory::write_ram_Int(uint16_t add, int16_t data)
 {
-    MemMap.DevInt32[add] = data;
+    //MemMap.DevInt[add] = data;
+    write_ram(CData,add,data);
 }
-long DevMemory::read_ram_Int32(uint16_t add)
+int16_t DevMemory::read_ram_Int(uint16_t add)
 {
-    return MemMap.DevInt32[add];
+    //return MemMap.DevInt[add];
+    int16_t _data=0x00;
+    read_ram(CData,add,_data);
+    return _data;
+}
+
+void DevMemory::write_ram_UInt32(uint16_t add, uint32_t data)
+{
+    //MemMap.DevUInt32[add] = data;
+    write_ram(CData,add,data);
+}
+uint32_t DevMemory::read_ram_UInt32(uint16_t add)
+{
+    uint32_t _data=0x00;
+    read_ram(CData,add,_data);
+    return _data;
+}
+
+void DevMemory::write_ram_Int32(uint16_t add, int32_t data)
+{
+    write_ram(CData,add,data);
+}
+int32_t DevMemory::read_ram_Int32(uint16_t add)
+{
+    int32_t _data=0x00;
+    read_ram(CData,add,_data);
+    return _data;
 }
 
 void DevMemory::write_ram_Float(uint16_t add, float data)
 {
-    MemMap.DevFloat[add] = data;
+    write_ram(CData,add,data);
 }
 float DevMemory::read_ram_Float(uint16_t add)
 {
-    return MemMap.DevFloat[add];
+    //return MemMap.DevFloat[add];
+    float _data=0.0;
+    read_ram(CData,add,_data);
+    return _data;
 }
 
 void DevMemory::write_ram_Double(uint16_t add, double data)
 {
-    MemMap.DevDouble[add] = data;
+    //MemMap.DevDouble[add] = data;
+    write_ram(CData,add,data);
 }
 double DevMemory::read_ram_Double(uint16_t add)
 {
-    return MemMap.DevDouble[add];
+    //return MemMap.DevDouble[add];
+    double _data=0.0;
+    read_ram(CData,add,_data);
+    return _data;
 }
-bool DevMemory::setOutputAdd(uint16_t add, unsigned char lens)
+bool DevMemory::setOutputAdd(uint16_t add, uint8_t lens)
 {
     int _temp = ((int)add + (int)lens) - ADD_LENS;
     if (_temp >= 0)
@@ -100,7 +125,7 @@ bool DevMemory::setOutputAdd(uint16_t add, unsigned char lens)
         return 0;
     }
 }
-bool DevMemory::setInputAdd(uint16_t add, unsigned char lens)
+bool DevMemory::setInputAdd(uint16_t add, uint8_t lens)
 {
     int _temp = ((int)add + (int)lens) - ADD_LENS;
     if (_temp >= 0)
@@ -114,35 +139,35 @@ bool DevMemory::setInputAdd(uint16_t add, unsigned char lens)
         return 0;
     }
 }
-unsigned char DevMemory::InputAddBegin()
+uint8_t DevMemory::InputAddBegin()
 {
     return _InputStart;
 }
-unsigned char DevMemory::OutputAddBegin()
+uint8_t DevMemory::OutputAddBegin()
 {
     return _OutputStart;
 }
-unsigned char DevMemory::InputLens()
+uint8_t DevMemory::InputLens()
 {
     return _maxIn;
 }
-unsigned char DevMemory::OutputLens()
+uint8_t DevMemory::OutputLens()
 {
     return _maxOut;
 }
-unsigned char DevMemory::ReadInPut(uint16_t add)
+uint8_t DevMemory::ReadInPut(uint16_t add)
 {
-    return MemMap.DevChar[_InputStart + add];
+    return MemMap.Data[_InputStart + add];
 }
-unsigned char DevMemory::ReadOutPut(uint16_t add)
+uint8_t DevMemory::ReadOutPut(uint16_t add)
 {
-    return MemMap.DevChar[_OutputStart + add];
+    return MemMap.Data[_OutputStart + add];
 }
-bool DevMemory::WriteOutPut(uint16_t add, unsigned char data)
+bool DevMemory::WriteOutPut(uint16_t add, uint8_t data)
 {
     if (add <= _maxOut) // Dem tu 0
     {
-        MemMap.DevChar[_OutputStart + add] = data;
+        MemMap.Data[_OutputStart + add] = data;
         return 1;
     }
     else
@@ -162,7 +187,7 @@ bool DevMemory::initEPPROM()
         return 0;
     }
 }
-unsigned char DevMemory::readEPPROM(uint16_t add)
+uint8_t DevMemory::readEPPROM(uint16_t add)
 {
     return EEPROM.read(add);
 }
@@ -173,45 +198,37 @@ void DevMemory::saveEPPROM()
     EEPROM.commit();
 #endif
 }
-bool DevMemory::writeEPPROM(uint16_t add, unsigned char data)
+bool DevMemory::writeEPPROM(uint16_t add, uint8_t data)
 {
     EEPROM.write(add, data);
-#ifdef ESP32 || ESP8266
-    EEPROM.commit();
-#endif
+    DevMemory::saveEPPROM();
 }
-void DevMemory::write_rom_UChar(uint16_t add, unsigned char data)
+void DevMemory::write_rom_UChar(uint16_t add, uint8_t data)
 {
     EEPROM.writeUChar(add, data);
-#ifdef ESP32 || ESP8266
-    EEPROM.commit();
-#endif
+    DevMemory::saveEPPROM();
 }
-unsigned char DevMemory::read_rom_UChar(uint16_t add)
+uint8_t DevMemory::read_rom_UChar(uint16_t add)
 {
     return EEPROM.readUChar(add);
 }
 
-void DevMemory::write_rom_Char(uint16_t add, char data)
+void DevMemory::write_rom_Char(uint16_t add, int8_t data)
 {
     EEPROM.writeChar(add + ECHAR_START, data);
-#ifdef ESP32 || ESP8266
-    EEPROM.commit();
-#endif
+    DevMemory::saveEPPROM();
 }
-char DevMemory::read_rom_Char(uint16_t add)
+int8_t DevMemory::read_rom_Char(uint16_t add)
 {
     return EEPROM.readChar(add + ECHAR_START);
 }
 
-void DevMemory::write_rom_UInt(uint16_t add, unsigned int data)
+void DevMemory::write_rom_UInt(uint16_t add, uint16_t  data)
 {
     EEPROM.writeUInt(add + EUINT_START, data);
-#ifdef ESP32 || ESP8266
-    EEPROM.commit();
-#endif
+    DevMemory::saveEPPROM();
 }
-unsigned int DevMemory::read_rom_UInt(uint16_t add)
+uint16_t  DevMemory::read_rom_UInt(uint16_t add)
 {
     return EEPROM.readUInt(add + EUINT_START);
 }
@@ -219,35 +236,29 @@ unsigned int DevMemory::read_rom_UInt(uint16_t add)
 void DevMemory::write_rom_Int(uint16_t add, int data)
 {
     EEPROM.writeInt(add + EINT_START, data);
-#ifdef ESP32 || ESP8266
-    EEPROM.commit();
-#endif
+    DevMemory::saveEPPROM();
 }
-int DevMemory::read_rom_Int(uint16_t add)
+int16_t DevMemory::read_rom_Int(uint16_t add)
 {
     return EEPROM.readInt(add + EINT_START);
 }
 
-void DevMemory::write_rom_UInt32(uint16_t add, unsigned long data)
+void DevMemory::write_rom_UInt32(uint16_t add, uint32_t data)
 {
     EEPROM.writeULong(add + EUINT32_START, data);
-#ifdef ESP32 || ESP8266
-    EEPROM.commit();
-#endif
+    DevMemory::saveEPPROM();
 }
-unsigned long DevMemory::read_rom_UInt32(uint16_t add)
+uint32_t DevMemory::read_rom_UInt32(uint16_t add)
 {
     return EEPROM.readULong(add + EUINT32_START);
 }
 
-void DevMemory::write_rom_Int32(uint16_t add, long data)
+void DevMemory::write_rom_Int32(uint16_t add, int32_t data)
 {
     EEPROM.writeLong(add + EINT32_START, data);
-#ifdef ESP32 || ESP8266
-    EEPROM.commit();
-#endif
+    DevMemory::saveEPPROM();
 }
-long DevMemory::read_rom_Int32(uint16_t add)
+int32_t DevMemory::read_rom_Int32(uint16_t add)
 {
     return EEPROM.readLong(add + EINT32_START);
 }
@@ -255,9 +266,7 @@ long DevMemory::read_rom_Int32(uint16_t add)
 void DevMemory::write_rom_Float(uint16_t add, float data)
 {
     EEPROM.writeFloat(add + EFLOAT_START, data);
-#ifdef ESP32 || ESP8266
-    EEPROM.commit();
-#endif
+    DevMemory::saveEPPROM();
 }
 float DevMemory::read_rom_Float(uint16_t add)
 {
@@ -267,105 +276,157 @@ float DevMemory::read_rom_Float(uint16_t add)
 void DevMemory::write_rom_Double(uint16_t add, double data)
 {
     EEPROM.writeDouble(add + EDBL_START, data);
-#ifdef ESP32 || ESP8266
-    EEPROM.commit();
-#endif
+    DevMemory::saveEPPROM();
 }
 double DevMemory::read_rom_Double(uint16_t add)
 {
     return EEPROM.readDouble(add + EDBL_START);
 }
-void DevMemory::copy_rom_to_ram_UChar(unsigned char radd, unsigned char fadd)
+void DevMemory::copy_rom_to_ram_UChar(uint16_t radd, uint16_t fadd)
 {
-    MemMap.DevUChar[fadd] = DevMemory::read_rom_UChar(radd);
+    //MemMap.DevUChar[fadd] = DevMemory::read_rom_UChar(radd);
+    DevMemory::write_ram_Block(fadd,1,(uint8_t*)(DevMemory::read_rom_UChar(radd)));
 }
-void DevMemory::copy_ram_to_rom_UChar(unsigned char fadd, unsigned char radd)
+void DevMemory::copy_ram_to_rom_UChar(uint16_t fadd, uint16_t radd)
 {
-    DevMemory::write_rom_UChar(radd, MemMap.DevUChar[fadd]);
-}
-
-void DevMemory::copy_rom_to_ram_Char(unsigned char radd, unsigned char fadd)
-{
-    MemMap.DevChar[fadd] = DevMemory::read_rom_Char(radd);
-}
-void DevMemory::copy_ram_to_rom_Char(unsigned char fadd, unsigned char radd)
-{
-    DevMemory::write_rom_Char(radd, MemMap.DevChar[fadd]);
+    uint8_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,1,(uint8_t*)_data);
+    DevMemory::write_rom_UChar(radd, _data);
 }
 
-void DevMemory::copy_rom_to_ram_UInt(unsigned char radd, unsigned char fadd)
+void DevMemory::copy_rom_to_ram_Char(uint16_t radd, uint16_t fadd)
 {
-    MemMap.DevUInt[radd] = DevMemory::read_rom_UInt(radd);
+    DevMemory::write_ram_Block(radd,1,(uint8_t*)(DevMemory::read_rom_Char(fadd)));
+    //MemMap.Data[fadd] = DevMemory::read_rom_Char(radd);
 }
-void DevMemory::copy_ram_to_rom_Uint(unsigned char fadd, unsigned char radd)
+void DevMemory::copy_ram_to_rom_Char(uint16_t fadd, uint16_t radd)
 {
-    DevMemory::write_rom_UInt(radd, MemMap.DevUInt[fadd]);
-}
-
-void DevMemory::copy_rom_to_ram_Int(unsigned char radd, unsigned char fadd)
-{
-    MemMap.DevInt[radd] = DevMemory::read_rom_Int(radd);
-}
-void DevMemory::copy_ram_to_rom_int(unsigned char fadd, unsigned char radd)
-{
-    DevMemory::write_rom_Int(radd, MemMap.DevInt[fadd]);
+    int8_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,1,(uint8_t*)_data);
+    DevMemory::write_rom_UChar(radd, _data);
 }
 
-void DevMemory::copy_rom_to_ram_UInt32(unsigned char radd, unsigned char fadd)
+void DevMemory::copy_rom_to_ram_UInt(uint16_t radd, uint16_t fadd)
 {
-    MemMap.DevUInt32[radd] = DevMemory::read_rom_UInt32(radd);
+    //MemMap.DevUInt[radd] = DevMemory::read_rom_UInt(radd);
+    DevMemory::write_ram_Block(fadd,2,(uint8_t*)(DevMemory::read_rom_UInt(radd)));
 }
-void DevMemory::copy_ram_to_rom_UInt32(unsigned char fadd, unsigned char radd)
+void DevMemory::copy_ram_to_rom_Uint(uint16_t fadd, uint16_t radd)
 {
-    DevMemory::write_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
-}
-
-void DevMemory::copy_rom_to_ram_Int32(unsigned char radd, unsigned char fadd)
-{
-    MemMap.DevInt32[radd] = DevMemory::read_rom_Int32(radd);
-}
-void DevMemory::copy_ram_to_rom_Int32(unsigned char fadd, unsigned char radd)
-{
-    DevMemory::write_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
+    //DevMemory::write_rom_UInt(radd, MemMap.DevUInt[fadd]);
+    uint16_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,2,(uint8_t*)_data);
+    DevMemory::write_rom_UInt(radd, _data);
 }
 
-void DevMemory::copy_rom_to_ram_ULong(unsigned char radd, unsigned char fadd)
+void DevMemory::copy_rom_to_ram_Int(uint16_t radd, uint16_t fadd)
 {
-    MemMap.DevUInt32[radd] = DevMemory::read_rom_UInt32(radd);
+    //MemMap.DevInt[radd] = DevMemory::read_rom_Int(radd);
+    DevMemory::write_ram_Block(fadd,2,(uint8_t*)(DevMemory::read_rom_Int(radd)));
 }
-void DevMemory::copy_ram_to_rom_ULong(unsigned char fadd, unsigned char radd)
+void DevMemory::copy_ram_to_rom_int(uint16_t fadd, uint16_t radd)
 {
-    DevMemory::write_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
-}
-
-void DevMemory::copy_rom_to_ram_Long(unsigned char radd, unsigned char fadd)
-{
-    MemMap.DevInt32[radd] = DevMemory::read_rom_Int32(radd);
-}
-void DevMemory::copy_ram_to_rom_Long(unsigned char fadd, unsigned char radd)
-{
-    DevMemory::write_rom_Int32(radd, MemMap.DevInt32[fadd]);
+    //DevMemory::write_rom_Int(radd, MemMap.DevInt[fadd]);
+    int16_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,2,(uint8_t*)_data);
+    DevMemory::write_rom_Int(radd, _data);
 }
 
-void DevMemory::copy_rom_to_ram_Float(unsigned char radd, unsigned char fadd)
+void DevMemory::copy_rom_to_ram_UInt32(uint16_t radd, uint16_t fadd)
 {
-    MemMap.DevFloat[radd] = DevMemory::read_rom_Float(radd);
+    //MemMap.DevUInt32[radd] = DevMemory::read_rom_UInt32(radd);
+    DevMemory::write_ram_Block(fadd,4,(uint8_t*)(DevMemory::read_rom_UInt32(radd)));
 }
-void DevMemory::copy_ram_to_rom_Float(unsigned char fadd, unsigned char radd)
+void DevMemory::copy_ram_to_rom_UInt32(uint16_t fadd, uint16_t radd)
 {
-    DevMemory::write_rom_Float(radd, MemMap.DevFloat[fadd]);
+    //DevMemory::write_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
+    uint32_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,4,(uint8_t*)_data);
+    DevMemory::write_rom_UInt32(radd, _data);
 }
-void DevMemory::copy_rom_to_ram_Double(unsigned char radd, unsigned char fadd)
+
+void DevMemory::copy_rom_to_ram_Int32(uint16_t radd, uint16_t fadd)
 {
-    MemMap.DevDouble[radd] = DevMemory::read_rom_Double(radd);
+    //MemMap.DevInt32[radd] = DevMemory::read_rom_Int32(radd);
+    DevMemory::write_ram_Block(fadd,4,(uint8_t*)(DevMemory::read_rom_Int32(radd)));
 }
-void DevMemory::copy_ram_to_rom_Double(unsigned char fadd, unsigned char radd)
+void DevMemory::copy_ram_to_rom_Int32(uint16_t fadd, uint16_t radd)
 {
-    DevMemory::write_rom_Double(radd, MemMap.DevDouble[fadd]);
+    //DevMemory::write_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
+    int32_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,4,(uint8_t*)_data);
+    DevMemory::write_rom_Int32(radd, _data);
 }
-void DevMemory::write_rom_Block(uint16_t add, unsigned int lens, unsigned char *data)
+
+void DevMemory::copy_rom_to_ram_ULong(uint16_t radd, uint16_t fadd)
 {
-    for (unsigned int t = add; t < lens; t++)
+    //MemMap.DevUInt32[radd] = DevMemory::read_rom_UInt32(radd);
+    DevMemory::write_ram_Block(fadd,4,(uint8_t*)(DevMemory::read_rom_UInt32(radd)));
+}
+void DevMemory::copy_ram_to_rom_ULong(uint16_t fadd, uint16_t radd)
+{
+    //DevMemory::write_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
+    uint32_t _data=0x00;
+    DevMemory::read_ram_Block(radd,4,(uint8_t*)_data);
+    DevMemory::write_rom_UInt32(fadd, _data);
+}
+
+void DevMemory::copy_rom_to_ram_Long(uint16_t radd, uint16_t fadd)
+{
+    //MemMap.DevInt32[radd] = DevMemory::read_rom_Int32(radd);
+    DevMemory::write_ram_Block(fadd,4,(uint8_t*)(DevMemory::read_rom_Int32(radd)));
+}
+void DevMemory::copy_ram_to_rom_Long(uint16_t fadd, uint16_t radd)
+{
+    //DevMemory::write_rom_Int32(radd, MemMap.DevInt32[fadd]);
+    int32_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,4,(uint8_t*)_data);
+    DevMemory::write_rom_Int32(radd, _data);
+}
+
+void DevMemory::copy_rom_to_ram_Float(uint16_t radd, uint16_t fadd)
+{
+    //MemMap.DevFloat[radd] = DevMemory::read_rom_Float(radd);
+    union {
+        float a;
+        uint8_t bytes[4];
+    } thing;
+    thing.a = DevMemory::read_rom_Float(radd);
+    DevMemory::write_ram_Block(fadd,4,(uint8_t*)thing.bytes);
+}
+void DevMemory::copy_ram_to_rom_Float(uint16_t fadd, uint16_t radd)
+{
+    //DevMemory::write_rom_Float(radd, MemMap.DevFloat[fadd]);
+    union {
+        float a;
+        uint8_t bytes[4];
+    } thing;
+    DevMemory::read_ram_Block(fadd,4,(uint8_t*)thing.bytes);
+    DevMemory::write_rom_Float(radd, thing.a);
+}
+void DevMemory::copy_rom_to_ram_Double(uint16_t radd, uint16_t fadd)
+{
+    //MemMap.DevDouble[radd] = DevMemory::read_rom_Double(radd);
+    union {
+        double a;
+        uint8_t bytes[8];
+    } thing;
+    thing.a = DevMemory::read_rom_Double(radd);
+    DevMemory::write_ram_Block(fadd,8,(uint8_t*)thing.bytes);
+}
+void DevMemory::copy_ram_to_rom_Double(uint16_t fadd, uint16_t radd)
+{
+    //DevMemory::write_rom_Double(radd, MemMap.DevDouble[fadd]);
+     union {
+        float a;
+        uint8_t bytes[8];
+    } thing;
+    DevMemory::read_ram_Block(fadd,8,(uint8_t*)thing.bytes);
+    DevMemory::write_rom_Float(radd, thing.a);
+}
+void DevMemory::write_rom_Block(uint16_t add, uint16_t  lens, uint8_t *data)
+{
+    for (uint16_t  t = add; t < lens; t++)
     {
         EEPROM.write(t, *(data + (t - add)));
     }
@@ -373,9 +434,9 @@ void DevMemory::write_rom_Block(uint16_t add, unsigned int lens, unsigned char *
     EEPROM.commit();
 #endif
 }
-unsigned char DevMemory::read_rom_Block(uint16_t add, unsigned int lens, unsigned char *data)
+uint8_t DevMemory::read_rom_Block(uint16_t add, uint16_t  lens, uint8_t *data)
 {
-    for (unsigned int t = add; t < lens; t++)
+    for (uint16_t  t = add; t < lens; t++)
     {
         *((char *)data + t - add) = EEPROM.read(t);
     }
@@ -386,73 +447,73 @@ bool DevMemory::initI2CEPPROM()
     eeprom.initialize();
     return 1;
 }
-unsigned char DevMemory::readI2C_rom(uint16_t add)
+uint8_t DevMemory::readI2C_rom(uint16_t add)
 {
     return eeprom.readByte(add);
 }
-bool DevMemory::writeI2C_rom(uint16_t add, unsigned char data)
+bool DevMemory::writeI2C_rom(uint16_t add, uint8_t data)
 {
     eeprom.writeByte(add, data);
 }
-void DevMemory::write_I2C_rom_UChar(uint16_t add, unsigned char data)
+void DevMemory::write_I2C_rom_UChar(uint16_t add, uint8_t data)
 {
     eeprom.writeByte(add, data);
 }
-unsigned char DevMemory::read_I2C_rom_UChar(uint16_t add)
-{
-    return eeprom.readByte(add);
-}
-
-void DevMemory::write_I2C_rom_Char(uint16_t add, char data)
-{
-    eeprom.writeByte(add, data);
-}
-char DevMemory::read_I2C_rom_Char(uint16_t add)
+uint8_t DevMemory::read_I2C_rom_UChar(uint16_t add)
 {
     return eeprom.readByte(add);
 }
 
-void DevMemory::write_I2C_rom_UInt(uint16_t add, unsigned int data)
+void DevMemory::write_I2C_rom_Char(uint16_t add, int8_t data)
 {
-    eeprom.writeBytes(add, 2, (byte *)data);
+    eeprom.writeByte(add, data);
 }
-unsigned int DevMemory::read_I2C_rom_UInt(uint16_t add)
+int8_t DevMemory::read_I2C_rom_Char(uint16_t add)
+{
+    return eeprom.readByte(add);
+}
+
+void DevMemory::write_I2C_rom_UInt(uint16_t add, uint16_t  data)
+{
+    eeprom.writeBytes(add, 2, (uint8_t *)data);
+}
+uint16_t  DevMemory::read_I2C_rom_UInt(uint16_t add)
 {
     uint16_t _x = 0;
-    eeprom.readBytes(add, 2, (byte *)_x);
+    eeprom.readBytes(add, 2, (uint8_t *)_x);
     return _x;
 }
 
 void DevMemory::write_I2C_rom_Int(uint16_t add, int data)
 {
-    eeprom.writeBytes(add, 2, (byte *)data);
+    eeprom.writeBytes(add, 2, (uint8_t *)data);
 }
-int DevMemory::read_I2C_rom_Int(uint16_t add)
+int16_t DevMemory::read_I2C_rom_Int(uint16_t add)
 {
     int16_t _x = 0;
-    eeprom.readBytes(add, 2, (byte *)_x);
+    eeprom.readBytes(add, 2, (uint8_t *)_x);
     return _x;
 }
 
-void DevMemory::write_I2C_rom_UInt32(uint16_t add, unsigned long data)
+void DevMemory::write_I2C_rom_UInt32(uint16_t add, uint32_t data)
 {
-    eeprom.writeBytes(add, 4, (byte *)data);
+    eeprom.writeBytes(add, 4, (uint8_t *)data);
 }
-unsigned long DevMemory::read_I2C_rom_UInt32(uint16_t add)
+uint32_t DevMemory::read_I2C_rom_UInt32(uint16_t add)
 {
     uint32_t _x = 0;
-    eeprom.readBytes(add, 4, (byte *)_x);
+    eeprom.readBytes(add, 4, (uint8_t *)_x);
     return _x;
 }
 
-void DevMemory::write_I2C_rom_Int32(uint16_t add, long data)
+void DevMemory::write_I2C_rom_Int32(uint16_t add, int32_t data)
 {
-    eeprom.writeBytes(add, 4, (byte *)data);
+    eeprom.writeBytes(add, 4, (uint8_t *)data);
 }
-long DevMemory::read_I2C_rom_Int32(uint16_t add)
+int32_t DevMemory::read_I2C_rom_Int32(uint16_t add)
 {
     int32_t _x = 0;
-    eeprom.readBytes(add, 4, (byte *)_x);
+    eeprom.readBytes(add, 4, (uint8_t *)_x);
     return _x;
 }
 
@@ -460,20 +521,20 @@ void DevMemory::write_I2C_rom_Float(uint16_t add, float data)
 {
     union {
         float a;
-        unsigned char bytes[4];
+        uint8_t bytes[4];
     } thing;
     thing.a = data;
-    eeprom.writeBytes(add, 4, (byte *)(thing.bytes));
+    eeprom.writeBytes(add, 4, (uint8_t *)(thing.bytes));
 }
 float DevMemory::read_I2C_rom_Float(uint16_t add)
 {
     float _x = 0;
     union {
         float a;
-        unsigned char bytes[4];
+        uint8_t bytes[4];
     } thing;
 
-    eeprom.readBytes(add, 4, (byte *)(thing.bytes));
+    eeprom.readBytes(add, 4, (uint8_t *)(thing.bytes));
     _x = thing.a;
     return _x;
 }
@@ -482,116 +543,173 @@ void DevMemory::write_I2C_rom_Double(uint16_t add, double data)
 {
     union {
         double a;
-        unsigned char bytes[8];
+        uint8_t bytes[8];
     } thing;
     thing.a = data;
-    eeprom.writeBytes(add, 8, (byte *)(thing.bytes));
+    eeprom.writeBytes(add, 8, (uint8_t *)(thing.bytes));
 }
 double DevMemory::read_I2C_rom_Double(uint16_t add)
 {
     double _x = 0;
     union {
         float a;
-        unsigned char bytes[8];
+        uint8_t bytes[8];
     } thing;
 
-    eeprom.readBytes(add, 8, (byte *)(thing.bytes));
+    eeprom.readBytes(add, 8, (uint8_t *)(thing.bytes));
     _x = thing.a;
     return _x;
 }
-void DevMemory::copy_I2C_rom_to_ram_UChar(unsigned char radd, unsigned char fadd)
+void DevMemory::copy_I2C_rom_to_ram_UChar(uint16_t radd, uint16_t fadd)
 {
-    MemMap.DevUChar[fadd] = DevMemory::read_I2C_rom_UChar(radd);
+    //MemMap.DevUChar[fadd] = DevMemory::read_I2C_rom_UChar(radd);
+    DevMemory::write_ram_Block(fadd,1,(uint8_t*)(DevMemory::read_I2C_rom_UChar(radd)));
 }
-void DevMemory::copy_ram_to_I2C_rom_UChar(unsigned char fadd, unsigned char radd)
+void DevMemory::copy_ram_to_I2C_rom_UChar(uint16_t fadd, uint16_t radd)
 {
-    DevMemory::write_I2C_rom_UChar(radd, MemMap.DevUChar[fadd]);
-}
-
-void DevMemory::copy_I2C_rom_to_ram_Char(unsigned char radd, unsigned char fadd)
-{
-    MemMap.DevChar[fadd] = DevMemory::read_I2C_rom_Char(radd);
-}
-void DevMemory::copy_ram_to_I2C_rom_Char(unsigned char fadd, unsigned char radd)
-{
-    DevMemory::write_I2C_rom_Char(radd, MemMap.DevChar[fadd]);
+    //DevMemory::write_I2C_rom_UChar(radd, MemMap.DevUChar[fadd]);
+    uint8_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,1,(uint8_t*)_data);
+    DevMemory::write_rom_UChar(radd, _data);
 }
 
-void DevMemory::copy_I2C_rom_to_ram_UInt(unsigned char radd, unsigned char fadd)
+void DevMemory::copy_I2C_rom_to_ram_Char(uint16_t radd, uint16_t fadd)
 {
-    MemMap.DevUInt[radd] = DevMemory::read_I2C_rom_UInt(radd);
+    //MemMap.Data[fadd] = DevMemory::read_I2C_rom_Char(radd);
+    DevMemory::write_ram_Block(fadd,1,(uint8_t*)(DevMemory::read_I2C_rom_Char(radd)));
 }
-void DevMemory::copy_ram_to_I2C_rom_Uint(unsigned char fadd, unsigned char radd)
+void DevMemory::copy_ram_to_I2C_rom_Char(uint16_t fadd, uint16_t radd)
 {
-    DevMemory::write_I2C_rom_UInt(radd, MemMap.DevUInt[fadd]);
-}
-
-void DevMemory::copy_I2C_rom_to_ram_Int(unsigned char radd, unsigned char fadd)
-{
-    MemMap.DevInt[radd] = DevMemory::read_I2C_rom_Int(radd);
-}
-void DevMemory::copy_ram_to_I2C_rom_int(unsigned char fadd, unsigned char radd)
-{
-    DevMemory::write_I2C_rom_Int(radd, MemMap.DevInt[fadd]);
+    //DevMemory::write_I2C_rom_Char(radd, MemMap.Data[fadd]);
+    int8_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,1,(uint8_t*)_data);
+    DevMemory::write_I2C_rom_Char(radd, _data);
 }
 
-void DevMemory::copy_I2C_rom_to_ram_UInt32(unsigned char radd, unsigned char fadd)
+void DevMemory::copy_I2C_rom_to_ram_UInt(uint16_t radd, uint16_t fadd)
 {
-    MemMap.DevUInt32[radd] = DevMemory::read_I2C_rom_UInt32(radd);
+    //MemMap.DevUInt[radd] = DevMemory::read_I2C_rom_UInt(radd);
+    DevMemory::write_ram_Block(fadd,2,(uint8_t*)(DevMemory::read_I2C_rom_UInt(radd)));
 }
-void DevMemory::copy_ram_to_I2C_rom_UInt32(unsigned char fadd, unsigned char radd)
+void DevMemory::copy_ram_to_I2C_rom_Uint(uint16_t fadd, uint16_t radd)
 {
-    DevMemory::write_I2C_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
-}
-
-void DevMemory::copy_I2C_rom_to_ram_Int32(unsigned char radd, unsigned char fadd)
-{
-    MemMap.DevInt32[radd] = DevMemory::read_I2C_rom_Int32(radd);
-}
-void DevMemory::copy_ram_to_I2C_rom_Int32(unsigned char fadd, unsigned char radd)
-{
-    DevMemory::write_I2C_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
+    //DevMemory::write_I2C_rom_UInt(radd, MemMap.DevUInt[fadd]);
+    uint16_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,2,(uint8_t*)_data);
+    DevMemory::write_I2C_rom_UInt(radd, _data);
 }
 
-void DevMemory::copy_I2C_rom_to_ram_ULong(unsigned char radd, unsigned char fadd)
+void DevMemory::copy_I2C_rom_to_ram_Int(uint16_t radd, uint16_t fadd)
 {
-    MemMap.DevUInt32[radd] = DevMemory::read_I2C_rom_UInt32(radd);
+    //MemMap.DevInt[radd] = DevMemory::read_I2C_rom_Int(radd);
+    DevMemory::write_ram_Block(fadd,2,(uint8_t*)(DevMemory::read_I2C_rom_Int(radd)));
 }
-void DevMemory::copy_ram_to_I2C_rom_ULong(unsigned char fadd, unsigned char radd)
+void DevMemory::copy_ram_to_I2C_rom_int(uint16_t fadd, uint16_t radd)
 {
-    DevMemory::write_I2C_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
-}
-
-void DevMemory::copy_I2C_rom_to_ram_Long(unsigned char radd, unsigned char fadd)
-{
-    MemMap.DevInt32[radd] = DevMemory::read_I2C_rom_Int32(radd);
-}
-void DevMemory::copy_ram_to_I2C_rom_Long(unsigned char fadd, unsigned char radd)
-{
-    DevMemory::write_I2C_rom_Int32(radd, MemMap.DevInt32[fadd]);
+    //DevMemory::write_I2C_rom_Int(radd, MemMap.DevInt[fadd]);
+    int16_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,2,(uint8_t*)_data);
+    DevMemory::write_I2C_rom_Int(radd, _data);
 }
 
-void DevMemory::copy_I2C_rom_to_ram_Float(unsigned char radd, unsigned char fadd)
+void DevMemory::copy_I2C_rom_to_ram_UInt32(uint16_t radd, uint16_t fadd)
 {
-    MemMap.DevFloat[radd] = DevMemory::read_I2C_rom_Float(radd);
+    //MemMap.DevUInt32[radd] = DevMemory::read_I2C_rom_UInt32(radd);
+    DevMemory::write_ram_Block(fadd,4,(uint8_t*)(DevMemory::read_I2C_rom_UInt32(radd)));
 }
-void DevMemory::copy_ram_to_I2C_rom_Float(unsigned char fadd, unsigned char radd)
+void DevMemory::copy_ram_to_I2C_rom_UInt32(uint16_t fadd, uint16_t radd)
 {
-    DevMemory::write_I2C_rom_Float(radd, MemMap.DevFloat[fadd]);
+    //DevMemory::write_I2C_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
+    uint32_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,4,(uint8_t*)_data);
+    DevMemory::write_I2C_rom_UInt32(radd, _data);
 }
-void DevMemory::copy_I2C_rom_to_ram_Double(unsigned char radd, unsigned char fadd)
+
+void DevMemory::copy_I2C_rom_to_ram_Int32(uint16_t radd, uint16_t fadd)
 {
-    MemMap.DevDouble[radd] = DevMemory::read_I2C_rom_Double(radd);
+    //MemMap.DevInt32[radd] = DevMemory::read_I2C_rom_Int32(radd);
+    DevMemory::write_ram_Block(fadd,4,(uint8_t*)(DevMemory::read_I2C_rom_Int32(radd)));
 }
-void DevMemory::copy_ram_to_I2C_rom_Double(unsigned char fadd, unsigned char radd)
+void DevMemory::copy_ram_to_I2C_rom_Int32(uint16_t fadd, uint16_t radd)
 {
-    DevMemory::write_I2C_rom_Double(radd, MemMap.DevDouble[fadd]);
+    //DevMemory::write_I2C_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
+    int32_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,4,(uint8_t*)_data);
+    DevMemory::write_I2C_rom_Int32(radd, _data);
 }
-void DevMemory::write_I2C_rom_Block(uint16_t add, unsigned int lens, unsigned char *data)
+
+void DevMemory::copy_I2C_rom_to_ram_ULong(uint16_t radd, uint16_t fadd)
+{
+    //MemMap.DevUInt32[radd] = DevMemory::read_I2C_rom_UInt32(radd);
+    DevMemory::write_ram_Block(fadd,4,(uint8_t*)(DevMemory::read_I2C_rom_UInt32(radd)));
+}
+void DevMemory::copy_ram_to_I2C_rom_ULong(uint16_t fadd, uint16_t radd)
+{
+    //DevMemory::write_I2C_rom_UInt32(radd, MemMap.DevUInt32[fadd]);
+    uint32_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,4,(uint8_t*)_data);
+    DevMemory::write_I2C_rom_UInt32(radd, _data);
+}
+
+void DevMemory::copy_I2C_rom_to_ram_Long(uint16_t radd, uint16_t fadd)
+{
+    //MemMap.DevInt32[radd] = DevMemory::read_I2C_rom_Int32(radd);
+    DevMemory::write_ram_Block(fadd,4,(uint8_t*)(DevMemory::read_I2C_rom_Int32(radd)));
+}
+void DevMemory::copy_ram_to_I2C_rom_Long(uint16_t fadd, uint16_t radd)
+{
+    //DevMemory::write_I2C_rom_Int32(radd, MemMap.DevInt32[fadd]);
+    int32_t _data=0x00;
+    DevMemory::read_ram_Block(fadd,4,(uint8_t*)_data);
+    DevMemory::write_I2C_rom_Int32(radd, _data);
+}
+
+void DevMemory::copy_I2C_rom_to_ram_Float(uint16_t radd, uint16_t fadd)
+{
+    //MemMap.DevFloat[radd] = DevMemory::read_I2C_rom_Float(radd);
+    union {
+        double a;
+        uint8_t bytes[4];
+    } thing;
+    thing.a = DevMemory::read_I2C_rom_Float(radd);
+    DevMemory::write_ram_Block(fadd,4,(uint8_t*)thing.bytes);
+}
+void DevMemory::copy_ram_to_I2C_rom_Float(uint16_t fadd, uint16_t radd)
+{
+    //DevMemory::write_I2C_rom_Float(radd, MemMap.DevFloat[fadd]);
+    union {
+        float a;
+        uint8_t bytes[4];
+    } thing;
+    DevMemory::read_ram_Block(fadd,4,(uint8_t*)thing.bytes);
+    DevMemory::write_I2C_rom_Float(radd, thing.a);
+}
+void DevMemory::copy_I2C_rom_to_ram_Double(uint16_t radd, uint16_t fadd)
+{
+    //MemMap.DevDouble[radd] = DevMemory::read_I2C_rom_Double(radd);
+   //MemMap.DevDouble[radd] = DevMemory::read_rom_Double(radd);
+    union {
+        double a;
+        uint8_t bytes[8];
+    } thing;
+    thing.a = DevMemory::read_I2C_rom_Double(radd);
+    DevMemory::write_ram_Block(fadd,8,(uint8_t*)thing.bytes);
+}
+void DevMemory::copy_ram_to_I2C_rom_Double(uint16_t fadd, uint16_t radd)
+{
+    //DevMemory::write_I2C_rom_Double(radd, MemMap.DevDouble[fadd]);
+    union {
+        double a;
+        uint8_t bytes[8];
+    } thing;
+    DevMemory::read_ram_Block(fadd,4,(uint8_t*)thing.bytes);
+    DevMemory::write_I2C_rom_Float(radd, thing.a);
+}
+void DevMemory::write_I2C_rom_Block(uint16_t add, uint16_t  lens, uint8_t *data)
 {
     eeprom.writeBytes(add, lens, data);
 }
-unsigned char DevMemory::read_I2C_rom_Block(uint16_t add, unsigned int lens, unsigned char *data)
+uint8_t DevMemory::read_I2C_rom_Block(uint16_t add, uint16_t  lens, uint8_t *data)
 {
     eeprom.readBytes(add, lens, data);
 }
