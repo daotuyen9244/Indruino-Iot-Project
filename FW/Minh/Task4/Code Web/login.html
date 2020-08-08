@@ -1,0 +1,20 @@
+<div ng-controller = 'loginCtrl'>
+<form action="/" id = "mylogin" method = "POST">
+    <h1>IOT</h1>
+    <table>
+        <tr>
+            <td>Username:</td>
+            <td><input type = "text" id = "username" ng-model = "username"/></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type = "password" id = "password" ng-model = "password"/></td>
+        </tr>
+        <tr>
+            <td><button type = "button" ng-click = "submit()">
+                Login
+            </button></td>
+        </tr>
+    </table>
+</form>
+</div>
