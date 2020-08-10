@@ -15,8 +15,6 @@ myApp.config(function($routeProvider){
 
 myApp.controller('loginCtrl', function($scope, $location){
     $scope.submit = function() {
-        var usname = $scope.username;
-        var pass = $scope.password;
         if($scope.username == 'IndruinoAdmin' && $scope.password == '123456'){
             $location.path('/control');
         } else {
