@@ -40,4 +40,10 @@ myApp.controller('ctrller', function($scope, $http){
                 console.log(response);
              })
     };
+    $scope.testget = function(){
+        $http.get("http://demo1319756.mockable.io/testget").then(function(data){
+        console.log("success callback");
+        console.log(data);
+    })
+    };
 });
