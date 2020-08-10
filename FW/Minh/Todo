@@ -5,7 +5,7 @@ FW_Basic: @TuyenDao @Minh
     ✔ Tạo weblogin. @done(20-07-31 15:21)
     ✔ Tạo webserver điều khiển led, nhập data, cập nhật data. @done(20-07-31 15:21)
     ✔ Cách tạo trang web. @done(20-08-07 10:23)
-    ☐ Nghiên cứu Angular
+    ✔ Nghiên cứu Angular @done(20-08-10 08:57)
     ✔ Cách xử lý thông tin Post/Get @done(20-08-07 10:23)
     ✔ Cách xử lý Javascript cơ bản @done(20-08-08 10:40)
     ✔ Login form username, pass, ok button. @done(20-08-07 10:23)
