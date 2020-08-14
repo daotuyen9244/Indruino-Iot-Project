@@ -38,12 +38,15 @@ void setup() {
   Serial.print(WiFi.localIP());
   Serial.println("/ in your browser to see it working");
   server.on("/", [](){
-    if(!server.authenticate(www_username, www_password))
+  if(!server.authenticate(www_username, www_password))
       return server.requestAuthentication();
       menuwebsever();
   });
   server.on("/info",[](){
   siteinfo();
+  });
+  server.on("/diagnostic",[](){
+  sitediagnostic();
   });
   server.on("/webcontrol",[](){
   webcontrol();
@@ -54,6 +57,8 @@ void setup() {
   server.on("/webcontrol/post",[](){
   webcontrolpost();
   });
+  
+  
 }
 
 void loop() {
@@ -72,9 +77,9 @@ void menuwebsever()
    site +=".button2 {background-color: #555555;}</style></head>";
    site +="<body>";
    site +="<h1>ESP32 Web Server</h1>";
-   site +="<p><a href=\"/webcontrol\"><button class=\"button\">&ensp;WEB CONTROL&ensp;</button></a></p>";
-   site +="<p><a href=\"/datadialogtic\"><button class=\"button\">DATA DIALOGTIC</button></a></p>";
-   site +="<p><a href=\"/info\"><button class=\"button\">&ensp;INFORMATION&ensp;</button></a></p>";
+   site +="<p><a href=\"/webcontrol\"><button class=\"button\">WEB CONTROL</button></a></p>";
+   site +="<p><a href=\"/diagnostic\"><button class=\"button\">DIAGNOSTIC</button></a></p>";
+   site +="<p><a href=\"/info\"><button class=\"button\">INFORMATION</button></a></p>";
    site +="</body></html>";
    server.send(200, "text/html",site);
   }
@@ -85,14 +90,7 @@ void siteinfo(){
    site +="<link rel=\"icon\" href=\"data:,\">";
    site +="<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}";
    site +="</style></head><body>";
-   site +="<h1>ESP32 INFORMATION</h1>";
-   site +="<p>---------------------------------------------------------------------</p>";
-   site +="Chip ID : " + String((uint32_t)ESP.getEfuseMac(),HEX) + "<br/>";
-   site +="Chip Rev: " + (String)ESP.getChipRevision() + "<br/>";
-   site +="Flash Size: " + (String)ESP.getFlashChipSize() + "<br/>";
-   site +="SDK Version: " + (String)esp_get_idf_version() + "<br/>";
-   site +="CPU Frequency: " + (String)ESP.getCpuFreqMHz() + "MHz<br/>";
-   site +="Memory - Free Heap: " + (String)ESP.getFreeHeap() + "bytes available<br/>";
+   site +="<h1>WIFI INFORMATION</h1>";
    site +="<p>---------------------------------------------------------------------</p>";
    site +="Access Point IP: " + WiFi.softAPIP().toString() + "<br/>";
    site +="Access Point MAC: " + (String)WiFi.softAPmacAddress() + "<br/>";
@@ -105,6 +103,37 @@ void siteinfo(){
    site +="Hostname: " + (String)WiFi.getHostname() + "<br/>";
    site +="Station MAC: " + WiFi.macAddress() + "<br/>";
    site +="Connected: " + isconnected + "<br/>";
+   site +="<p>---------------------------------------------------------------------</p>";
+   site +="</body></html>";
+   server.send(200, "text/html",site);
+  }
+void sitediagnostic(){
+  String isconnected=WiFi.isConnected()? "Yes":"No";
+  String site ="<!DOCTYPE html><html>";
+   site +="<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
+   site +="<link rel=\"icon\" href=\"data:,\">";
+   site +="<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}";
+   site +="</style></head><body>";
+   site +="<h1>ESP32 INFORMATION</h1>";
+   site +="<p>---------------------------------------------------------------------</p>";
+   site +="Chip ID : " + String((uint32_t)ESP.getEfuseMac(),HEX) + "<br/>";
+   site +="Chip Rev: " + (String)ESP.getChipRevision() + "<br/>";
+   site +="Flash Size: " + (String)ESP.getFlashChipSize() + "<br/>";
+   site +="Flash Speed: " + (String)ESP.getFlashChipSpeed() + "<br/>";
+   site +="SDK Version: " + (String)esp_get_idf_version() + "<br/>";
+   site +="CPU Frequency: " + (String)ESP.getCpuFreqMHz() + "MHz<br/>";
+   site +="Sketch Size: " + (String)ESP.getSketchSize() + " bytes <br/>";
+   site +="Sketch MD5 : " + ESP.getSketchMD5() + " <br/>";
+   site +="Sketch Free Space : " + (String)ESP.getFreeSketchSpace() + " bytes <br/>";
+   site +="Memory - Total Heap: " + (String)ESP.getHeapSize() + " bytes <br/>";
+   site +="Memory - Free Heap: " + (String)ESP.getFreeHeap() + " bytes <br/>";
+   site +="Memory - Lowest Level of Free Heap: " + (String)ESP.getMinFreeHeap() + "bytes <br/>";
+   site +="Memory - Largest Level of Free Heap: " + (String)ESP.getMaxAllocHeap() + "bytes <br/>";
+   site +="SPI RAM - Total: " + (String)ESP.getPsramSize() + " bytes <br/>";
+   site +="SPI RAM - Free: " + (String)ESP.getFreePsram() + " bytes <br/>";
+   site +="SPI RAM - Lowest: " + (String)ESP.getMinFreePsram() + " bytes <br/>";
+   site +="SPI RAM - Largest: " + (String)ESP.getMaxAllocPsram() + " bytes <br/>";
+   site +="<p>---------------------------------------------------------------------</p>";
    site +="</body></html>";
    server.send(200, "text/html",site);
   }
