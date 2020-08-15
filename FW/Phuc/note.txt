@@ -1,0 +1,5 @@
+5.1 Silde 1: trang Indruino
+5.2 Silde 2:Tên bài thuyết trình ( Size:48,font"Segoe UI Black",màu trắng), diễn giả - bộ phận  ( Size:20,font"Segoe UI Black",màu trắng)
+5.3 Silde nội dung: list ra các phần sẽ báo cáo  ( Size:30,font"Segoe UI Black")
+5.4 Silde nội dung từng phần nhỏ  ( font"Segoe UI Black")
+5.5 Kết thúc: Thank you" ( ( font"Segoe UI Black",màu trắng))
