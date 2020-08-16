@@ -6,9 +6,9 @@ SW Server Api:
     ✔ Phương thức get_post @done(20-08-03 09:28)
     ✔ Tìm hiểu restApi @done(20-08-03 09:28)
     ✔ Nghiên cứu nodejs @done(20-08-11 11:11)
-    ☐ Tạo server cơ bản localhost với port 8000
-    ☐ Nghiên cứu post/get để truyền nhận dữ liệu
-    ☐ Tạo, xử lí JSON trong nodejs
+    ✔ Tạo server cơ bản localhost với port 8000 @done(20-08-16 16:55)
+    ✔ Nghiên cứu post/get để truyền nhận dữ liệu @done(20-08-16 16:55)
+    ✔ Tạo, xử lí JSON trong nodejs @done(20-08-16 16:55)
     ☐ Lấy dữ liệu từ server Indruino mqtt
 Done:
 Cancelled:
