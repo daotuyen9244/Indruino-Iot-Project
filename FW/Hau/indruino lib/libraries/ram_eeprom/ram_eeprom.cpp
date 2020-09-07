@@ -42,7 +42,7 @@ bool RamEeprom::write2RomAll(int addRom, int addRam, const T &value, SRAM *p_ram
     {
         uint8_t temp = p_ram_arr->readByte(addRam + count);
         // Serial.println(temp, HEX);
-        EEPROM.writeByte(addRom + count, temp);
+        EEPROM.write(addRom + count, temp);    
     }
 #ifdef ESP32 || ESP8266
     return EEPROM.commit();
@@ -64,7 +64,7 @@ bool RamEeprom::write2RomAll(int addRom, int addRam, uint16_t len, const T &valu
     {
         uint8_t temp = p_ram_arr->readByte(addRam + count);
         // Serial.println(temp, HEX);
-        EEPROM.writeByte(addRom + count, temp);
+        EEPROM.write(addRom + count, temp);
     }
 #ifdef ESP32 || ESP8266
     return EEPROM.commit();
@@ -128,7 +128,7 @@ bool RamEeprom::write2RamAll(int addRom, int addRam, const T &value, SRAM *p_ram
 
     for (uint16_t count = 0; count < sizeof(T); count++)
     {
-        uint8_t temp = EEPROM.readByte(addRom + count);
+        uint8_t temp = EEPROM.read(addRom + count);
         // Serial.println(temp, HEX);
         p_ram_arr->writeByte(addRam + count, temp);
     }
@@ -146,7 +146,7 @@ bool RamEeprom::write2RamAll(int addRom, int addRam, uint16_t len, const T &valu
 
     for (uint16_t count = 0; count < len; count++)
     {
-        uint8_t temp = EEPROM.readByte(addRom + count);
+        uint8_t temp = EEPROM.read(addRom + count);
         // Serial.println(temp, HEX);
         p_ram_arr->writeByte(addRam + count, temp);
     }

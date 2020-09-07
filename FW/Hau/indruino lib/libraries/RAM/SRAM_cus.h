@@ -29,6 +29,8 @@ public:
     void init(int size);
     uint16_t getSize();
 
+    
+
     uint8_t readByte(int address);
     int8_t readChar(int address);
     uint8_t readUChar(int address);
@@ -40,8 +42,8 @@ public:
     uint32_t readULong(int address);
     int64_t readLong64(int address);
     uint64_t readULong64(int address);
-    float_t readFloat(int address);
-    double_t readDouble(int address);
+    float readFloat(int address);
+    double readDouble(int address);
     bool readBool(int address);
     size_t readString(int address, char *value, size_t maxLen);
     String readString(int address);
@@ -63,8 +65,8 @@ public:
     bool writeULong(int address, uint32_t value);
     bool writeLong64(int address, int64_t value);
     bool writeULong64(int address, uint64_t value);
-    bool writeFloat(int address, float_t value);
-    bool writeDouble(int address, double_t value);
+    bool writeFloat(int address, float value);
+    bool writeDouble(int address, double value);
     bool writeBool(int address, bool value);
     bool writeString(int address, const char *value);
     bool writeString(int address, String value);

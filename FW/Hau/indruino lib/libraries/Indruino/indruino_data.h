@@ -14,22 +14,16 @@ private:
     SRAM *_ram = nullptr; //you can create new ram if you want
     ROM *_rom =nullptr;
 public:
-    void init()
+    void init();
     ROM *myRom();
     SRAM *myRam(SRAM *_ptr_ram);
     SRAM *myRam(void);
     RamEeprom *syn(void);
-    Indruino(/* args */);
+    Indruino();
     ~Indruino();
 };
 
-Indruino::Indruino(/* args */)
-{
-}
 
-Indruino::~Indruino()
-{
-}
 
 
 
