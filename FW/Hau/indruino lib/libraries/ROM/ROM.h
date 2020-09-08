@@ -11,7 +11,10 @@ class ROM
 private:
     uint16_t sizeRom = 0; //size of Rom
 public:
+    friend class Indruino;
+    friend class RamEeprom;
     void init();
+    void init(int size);
     uint16_t getSize(uint16_t size);
 
     uint8_t readByte(int address);

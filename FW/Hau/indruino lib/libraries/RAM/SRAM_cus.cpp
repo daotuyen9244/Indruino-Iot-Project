@@ -7,6 +7,10 @@ uint16_t SRAM::getSize() {
     return temp;
 }
 
+uint8_t* SRAM::array(int address) {
+       return (ptr+address);
+}
+
 //init
 void SRAM::init(int size)
 {
@@ -117,4 +121,6 @@ int16_t SRAM::readShort(int address) {
 
 
 SRAM ram;
+
+
 

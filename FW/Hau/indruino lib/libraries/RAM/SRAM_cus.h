@@ -23,13 +23,16 @@ private:
     // bool writeAll(uint16_t add, uint8_t *ptr_value, uint16_t len);
     // //template for write
 public:
+    friend class Indruino;
     friend class RamEeprom;
     SRAM(void);
     SRAM(int size);
     void init(int size);
     uint16_t getSize();
 
-    
+    //add Function
+    uint8_t *array(int address);
+    //add Function
 
     uint8_t readByte(int address);
     int8_t readChar(int address);

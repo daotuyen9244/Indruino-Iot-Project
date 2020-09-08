@@ -67,6 +67,16 @@ void ROM::init()
 }
 //init this ROM
 
+void ROM::init(int size)
+{
+    if (sizeRom != 0)
+        return;
+#ifdef ESP32 || ESP8266
+    EEPROM.begin(size);
+#endif
+    sizeRom = size;
+}
+
 //read===================
 
 //readByte this ROM
