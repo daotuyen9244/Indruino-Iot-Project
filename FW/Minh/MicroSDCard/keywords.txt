@@ -1,0 +1,25 @@
+#######################################
+# Syntax Coloring Map SD
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+SDCard	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+SDbegin		KEYWORD2
+SDsize 		KEYWORD2
+listDir		KEYWORD2
+createDir	KEYWORD2
+removeDir	KEYWORD2
+readFile	KEYWORD2
+writeFile	KEYWORD2
+appendFile	KEYWORD2
+renameFile	KEYWORD2
+deleteFile	KEYWORD2
+testFileIO	KEYWORD2	
+
