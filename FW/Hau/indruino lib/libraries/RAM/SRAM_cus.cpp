@@ -47,6 +47,9 @@ SRAM::SRAM(void)
 {
 }
 //
+SRAM::~SRAM(void) {
+    free(ptr);
+}
 //template for read
 template <class T>
 bool SRAM::readAll(int add, T *des, size_t len)
@@ -121,6 +124,8 @@ int16_t SRAM::readShort(int address) {
 
 
 SRAM ram;
+
+
 
 
 

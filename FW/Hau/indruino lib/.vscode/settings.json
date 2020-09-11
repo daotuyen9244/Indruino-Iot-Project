@@ -7,6 +7,7 @@
         "xlocmon": "cpp",
         "xtr1common": "cpp",
         "cmath": "cpp",
-        "xmemory": "cpp"
+        "xmemory": "cpp",
+        "ios": "cpp"
     }
 }

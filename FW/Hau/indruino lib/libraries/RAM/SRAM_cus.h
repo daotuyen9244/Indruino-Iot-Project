@@ -27,6 +27,7 @@ public:
     friend class RamEeprom;
     SRAM(void);
     SRAM(int size);
+    ~SRAM(void);
     void init(int size);
     uint16_t getSize();
 

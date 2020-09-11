@@ -7,15 +7,17 @@
 #include "ROM.h"
 #include "ram_eeprom.h"
 
+#define _SIZE_MAX_NEW_RAM 3
 
 class Indruino
 {
 private:
-    SRAM *_ram = nullptr; //you can create new ram if you want
+    SRAM *_new_Ram; //you can create new ram if you want max is 3
+    SRAM *_ram = nullptr; //default
     ROM *_rom =nullptr;
-    RamEeprom *_synData = nullptr;
-    int now_pos = 0;
-    int count_ram = 1;
+    RamEeprom *_synData = nullptr; //default
+    int _now_pos = 0;
+    int _count_ram = 0; //count new raw
 public:
     void init();
     
@@ -25,18 +27,17 @@ public:
 
     //SRAM function
     SRAM *myRam(int pos); //default pos = 0
-    SRAM *myRam(void);
+    SRAM *myRam(void); //return ram default
     int count_Ram(void);
     int now_Ram_choose(void);
-    void createNewRam(int size);
+    void createNewRam(int size, int pos);
     void deleteRam(int pos);
     bool setNowPos(int pos);
     //SRAM function
 
 
-
+    RamEeprom *synMyData(int pos);
     RamEeprom *synMyData(void);
-    RamEeprom *synMyData(SRAM *ptr_ram);
     Indruino();
     ~Indruino();
 };

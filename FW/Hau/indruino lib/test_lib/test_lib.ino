@@ -1,23 +1,30 @@
 #include <EEPROM.h>
 #include "indruino_data.h"
 
-RamEeprom syn;
+Indruino indruino;
 //SRAM newRam(512);
 
 void setup()
 {
+  indruino.init();
   Serial.begin(115200);
   while (!Serial);
-  rom.init();
-  ram.init(512);
-  syn.init();
-  int16_t value = 1052;
-  int16_t value_data = 1024;
-  //ram.writeShort(0, value_data);
-  //rom.writeShort(0, value);
-  syn.write2RamShort(0, 0);
+
+  // int16_t value = 1052;
+  
+  // indruino.synMyData()->loadRom2Ram(0, 0, 4);
+  
+  // //ram.writeShort(0, value_data);
+  
   //Serial.println(EEPROM.read(0));
-  Serial.println(ram.readShort(0));
+
+  indruino.createNewRam(10, 1);
+  uint8_t value = 11;
+
+  indruino.myRam(1)->writeByte(0, value);
+  indruino.synMyData(1);
+  Serial.println(indruino.myRam(1)->readByte(0));
+  //Serial.println(indruino.myRam()->readShort(2));
   // ram.init(512);
   // syn.init();
   // syn.setRam(newRam);
