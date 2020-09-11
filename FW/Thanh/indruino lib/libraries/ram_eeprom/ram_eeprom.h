@@ -13,9 +13,10 @@ class RamEeprom
 {
 private:
     SRAM *p_ram = nullptr; //with only one ram I was created recently
-    ROM *p_rom = nullptr;
-
+    ROM *p_rom = nullptr; //with only one rom I was created recnetly
 public:
+
+    friend class Indruino;
     RamEeprom();
     ~RamEeprom();
 
@@ -123,13 +124,17 @@ public:
     //syn
     bool loadRam2Rom(int addRom, int addRam, int lenRam,SRAM *p_ram_arr);
     bool loadRam2Rom(int addRom, int addRam, SRAM *p_ram_arr);
+    bool loadRam2Rom(int addRom, int addRam, int lenRam);
+
+
 
     bool loadRom2Ram(int addRom, int addRam, int lenRom,SRAM *p_ram_arr);
     bool loadRom2Ram(int addRom, int addRam, SRAM *p_ram_arr);
-    
+    bool loadRom2Ram(int addRom, int addRam, int lenRom);
     //function dong bo ram and rom(load ram) - (load rom) ..etc
 
     //syn
 };
+extern RamEeprom synData;
 //syn data between ram && rom
 #endif //_RAMEEPROM_H
