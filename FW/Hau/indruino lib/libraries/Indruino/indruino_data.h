@@ -19,7 +19,7 @@ private:
     int _now_pos = 0;
     int _count_ram = 0; //count new raw
 public:
-    void init();
+    void init(); //Initialization
     
     //ROM function
     ROM *myRom(); //return ptr of ram
@@ -28,16 +28,16 @@ public:
     //SRAM function
     SRAM *myRam(int pos); //default pos = 0
     SRAM *myRam(void); //return ram default
-    int count_Ram(void);
-    int now_Ram_choose(void);
-    void createNewRam(int size, int pos);
-    void deleteRam(int pos);
-    bool setNowPos(int pos);
+    int count_Ram(void); //return sum of ram
+    int now_Ram_choose(void); //return ram is choosing now
+    void createNewRam(int size, int pos); //create newRam
+    void deleteRam(int pos); //delete Ram at pos
+    bool setNowPos(int pos); //set Pos Ram
     //SRAM function
 
 
-    RamEeprom *synMyData(int pos); 
-    RamEeprom *synMyData(void);
+    RamEeprom *synMyData(int pos); //use synMyData with ram at pos
+    RamEeprom *synMyData(void); //use synMyData with ram at _now_pos
     Indruino();
     ~Indruino();
 };

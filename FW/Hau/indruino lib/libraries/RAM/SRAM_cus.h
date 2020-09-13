@@ -22,6 +22,18 @@ private:
     // template <class T>
     // bool writeAll(uint16_t add, uint8_t *ptr_value, uint16_t len);
     // //template for write
+
+    template <class T>
+    bool readAll(int add, T *des, size_t len); //read at add with len of data and copy data to *des
+    template <class T>
+    T readAll(int add, T &des);
+
+    template <class T>
+    bool writeAll(int add, T &value); //write data at add with len and write it to *p
+    template <class T>
+    bool writeAll(int add, uint8_t *ptr_value, size_t len);
+
+
 public:
     friend class Indruino;
     friend class RamEeprom;
@@ -53,10 +65,7 @@ public:
     String readString(int address);
     size_t readBytes(int address, void *value, size_t maxLen);
 
-    template <class T>
-    bool readAll(int add, T *des, size_t len); //read at add with len of data and copy data to *des
-    template <class T>
-    T readAll(int add, T &des);
+    
 
     bool writeByte(int address, uint8_t value);
     bool writeChar(int address, int8_t value);
@@ -76,10 +85,7 @@ public:
     bool writeString(int address, String value);
     bool writeBytes(int address, const void *value, size_t len);
 
-    template <class T>
-    bool writeAll(int add, T &value); //write data at add with len and write it to *p
-    template <class T>
-    bool writeAll(int add, uint8_t *ptr_value, size_t len);
+    
 };
 
 extern SRAM ram;

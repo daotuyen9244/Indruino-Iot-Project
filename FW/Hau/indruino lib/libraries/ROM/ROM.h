@@ -10,6 +10,17 @@ class ROM
 {
 private:
     uint16_t sizeRom = 0; //size of Rom
+
+    template <class T>
+    T readAll(int add, T *des);
+    template <class T>
+    bool readAll(int add, uint8_t *des, size_t len);
+
+    template <class T>
+    bool writeAll(int add, T *value); //write data at add with len and write it to *p
+    template <class T>
+    bool writeAll(int add, uint8_t *ptr_value, size_t len);
+
 public:
     friend class Indruino;
     friend class RamEeprom;
@@ -34,10 +45,8 @@ public:
     size_t readString(int address, char *value, size_t maxLen);
     String readString(int address);
     size_t readBytes(int address, void *value, size_t maxLen);
-    template <class T>
-    T readAll(int add, T *des);
-    template <class T>
-    bool readAll(int add, uint8_t *des, size_t len);
+    
+    
 
     bool writeByte(int address, uint8_t value);
     bool writeChar(int address, int8_t value);
@@ -57,11 +66,7 @@ public:
     bool writeString(int address, String value);
     bool writeBytes(int address, const void *value, size_t len);
 
-    template <class T>
-    bool writeAll(int add, T *value); //write data at add with len and write it to *p
-    template <class T>
-    bool writeAll(int add, uint8_t *ptr_value, size_t len);
-
+    
     ROM();
     ~ROM();
 };

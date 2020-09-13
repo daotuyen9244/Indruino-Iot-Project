@@ -30,7 +30,8 @@ SRAM *Indruino::myRam()
         return nullptr;
     if (_now_pos < 0)
         return nullptr;
-    if(_now_pos == 0) return _ram;
+    if (_now_pos == 0)
+        return _ram;
     //else
     return _new_Ram + _now_pos - 1;
 }
@@ -40,7 +41,8 @@ SRAM *Indruino::myRam(int pos) //0 1 2
         return nullptr;
     if (pos < 0)
         return nullptr;
-    if(pos == 0) return _ram;
+    if (pos == 0)
+        return _ram;
     //else
     return _new_Ram + pos - 1;
 }
@@ -66,6 +68,20 @@ RamEeprom *Indruino::synMyData(void) //use _ram default for syn if _now_pos == 0
     }
     return _synData;
 }
+
+RamEeprom *Indruino::synMyData(int pos) //use _ram default for syn if _now_pos == 0;
+{
+    if (pos == 0)
+    {
+        _synData->setRam(*_ram);
+    }
+    if (pos != 0)
+    {
+        _synData->setRam(*(_new_Ram + pos - 1));
+    }
+    return _synData;
+}
+
 void Indruino::createNewRam(int size, int pos) //pos 1 2 - > < max_size_new_RAM
 {
     if (pos >= _SIZE_MAX_NEW_RAM)
@@ -83,4 +99,12 @@ void Indruino::deleteRam(int pos)
     SRAM *_ram_ptr = _new_Ram + pos - 1;
     _ram_ptr->~SRAM();
     _count_ram--;
+}
+
+bool Indruino::setNowPos(int pos)
+{
+    if (pos < 0 || pos >= _SIZE_MAX_NEW_RAM)
+        return false;
+    _now_pos = pos;
+    return true;
 }

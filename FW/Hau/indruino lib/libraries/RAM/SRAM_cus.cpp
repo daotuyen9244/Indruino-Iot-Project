@@ -410,3 +410,9 @@ size_t SRAM::readBytes(int address, void *value, size_t maxLen)
 //READ
 
 SRAM ram;
+
+uint8_t *SRAM::array(int address)
+{
+    if (address < 0 || address > _SIZE_OF_RAM)
+        return ptr + address;
+}
