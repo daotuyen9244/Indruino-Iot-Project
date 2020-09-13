@@ -14,6 +14,19 @@ class RamEeprom
 private:
     SRAM *p_ram = nullptr; //with only one ram I was created recently
     ROM *p_rom = nullptr; //with only one rom I was created recnetly
+
+    template <class T>
+    bool write2RomAll(int addRom, int addRam, const T &value, SRAM *p_ram_arr); //write data at add with len and write it to *p
+    template <class T>
+    bool write2RomAll(int addRom, int addRam, uint16_t len, const T &value, SRAM *p_ram_arr); //n byte
+
+
+    bool write2RamBytes(int addRom, int addRam, int len, SRAM *p_ram_arr);
+    template <class T>
+    bool write2RamAll(int addRom, int addRam, const T &value, SRAM *p_ram_arr); //write data at add with len and write it to *p
+    template <class T>
+    bool write2RamAll(int addRom, int addRam, uint16_t len, const T &value, SRAM *p_ram_arr); //n byte
+
 public:
 
     friend class Indruino;
@@ -42,10 +55,7 @@ public:
     bool write2RomString(int addRom, int addRam, SRAM *p_ram_arr);
     bool write2RomString(int addRom, int addRam, int len, SRAM *p_ram_arr);
     bool write2RomBytes(int addRom, int addRam, int len, SRAM *p_ram_arr);
-    template <class T>
-    bool write2RomAll(int addRom, int addRam, const T &value, SRAM *p_ram_arr); //write data at add with len and write it to *p
-    template <class T>
-    bool write2RomAll(int addRom, int addRam, uint16_t len, const T &value, SRAM *p_ram_arr); //n byte
+    
     //writetoRomWithChooseSRAM
 
     //writetoRom
@@ -90,11 +100,7 @@ public:
     bool write2RamBool(int addRom, int addRam, SRAM *p_ram_arr);
     bool write2RamString(int addRom, int addRam, SRAM *p_ram_arr);
     bool write2RamString(int addRom, int addRam, int len, SRAM *p_ram_arr);
-    bool write2RamBytes(int addRom, int addRam, int len, SRAM *p_ram_arr);
-    template <class T>
-    bool write2RamAll(int addRom, int addRam, const T &value, SRAM *p_ram_arr); //write data at add with len and write it to *p
-    template <class T>
-    bool write2RamAll(int addRom, int addRam, uint16_t len, const T &value, SRAM *p_ram_arr); //n byte
+    
     // template <class T>
     // bool write2RamAll(uint16_t add, T &value); //write data at add with len and write it to *p
     // template <class T>
