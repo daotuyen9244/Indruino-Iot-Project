@@ -36,7 +36,7 @@ public:
     //SRAM function
 
 
-    RamEeprom *synMyData(int pos);
+    RamEeprom *synMyData(int pos); 
     RamEeprom *synMyData(void);
     Indruino();
     ~Indruino();
