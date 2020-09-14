@@ -1,6 +1,5 @@
-#include <ModbusSerial.h>
-#include <Modbus.h>
-#include <Arduino.h>
+#include "ModbusSerial.h"
+#include "Modbus.h"
 
 ModbusSerial mb;
 const int LAMP1_COIL = 1;
@@ -27,7 +26,6 @@ void loop()
 {
   mb.task(); // keep alive
   digitalWrite(ledPin, mb.Coil(1));
-
   // put your main code here, to run repeatedly:
   //testing with multiway
 }
