@@ -1,4 +1,4 @@
-#include <EEPROM.h>
+//#include <EEPROM.h>
 #include "indruino_data.h"
 
 Indruino indruino;
@@ -22,8 +22,8 @@ void setup()
   uint8_t value = 11;
 
   indruino.myRam(1)->writeByte(0, value);
-  indruino.synMyData(1);
-  Serial.println(indruino.myRam(1)->readByte(0));
+  indruino.synMyData(1)->write2RomByte(0, 0);
+  Serial.println(indruino.myRom()->readByte(0));
   //Serial.println(indruino.myRam()->readShort(2));
   // ram.init(512);
   // syn.init();

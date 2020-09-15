@@ -84,6 +84,7 @@ RamEeprom *Indruino::synMyData(int pos) //use _ram default for syn if _now_pos =
 
 void Indruino::createNewRam(int size, int pos) //pos 1 2 - > < max_size_new_RAM
 {
+    if(pos == 0) return;
     if (pos >= _SIZE_MAX_NEW_RAM)
         return;
     if ((size > _SIZE_OF_RAM) || (size < 0))
