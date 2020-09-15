@@ -35,8 +35,11 @@ void MicroSDCard::listDir(const char * dirname, uint8_t levels)
         {
             return _listDir(SD, dirname, levels);
         }
-
-void _createDir(fs::FS &fs, const char * path){
+void MicroSDCard::listDir(const char * dirname)
+        {
+            return _listDir(SD, dirname, 0);
+        }
+void MicroSDCard::_createDir(fs::FS &fs, const char * path){
     Serial.printf("Creating Dir: %s\n", path);
     if(fs.mkdir(path)){
         Serial.println("Dir created");
@@ -48,7 +51,7 @@ void MicroSDCard::createDir(const char * path)
         {
             return _createDir(SD, path);
         }
-void _removeDir(fs::FS &fs, const char * path){
+void MicroSDCard::_removeDir(fs::FS &fs, const char * path){
     Serial.printf("Removing Dir: %s\n", path);
     if(fs.rmdir(path)){
         Serial.println("Dir removed");
@@ -60,7 +63,7 @@ void MicroSDCard::removeDir(const char * path)
         {
             return _removeDir(SD, path);
         }
-void _readFile(fs::FS &fs, const char * path){
+void MicroSDCard::_readFile(fs::FS &fs, const char * path){
     Serial.printf("Reading file: %s\n", path);
 
     File file = fs.open(path);
@@ -79,7 +82,7 @@ void MicroSDCard::readFile(const char * path)
         {
             return _readFile(SD, path);
         }
-void _writeFile(fs::FS &fs, const char * path, const char * message){
+void MicroSDCard::_writeFile(fs::FS &fs, const char * path, const char * message){
     Serial.printf("Writing file: %s\n", path);
 
     File file = fs.open(path, FILE_WRITE);
@@ -98,7 +101,7 @@ void MicroSDCard::writeFile(const char * path, const char * message)
         {
             return _writeFile(SD, path, message);
         }
-void _appendFile(fs::FS &fs, const char * path, const char * message){
+void MicroSDCard::_appendFile(fs::FS &fs, const char * path, const char * message){
     Serial.printf("Appending to file: %s\n", path);
 
     File file = fs.open(path, FILE_APPEND);
@@ -117,7 +120,7 @@ void MicroSDCard::appendFile(const char * path, const char * message)
         {
             return _appendFile(SD, path, message);
         }
-void _renameFile(fs::FS &fs, const char * path1, const char * path2){
+void MicroSDCard::_renameFile(fs::FS &fs, const char * path1, const char * path2){
     Serial.printf("Renaming file %s to %s\n", path1, path2);
     if (fs.rename(path1, path2)) {
         Serial.println("File renamed");
@@ -129,7 +132,7 @@ void MicroSDCard::renameFile(const char * path1, const char * path2)
         {
             return _renameFile(SD, path1, path2);
         }
-void _deleteFile(fs::FS &fs, const char * path){
+void MicroSDCard::_deleteFile(fs::FS &fs, const char * path){
     Serial.printf("Deleting file: %s\n", path);
     if(fs.remove(path)){
         Serial.println("File deleted");
@@ -140,51 +143,6 @@ void _deleteFile(fs::FS &fs, const char * path){
 void MicroSDCard::deleteFile(const char * path)
         {
             return _deleteFile(SD, path);
-        }
-void _testFileIO(fs::FS &fs, const char * path){
-    File file = fs.open(path);
-    static uint8_t buf[512];
-    size_t len = 0;
-    uint32_t start = millis();
-    uint32_t end = start;
-    if(file){
-        len = file.size();
-        size_t flen = len;
-        start = millis();
-        while(len){
-            size_t toRead = len;
-            if(toRead > 512){
-                toRead = 512;
-            }
-            file.read(buf, toRead);
-            len -= toRead;
-        }
-        end = millis() - start;
-        Serial.printf("%u bytes read for %u ms\n", flen, end);
-        file.close();
-    } else {
-        Serial.println("Failed to open file for reading");
-    }
-
-
-    file = fs.open(path, FILE_WRITE);
-    if(!file){
-        Serial.println("Failed to open file for writing");
-        return;
-    }
-
-    size_t i;
-    start = millis();
-    for(i=0; i<2048; i++){
-        file.write(buf, 512);
-    }
-    end = millis() - start;
-    Serial.printf("%u bytes written for %u ms\n", 2048 * 512, end);
-    file.close();
-}
-void MicroSDCard::testFileIO(const char * path)
-        {
-            return _testFileIO(SD, path);
         }
 uint64_t MicroSDCard::SDSize(){
     uint64_t cardSize = SD.cardSize() / (1024 * 1024);

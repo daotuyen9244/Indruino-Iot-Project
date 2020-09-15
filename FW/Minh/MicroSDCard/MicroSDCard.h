@@ -16,9 +16,9 @@ class MicroSDCard{
         void _appendFile(fs::FS &fs, const char * path, const char * message);
         void _renameFile(fs::FS &fs, const char * path1, const char * path2);
         void _deleteFile(fs::FS &fs, const char * path);
-        void _testFileIO(fs::FS &fs, const char * path);
     public: 
         void listDir(const char * dirname, uint8_t levels);
+        void listDir(const char * dirname);
         void createDir(const char * path);
         void removeDir(const char * path);
         void readFile(const char * path);
@@ -26,7 +26,6 @@ class MicroSDCard{
         void appendFile(const char * path, const char * message);
         void renameFile(const char * path1, const char * path2);
         void deleteFile(const char * path);
-        void testFileIO(const char * path);
         uint64_t SDSize();
         boolean SDbegin();
 };
