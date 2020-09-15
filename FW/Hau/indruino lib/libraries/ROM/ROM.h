@@ -27,6 +27,7 @@ public:
     void init();
     void init(int size);
     uint16_t getSize(uint16_t size);
+    bool clear();
 
     uint8_t readByte(int address);
     int8_t readChar(int address);

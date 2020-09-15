@@ -487,6 +487,13 @@ uint16_t ROM::getSize(uint16_t size)
 {
     return sizeRom;
 }
+bool ROM::clear() {
+    uint8_t temp = 0;
+    for(uint16_t addr = 0; addr<_SIZE_OF_EEPROM; addr++)
+    {
+        writeByte(addr, temp);
+    }    
+}
 
 ROM::ROM()
 {
