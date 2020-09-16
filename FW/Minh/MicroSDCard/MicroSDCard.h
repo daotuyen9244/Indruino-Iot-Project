@@ -15,6 +15,8 @@ class MicroSDCard{
         void _writeFile(fs::FS &fs, const char * path, const char * message);
         void _appendFile(fs::FS &fs, const char * path, const char * message);
         void _renameFile(fs::FS &fs, const char * path1, const char * path2);
+        void _writeColumnCSV(fs::FS &fs, const char * path, const char * columnname);
+        void _writeRowCSV(fs::FS &fs, const char * path, const char * row);
         void _deleteFile(fs::FS &fs, const char * path);
     public: 
         void listDir(const char * dirname, uint8_t levels);
@@ -26,6 +28,8 @@ class MicroSDCard{
         void appendFile(const char * path, const char * message);
         void renameFile(const char * path1, const char * path2);
         void deleteFile(const char * path);
+        void writeColumnCSV(const char * path, const char * columnname);
+        void writeRowCSV(const char * path, const char * row);
         uint64_t SDSize();
         boolean SDbegin();
 };

@@ -22,4 +22,5 @@ appendFile	KEYWORD2
 renameFile	KEYWORD2
 deleteFile	KEYWORD2
 testFileIO	KEYWORD2	
-
+writeColumnCSV	KEYWORD2
+writeRowCSV	KEYWORD2

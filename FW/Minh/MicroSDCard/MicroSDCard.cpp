@@ -144,6 +144,20 @@ void MicroSDCard::deleteFile(const char * path)
         {
             return _deleteFile(SD, path);
         }
+void MicroSDCard::_writeColumnCSV(fs::FS &fs, const char * path, const char * columnname){
+    _writeFile(fs, path, columnname);
+}
+void MicroSDCard::writeColumnCSV(const char * path, const char * columnname){
+   String data = String(columnname) + "\r\n";
+   return _writeColumnCSV(SD, path, data.c_str());
+}
+void MicroSDCard::_writeRowCSV(fs::FS &fs, const char * path, const char * row){
+    _appendFile(SD, path, row);
+}
+void MicroSDCard::writeRowCSV(const char * path, const char * row){
+   String data = String(row) + "\r\n";
+   return _writeRowCSV(SD, path, data.c_str());
+}
 uint64_t MicroSDCard::SDSize(){
     uint64_t cardSize = SD.cardSize() / (1024 * 1024);
     return cardSize;
