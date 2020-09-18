@@ -2,16 +2,18 @@
 #define _DATA_DEFAULT_H
 //DATA DEFAULT CONFIG PROTOCOL
 
+#include "config_mem.h"
+
 typedef struct _data_default
 {
 //model
-const char* model = PSTR("F1");
+const char ID_BOARD[2] = PSTR("F1");
 //firmware
-const char* fw = PSTR("00");
+const char model_number = PSTR(0x00);
 //id
-const char* id = PSTR("0000");
+const char fw_ver = PSTR(0x00);
 //baud
-const unsigned char baud_mode = 0; 
+//const char baud_s1 = PSTR(0x04); 
 /*
             0:300
             1: 1200
@@ -30,23 +32,30 @@ const unsigned char baud_mode = 0;
             14: 2000000
 */
 //baud   
+//const char id_s1 = PSTR(0x00);
+const char return_delay = PSTR(0x01);
 
+#ifdef ESP32||ESP8266
+
+//wifi
+const WiFi_Data wifi_default;
 //mode protocol
-    
-    
+const char mode_protocol = PSTR(0x01); //use mqtt
 
-   
+const MQTT_Data mqtt_default;
+const UDP_Data udp_default;
+const TCP_Data tcp_default;
+const MODBUS_RTU_Data modrtu_s1_default;
+const MODBUS_TCP_Data modtcp_default;
+const FTP_Data ftp_default;
+const Data_Logging_Data data_logging_default;
+const SERVER_STORAGE_Data sv_storage_default;
+const TIME_Data time_default;
 
-
-
-
-
-
-
-
-
-
-
+#else
+const MODBUS_RTU_Data modrtu_s1_default;
+const MODBUS_RTU_Data modrtu_s2_default;
+#endif
     //digital Input
         //4port
     //digital Input
@@ -62,22 +71,14 @@ const unsigned char baud_mode = 0;
         //8 chanel
     //analog out
 
-    //data comunication
-        //Uchar 64
-        //char 64
-        //uint16 32
-        //int16 32
-        //float 10
-        //double 10
-    //data comunication
 
  } Data_Default;
 
- typedef struct _wifi_default
+ typedef struct _wifi_data
  {
      //WiFi
         //ModeWifi
-        const unsigned char _mWiFi = 0; //mode WiFi
+        unsigned char _mWiFi = 0; //mode WiFi
         //
         //0 mode Station
         //1 mode Access Point AP
@@ -85,7 +86,7 @@ const unsigned char baud_mode = 0;
         //ModeWifi
 
         //ModeIP
-        const unsigned char _mIP = 0; //mode IP
+        unsigned char _mIP = 0; //mode IP
         //
         //mode = 0 static
         //mode = 1 dynamic
@@ -94,109 +95,153 @@ const unsigned char baud_mode = 0;
 
 
         //IP
-        const unsigned char _IP[4] = {192,168,100,10};
+        unsigned char _IP[4] = {192,168,100,10};
         //GW
-        const unsigned char _GW[4] = {0,0,0,0};
+         unsigned char _GW[4] = {0,0,0,0};
         //sub
-        const unsigned char _SB[4] = {0,0,0,0};
+         unsigned char _SB[4] = {0,0,0,0};
         //user
-        const unsigned char _user[20] = {0};
+         unsigned char _user[20] = {0};
         //mac
-        const unsigned char _mac[6] = {0};
+         unsigned char _mac[6] = {0};
         //pass
-        const unsigned char _pass[20] = {0}; 
+         unsigned char _pass[20] = {0}; 
     //WiFi
- } WiFi_Default;
+ } WiFi_Data;
    
-typedef struct _mqtt_default
+typedef struct _mqtt_data
 {
     //mqtt
         //ip broker
+         unsigned char _IP[4] = {0,0,0,0};
         //user
+         unsigned char _user[20] = {0};
         //pass
+         unsigned char _pass[20] = {0};
         //qos
+         unsigned char _qos[1] = {0};
         //port
-        //goi tin alive
+         unsigned short _port = 8080;
+        //goi tin alive - lwt
+         unsigned char _topic[20] = {0}; //name of esp
+         unsigned char _payload = 1;
+         unsigned char _returned = 1;
         //goitinsend2broker
-    //mqtt
-} MQTT_Default;
 
-typedef struct _udp_default
+    //mqtt
+} MQTT_Data;
+
+typedef struct _udp_data
 {
    //udp
         //ip
+         unsigned char _IP[4] = {0};
         //port
+         unsigned short _port[4] = {0};
     //udp
-}UDP_Default;
+}UDP_Data;
 
-typedef struct _tcp_default
+typedef struct _tcp_data
 {
     //tcp
         //ip
+         unsigned char _IP[4] = {0};
         //port
+         unsigned short _port[4] = {0};
     //tcp
-}TCP_Default;
+}TCP_Data;
 
-typedef struct _ftp_default
+typedef struct _ftp_data
 {
     //FTP
         //ip server
+         unsigned char _IP[4] = {0};
         //user
+         unsigned char _user[20] = {0};
         //pass
+         unsigned char _pass[20] = {0};
         //port
+         unsigned short _port = 0;
     //FTP
-} FTP_Default;
+} FTP_Data;
 
-typedef struct _modbus_rtu_default
+typedef struct _modbus_rtu_data
 {
     //modbus RTU
         //ID
+#ifdef ESP32 || ESP8266
+         unsigned char _ID = 0;
+#else
+         unsigned char _ID = 1;
+#endif
         //Baud
+         unsigned char _baud = 0x04; //baud 9600
     //modbusRTU
-}MODBUS_RTU_Default;
+}MODBUS_RTU_Data;
 
-typedef struct _modbus_tcp_default
+typedef struct _modbus_tcp_data
 {
     //modbus tcp
         //ip
+         unsigned char _IP[4] = {0};
         //port
+         unsigned short _port = 0;
     //modbus tcp
-}MODBUS_TCP_Default;
+}MODBUS_TCP_Data;
 
-typedef struct _data_logging
+typedef struct _data_logging_data
 {
     //data logging
         //mode
+         unsigned char _mode = 0;
+        //
+        //
+        //
         //type
+         unsigned char _type = 0;
     //data logging
-}Data_Logging_Default;
+}Data_Logging_Data;
 
-typedef struct _server_storage
+typedef struct _server_storage_data
 {
     //server storage
         //mode
+         unsigned char _mode = 0;
+        //
+        //
+        //
         //IP
+         unsigned char _IP[4] = {0};
         //user
+         unsigned char _user[20] = {0};
         //pass 
+         unsigned char _pass[20] = {0};
     //server storage
-} SERVER_STORAGE_Default;
+} SERVER_STORAGE_Data;
 
-typedef struct _time_default
+typedef struct _time_data
 {
     //time
         //mode
+         unsigned char _mode = 0;
+        //0: 
+        //1: setup
+
         //year
+         unsigned char _year = 0;
         //month
+         unsigned char _month = 0;
         //date
+         unsigned char _date = 0;
         //date of week
+         unsigned char _dow = 1;
         //hour
+         unsigned char _hour = 0;
         //minute
+         unsigned char _min = 0;
         //second
+         unsigned char _sec = 0;
     //time
-}TIME_Default;
-
-
-
-
+}TIME_Data;
 
 #endif //_DATA_DEFAULT_H
