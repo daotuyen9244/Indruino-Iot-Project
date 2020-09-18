@@ -40,6 +40,6 @@
 #define sv_storage_IP 204
 #define sv_storage_user 208
 #define sv_pass_pass 212
-#define ext_data 0
+#define ext_data 216
 
 #endif //_ESP32_ADDR_H
