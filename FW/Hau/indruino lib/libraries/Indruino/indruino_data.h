@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "config_mem.h"
+#include "config_addr.h"
 #include "SRAM_cus.h"
 #include "ROM.h"
 #include "ram_eeprom.h"
