@@ -26,7 +26,7 @@ void setup()
 {
   // Initialize each packet
   //packet1 confiured with id slave =  1, function code Preset_multiple_register, addr of register =  0, count data = 2, array buffer address* = 0
-  modbus_construct(&packets[PACKET1], 1, PRESET_MULTIPLE_REGISTERS, 9, 2, 0);
+  modbus_construct(&packets[PACKET1], 1, PRESET_MULTIPLE_REGISTERS, 0, 2, 0);
 
   //packet2 confiured with id slave = 2, function code force_single_coil, addr of coils = 0, count data =1, array buffer address* = 2;
   modbus_construct(&packets[PACKET2], 1, FORCE_SINGLE_COIL, 0, 1, 2);
@@ -43,7 +43,7 @@ void loop()
   regs[0]=6; //set data at holding Register addr 1
   regs[1] = 5; //set data at holding Register addr 2
   regs[2] = 0xFF00; // set data at coils addr 0 
-  // coils ON = 0xFF00, coils OFF = 0x0000; 
+  //coils ON = 0xFF00, coils OFF = 0x0000; 
   //update data to be written to arduino slave
 
 //test with multiway
