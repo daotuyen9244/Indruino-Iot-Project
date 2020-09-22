@@ -413,6 +413,6 @@ SRAM ram;
 
 uint8_t *SRAM::array(int address)
 {
-    if (address < 0 || address > _SIZE_OF_RAM)
+    if (address < 0 || address > _SIZE_OF_RAM) return nullptr;
         return ptr + address;
 }

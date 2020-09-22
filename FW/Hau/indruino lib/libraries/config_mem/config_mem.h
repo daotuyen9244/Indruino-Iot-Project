@@ -1,7 +1,7 @@
 #ifndef _CONFIG_MEM_H
 #define _CONFIG_MEM_H
 
-#define ESP32 //if your board is ESP32 or ESP8266, you need this define
+#define NOESP32 //if your board is ESP32 or ESP8266, you need this define
 
 
 // //**config size and postion of eeprom**//

@@ -237,7 +237,7 @@ size_t ROM::readString (int address, char* value, size_t maxLen)
   if (address + len > sizeRom)
     return 0;
 
-  memcpy((uint8_t*) value, ptr + address, len);
+  memcpy((uint8_t*) value, p + address, len);
   value[len] = 0;
   return len;
   #endif
