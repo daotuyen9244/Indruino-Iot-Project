@@ -3,7 +3,7 @@
 #include <PubSubClient.h>
  
 const char* ssid = "Iphone";
-const char* password =  "alo123456";
+const char* password =  "tuan2302";
 const char* mqttServer = "45.77.45.244";
 const int mqttPort = 1883;
 //const char* mqttUser = "yourInstanceUsername";
@@ -33,15 +33,12 @@ void setup() {
  
     //if (client.connect("ESP32Client", mqttUser, mqttPassword )) {
     if (client.connect("ESP32Client")) {
- 
       Serial.println("connected");
- 
-    } else {
- 
+    } 
+    else {
       Serial.print("failed with state ");
       Serial.print(client.state());
       delay(2000);
- 
     }
   }
  
@@ -51,23 +48,27 @@ void loop() {
  
   StaticJsonBuffer<300> JSONbuffer;
   JsonObject& JSONencoder = JSONbuffer.createObject();
-  //"code":"0+0","mNumSlv"":0, "idSlv":0,"codeFunc":200
+  //"code":"0+0","mNumSlv"":0, "idSlv":0,"codeFunc":200,"A0":213,"A1":150,"A2":360,"A3":1000,"A4":30,"A5":999,"A6":69,"A7":23,"IN_P":230
   JSONencoder["code"] = "0+0";
   JSONencoder["mNumSlv"] = 0;
   JSONencoder["idSlv"] = 0;
   JSONencoder["codeFunc"] = 200;
-  /*JsonArray& values = JSONencoder.createNestedArray("values");
- 
-  values.add(20);
-  values.add(21);
-  values.add(23);*/
+  JSONencoder["A0"] = 213;
+  JSONencoder["A1"] = 150;
+  JSONencoder["A2"] = 360;
+  JSONencoder["A3"] = 1000;
+  JSONencoder["A4"] = 30;
+  JSONencoder["A5"] = 999;
+  JSONencoder["A6"] = 69;
+  JSONencoder["A7"] = 23;
+  JSONencoder["IN_P"] = 230;
  
   char JSONmessageBuffer[200];
   JSONencoder.printTo(JSONmessageBuffer, sizeof(JSONmessageBuffer));
   Serial.println("Sending message to MQTT topic..");
   Serial.println(JSONmessageBuffer);
  
-  if (client.publish("DEMO", JSONmessageBuffer) == true) {
+  if (client.publish("/MASTER/POST/SENSOR", JSONmessageBuffer) == true) {
     Serial.println("Success sending message");
   } else {
     Serial.println("Error sending message");
