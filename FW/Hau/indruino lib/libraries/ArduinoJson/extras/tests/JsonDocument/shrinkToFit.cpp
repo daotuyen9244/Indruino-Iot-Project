@@ -94,8 +94,13 @@ TEST_CASE("BasicJsonDocument::shrinkToFit()") {
   }
 
   SECTION("owned raw") {
+<<<<<<< HEAD
     doc.set(serialized(std::string("[{},12]")));
     testShrinkToFit(doc, "[{},12]", 8);
+=======
+    doc.set(serialized(std::string("[{},123]")));
+    testShrinkToFit(doc, "[{},123]", 8);
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   }
 
   SECTION("linked key") {

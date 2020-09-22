@@ -12,11 +12,14 @@
 #pragma warning(disable : 4244)
 #endif
 
+<<<<<<< HEAD
 #ifdef __ICCARM__
 // Suppress IAR Compiler Warning[Pa093]: implicit conversion from floating point to integer
 #pragma diag_suppress=Pa093
 #endif
 
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 namespace ARDUINOJSON_NAMESPACE {
 
 template <typename From, typename To>
@@ -37,7 +40,10 @@ struct is_convertible {
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
+<<<<<<< HEAD
 
 #ifdef __ICCARM__
 #pragma diag_default=Pa093
 #endif
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323

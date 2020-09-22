@@ -102,13 +102,21 @@ TEST_CASE("JsonArray::add()") {
 
   SECTION("should duplicate char*") {
     array.add(const_cast<char*>("world"));
+<<<<<<< HEAD
     const size_t expectedSize = JSON_ARRAY_SIZE(1) + JSON_STRING_SIZE(5);
+=======
+    const size_t expectedSize = JSON_ARRAY_SIZE(1) + JSON_STRING_SIZE(6);
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     REQUIRE(expectedSize == doc.memoryUsage());
   }
 
   SECTION("should duplicate std::string") {
     array.add(std::string("world"));
+<<<<<<< HEAD
     const size_t expectedSize = JSON_ARRAY_SIZE(1) + JSON_STRING_SIZE(5);
+=======
+    const size_t expectedSize = JSON_ARRAY_SIZE(1) + JSON_STRING_SIZE(6);
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     REQUIRE(expectedSize == doc.memoryUsage());
   }
 

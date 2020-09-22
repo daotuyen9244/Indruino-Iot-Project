@@ -5,8 +5,12 @@
 #pragma once
 
 #include <ArduinoJson/Configuration.hpp>
+<<<<<<< HEAD
 #include <ArduinoJson/Variant/VariantOperators.hpp>
 #include <ArduinoJson/Variant/VariantShortcuts.hpp>
+=======
+#include <ArduinoJson/Operators/VariantOperators.hpp>
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 #include <ArduinoJson/Variant/VariantTo.hpp>
 
 #ifdef _MSC_VER
@@ -18,7 +22,10 @@ namespace ARDUINOJSON_NAMESPACE {
 
 template <typename TArray>
 class ElementProxy : public VariantOperators<ElementProxy<TArray> >,
+<<<<<<< HEAD
                      public VariantShortcuts<ElementProxy<TArray> >,
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
                      public Visitable {
   typedef ElementProxy<TArray> this_type;
 
@@ -53,6 +60,17 @@ class ElementProxy : public VariantOperators<ElementProxy<TArray> >,
     return *this;
   }
 
+<<<<<<< HEAD
+=======
+  FORCE_INLINE bool operator==(VariantConstRef rhs) const {
+    return static_cast<VariantConstRef>(getUpstreamElement()) == rhs;
+  }
+
+  FORCE_INLINE bool operator!=(VariantConstRef rhs) const {
+    return static_cast<VariantConstRef>(getUpstreamElement()) != rhs;
+  }
+
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   FORCE_INLINE void clear() const {
     getUpstreamElement().clear();
   }
@@ -135,10 +153,13 @@ class ElementProxy : public VariantOperators<ElementProxy<TArray> >,
     return getOrAddUpstreamElement().getElement(index);
   }
 
+<<<<<<< HEAD
   VariantRef getOrAddElement(size_t index) const {
     return getOrAddUpstreamElement().getOrAddElement(index);
   }
 
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   FORCE_INLINE void remove(size_t index) const {
     getUpstreamElement().remove(index);
   }

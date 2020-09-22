@@ -164,7 +164,11 @@
 
 // Convert unicode escape sequence (\u0123) to UTF-8
 #ifndef ARDUINOJSON_DECODE_UNICODE
+<<<<<<< HEAD
 #define ARDUINOJSON_DECODE_UNICODE 1
+=======
+#define ARDUINOJSON_DECODE_UNICODE 0
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 #endif
 
 // Ignore comments in input
@@ -215,10 +219,13 @@
 #define ARDUINOJSON_TAB "  "
 #endif
 
+<<<<<<< HEAD
 #ifndef ARDUINOJSON_ENABLE_STRING_DEDUPLICATION
 #define ARDUINOJSON_ENABLE_STRING_DEDUPLICATION 1
 #endif
 
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 #ifndef ARDUINOJSON_STRING_BUFFER_SIZE
 #define ARDUINOJSON_STRING_BUFFER_SIZE 32
 #endif

@@ -3,12 +3,16 @@
 // MIT License
 
 #include <ArduinoJson.h>
+<<<<<<< HEAD
 
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 #include <catch.hpp>
 #include <sstream>
 
 #include "CustomReader.hpp"
 
+<<<<<<< HEAD
 TEST_CASE("deserializeJson(char*)") {
   StaticJsonDocument<1024> doc;
 
@@ -24,6 +28,8 @@ TEST_CASE("deserializeJson(char*)") {
   }
 }
 
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 TEST_CASE("deserializeJson(const std::string&)") {
   DynamicJsonDocument doc(4096);
 

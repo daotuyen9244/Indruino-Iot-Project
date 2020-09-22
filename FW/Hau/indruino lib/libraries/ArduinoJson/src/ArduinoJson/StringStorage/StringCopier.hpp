@@ -5,11 +5,16 @@
 #pragma once
 
 #include <ArduinoJson/Memory/MemoryPool.hpp>
+<<<<<<< HEAD
+=======
+#include <ArduinoJson/Memory/StringBuilder.hpp>
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 
 namespace ARDUINOJSON_NAMESPACE {
 
 class StringCopier {
  public:
+<<<<<<< HEAD
   void startString(MemoryPool* pool) {
     pool->getFreeZone(&_ptr, &_capacity);
     _size = 0;
@@ -54,5 +59,21 @@ class StringCopier {
   char* _ptr;
   size_t _size;
   size_t _capacity;
+=======
+  typedef ARDUINOJSON_NAMESPACE::StringBuilder StringBuilder;
+
+  StringCopier(MemoryPool* pool) : _pool(pool) {}
+
+  StringBuilder startString() {
+    return StringBuilder(_pool);
+  }
+
+  void reclaim(const char* s) {
+    _pool->reclaimLastString(s);
+  }
+
+ private:
+  MemoryPool* _pool;
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 };
 }  // namespace ARDUINOJSON_NAMESPACE

@@ -4,6 +4,7 @@
 
 #pragma once
 
+<<<<<<< HEAD
 #include <stdint.h>  // int8_t, int16_t
 
 #include <ArduinoJson/Polyfills/gsl/not_null.hpp>
@@ -11,6 +12,14 @@
 #include <ArduinoJson/Strings/StoragePolicy.hpp>
 #include <ArduinoJson/Variant/VariantContent.hpp>
 
+=======
+#include <ArduinoJson/Polyfills/gsl/not_null.hpp>
+#include <ArduinoJson/Polyfills/type_traits.hpp>
+#include <ArduinoJson/Variant/VariantContent.hpp>
+
+#include <stdint.h>  // int8_t, int16_t
+
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 namespace ARDUINOJSON_NAMESPACE {
 
 typedef conditional<sizeof(void*) <= 2, int8_t, int16_t>::type VariantSlotDiff;
@@ -70,6 +79,7 @@ class VariantSlot {
     _next = VariantSlotDiff(slot - this);
   }
 
+<<<<<<< HEAD
   void setKey(const char* k, storage_policies::store_by_copy) {
     ARDUINOJSON_ASSERT(k != NULL);
     _flags |= KEY_IS_OWNED;
@@ -80,6 +90,16 @@ class VariantSlot {
     ARDUINOJSON_ASSERT(k != NULL);
     _flags &= VALUE_MASK;
     _key = k;
+=======
+  void setOwnedKey(not_null<const char*> k) {
+    _flags |= KEY_IS_OWNED;
+    _key = k.get();
+  }
+
+  void setLinkedKey(not_null<const char*> k) {
+    _flags &= VALUE_MASK;
+    _key = k.get();
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   }
 
   const char* key() const {

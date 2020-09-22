@@ -5,10 +5,16 @@
 #pragma once
 
 #include <ArduinoJson/Configuration.hpp>
+<<<<<<< HEAD
 #include <ArduinoJson/Polyfills/type_traits.hpp>
 #include <ArduinoJson/Variant/VariantOperators.hpp>
 #include <ArduinoJson/Variant/VariantRef.hpp>
 #include <ArduinoJson/Variant/VariantShortcuts.hpp>
+=======
+#include <ArduinoJson/Operators/VariantOperators.hpp>
+#include <ArduinoJson/Polyfills/type_traits.hpp>
+#include <ArduinoJson/Variant/VariantRef.hpp>
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 #include <ArduinoJson/Variant/VariantTo.hpp>
 
 #ifdef _MSC_VER
@@ -20,7 +26,10 @@ namespace ARDUINOJSON_NAMESPACE {
 
 template <typename TObject, typename TStringRef>
 class MemberProxy : public VariantOperators<MemberProxy<TObject, TStringRef> >,
+<<<<<<< HEAD
                     public VariantShortcuts<MemberProxy<TObject, TStringRef> >,
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
                     public Visitable {
   typedef MemberProxy<TObject, TStringRef> this_type;
 
@@ -56,6 +65,17 @@ class MemberProxy : public VariantOperators<MemberProxy<TObject, TStringRef> >,
     return *this;
   }
 
+<<<<<<< HEAD
+=======
+  FORCE_INLINE bool operator==(VariantConstRef rhs) const {
+    return static_cast<VariantConstRef>(getUpstreamMember()) == rhs;
+  }
+
+  FORCE_INLINE bool operator!=(VariantConstRef rhs) const {
+    return static_cast<VariantConstRef>(getUpstreamMember()) != rhs;
+  }
+
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   FORCE_INLINE void clear() const {
     getUpstreamMember().clear();
   }

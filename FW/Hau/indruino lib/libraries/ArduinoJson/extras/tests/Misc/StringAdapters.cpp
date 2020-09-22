@@ -6,7 +6,10 @@
 #include "progmem_emulation.hpp"
 #include "weird_strcmp.hpp"
 
+<<<<<<< HEAD
 #include <ArduinoJson/Strings/ArduinoStringAdapter.hpp>
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 #include <ArduinoJson/Strings/ConstRamStringAdapter.hpp>
 #include <ArduinoJson/Strings/FlashStringAdapter.hpp>
 #include <ArduinoJson/Strings/SizedRamStringAdapter.hpp>
@@ -115,6 +118,7 @@ TEST_CASE("std::string") {
   CHECK(adapter.size() == 5);
 }
 
+<<<<<<< HEAD
 TEST_CASE("Arduino String") {
   ::String str("bravo");
   ArduinoStringAdapter adapter = adaptString(str);
@@ -130,6 +134,8 @@ TEST_CASE("Arduino String") {
   CHECK(adapter.size() == 5);
 }
 
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 TEST_CASE("custom_string") {
   custom_string str("bravo");
   StlStringAdapter<custom_string> adapter = adaptString(str);
@@ -161,6 +167,7 @@ TEST_CASE("IsString<T>") {
   SECTION("const __FlashStringHelper*") {
     CHECK(IsString<const __FlashStringHelper*>::value == true);
   }
+<<<<<<< HEAD
 
   SECTION("const char*") {
     CHECK(IsString<const char*>::value == true);
@@ -169,4 +176,6 @@ TEST_CASE("IsString<T>") {
   SECTION("const char[]") {
     CHECK(IsString<const char[8]>::value == true);
   }
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 }

@@ -107,43 +107,71 @@ TEST_CASE("JsonObject::operator[]") {
 
   SECTION("should duplicate char* value") {
     obj["hello"] = const_cast<char*>("world");
+<<<<<<< HEAD
     const size_t expectedSize = JSON_OBJECT_SIZE(1) + JSON_STRING_SIZE(5);
+=======
+    const size_t expectedSize = JSON_OBJECT_SIZE(1) + JSON_STRING_SIZE(6);
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     REQUIRE(expectedSize == doc.memoryUsage());
   }
 
   SECTION("should duplicate char* key") {
     obj[const_cast<char*>("hello")] = "world";
+<<<<<<< HEAD
     const size_t expectedSize = JSON_OBJECT_SIZE(1) + JSON_STRING_SIZE(5);
+=======
+    const size_t expectedSize = JSON_OBJECT_SIZE(1) + JSON_STRING_SIZE(6);
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     REQUIRE(expectedSize == doc.memoryUsage());
   }
 
   SECTION("should duplicate char* key&value") {
     obj[const_cast<char*>("hello")] = const_cast<char*>("world");
+<<<<<<< HEAD
     const size_t expectedSize = JSON_OBJECT_SIZE(1) + 2 * JSON_STRING_SIZE(5);
+=======
+    const size_t expectedSize = JSON_OBJECT_SIZE(1) + 2 * JSON_STRING_SIZE(6);
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     REQUIRE(expectedSize <= doc.memoryUsage());
   }
 
   SECTION("should duplicate std::string value") {
     obj["hello"] = std::string("world");
+<<<<<<< HEAD
     const size_t expectedSize = JSON_OBJECT_SIZE(1) + JSON_STRING_SIZE(5);
+=======
+    const size_t expectedSize = JSON_OBJECT_SIZE(1) + JSON_STRING_SIZE(6);
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     REQUIRE(expectedSize == doc.memoryUsage());
   }
 
   SECTION("should duplicate std::string key") {
     obj[std::string("hello")] = "world";
+<<<<<<< HEAD
     const size_t expectedSize = JSON_OBJECT_SIZE(1) + JSON_STRING_SIZE(5);
+=======
+    const size_t expectedSize = JSON_OBJECT_SIZE(1) + JSON_STRING_SIZE(6);
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     REQUIRE(expectedSize == doc.memoryUsage());
   }
 
   SECTION("should duplicate std::string key&value") {
     obj[std::string("hello")] = std::string("world");
+<<<<<<< HEAD
     const size_t expectedSize = JSON_OBJECT_SIZE(1) + 2 * JSON_STRING_SIZE(5);
+=======
+    const size_t expectedSize = JSON_OBJECT_SIZE(1) + 2 * JSON_STRING_SIZE(6);
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     REQUIRE(expectedSize <= doc.memoryUsage());
   }
 
   SECTION("should duplicate a non-static JsonString key") {
     obj[JsonString("hello", false)] = "world";
+<<<<<<< HEAD
     const size_t expectedSize = JSON_OBJECT_SIZE(1) + JSON_STRING_SIZE(5);
+=======
+    const size_t expectedSize = JSON_OBJECT_SIZE(1) + JSON_STRING_SIZE(6);
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     REQUIRE(expectedSize == doc.memoryUsage());
   }
 

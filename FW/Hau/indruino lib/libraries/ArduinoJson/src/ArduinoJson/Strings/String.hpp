@@ -38,6 +38,7 @@ class String {
     return strcmp(lhs._data, rhs._data) == 0;
   }
 
+<<<<<<< HEAD
   friend bool operator!=(String lhs, String rhs) {
     if (lhs._data == rhs._data)
       return false;
@@ -47,6 +48,9 @@ class String {
       return true;
     return strcmp(lhs._data, rhs._data) != 0;
   }
+=======
+  typedef storage_policy::decide_at_runtime storage_policy;
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 
  private:
   const char* _data;
@@ -62,7 +66,15 @@ class StringAdapter : public RamStringAdapter {
     return _isStatic;
   }
 
+<<<<<<< HEAD
   typedef storage_policies::decide_at_runtime storage_policy;
+=======
+  const char* save(MemoryPool* pool) const {
+    if (_isStatic)
+      return data();
+    return RamStringAdapter::save(pool);
+  }
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 
  private:
   bool _isStatic;

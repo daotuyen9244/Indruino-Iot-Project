@@ -239,7 +239,11 @@ TEST_CASE("Filtering") {
       10,
       DeserializationError::Ok,
       "[{\"example\":1},{\"example\":3}]",
+<<<<<<< HEAD
       JSON_ARRAY_SIZE(2) + 2 * JSON_OBJECT_SIZE(1) + 8
+=======
+      JSON_ARRAY_SIZE(2) + 2 * JSON_OBJECT_SIZE(1) + 16
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     },
     {
       "[',2,3]",
@@ -525,7 +529,11 @@ TEST_CASE("Filtering") {
       10,
       DeserializationError::InvalidInput,
       "{}", 
+<<<<<<< HEAD
       JSON_OBJECT_SIZE(0)
+=======
+      JSON_OBJECT_SIZE(0) + 8
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     },
     {
       // incomplete comment after key
@@ -534,7 +542,11 @@ TEST_CASE("Filtering") {
       10,
       DeserializationError::IncompleteInput,
       "{}", 
+<<<<<<< HEAD
       JSON_OBJECT_SIZE(0)
+=======
+      JSON_OBJECT_SIZE(0) + 8
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     },
     {
       // invalid comment after colon
@@ -730,3 +742,23 @@ TEST_CASE("Overloads") {
   }
 #endif
 }
+<<<<<<< HEAD
+=======
+
+TEST_CASE("StringMover::reclaim()") {
+  StaticJsonDocument<200> filter;
+  filter["a"] = true;
+  filter["c"] = true;
+  char input[] = "{\"a\":1,\"b\":2,\"c\":1}";
+
+  StaticJsonDocument<200> doc;
+  deserializeJson(doc, input, DeserializationOption::Filter(filter));
+
+  REQUIRE(doc.as<std::string>() == "{\"a\":1,\"c\":1}");
+
+  CHECK(input[0] == 'a');
+  CHECK(input[1] == 0);
+  CHECK(input[2] == 'c');
+  CHECK(input[3] == 0);
+}
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323

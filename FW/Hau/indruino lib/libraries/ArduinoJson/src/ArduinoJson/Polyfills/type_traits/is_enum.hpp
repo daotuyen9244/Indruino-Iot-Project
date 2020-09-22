@@ -16,7 +16,12 @@ template <typename T>
 struct is_enum {
   static const bool value = is_convertible<T, int>::value &&
                             !is_class<T>::value && !is_integral<T>::value &&
+<<<<<<< HEAD
                             !is_floating_point<T>::value;
+=======
+                            !is_floating_point<T>::value &&
+                            !is_same<T, bool>::value;
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 };
 
 }  // namespace ARDUINOJSON_NAMESPACE

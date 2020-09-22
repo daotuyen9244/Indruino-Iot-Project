@@ -29,6 +29,7 @@ TEST_CASE("Polyfills/type_traits") {
     CHECK(is_const<const char>::value == true);
   }
 
+<<<<<<< HEAD
   SECTION("is_integral") {
     CHECK(is_integral<double>::value == false);
     CHECK(is_integral<float>::value == false);
@@ -47,6 +48,8 @@ TEST_CASE("Polyfills/type_traits") {
     CHECK(is_integral<UInt>::value == true);
   }
 
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   SECTION("is_signed") {
     CHECK(is_signed<char>::value == true);
     CHECK(is_signed<signed char>::value == true);

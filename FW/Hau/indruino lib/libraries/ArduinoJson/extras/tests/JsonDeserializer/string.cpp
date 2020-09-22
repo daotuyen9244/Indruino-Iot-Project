@@ -74,16 +74,28 @@ TEST_CASE("Invalid JSON string") {
   }
 }
 
+<<<<<<< HEAD
 TEST_CASE("Not enough room to save the key") {
   DynamicJsonDocument doc(JSON_OBJECT_SIZE(1) + 8);
 
   SECTION("Quoted string") {
     REQUIRE(deserializeJson(doc, "{\"accuracy\":1}") ==
+=======
+TEST_CASE("Not enough room to duplicate the string") {
+  DynamicJsonDocument doc(JSON_OBJECT_SIZE(0));
+
+  SECTION("Quoted string") {
+    REQUIRE(deserializeJson(doc, "{\"example\":1}") ==
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
             DeserializationError::NoMemory);
   }
 
   SECTION("Non-quoted string") {
+<<<<<<< HEAD
     REQUIRE(deserializeJson(doc, "{accuracy:1}") ==
+=======
+    REQUIRE(deserializeJson(doc, "{example:1}") ==
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
             DeserializationError::NoMemory);
   }
 }

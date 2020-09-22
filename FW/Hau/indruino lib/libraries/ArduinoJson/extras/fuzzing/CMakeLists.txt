@@ -6,6 +6,7 @@ if(MSVC)
 	add_compile_options(-D_CRT_SECURE_NO_WARNINGS)
 endif()
 
+<<<<<<< HEAD
 add_executable(msgpack_reproducer
 	msgpack_fuzzer.cpp
 	reproducer.cpp
@@ -71,3 +72,20 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSIO
 	add_fuzzer(msgpack memory)
 	add_fuzzer(msgpack undefined)
 endif()
+=======
+add_executable(msgpack_fuzzer
+	msgpack_fuzzer.cpp
+	fuzzer_main.cpp
+)
+target_link_libraries(msgpack_fuzzer
+	ArduinoJson
+)
+
+add_executable(json_fuzzer
+	json_fuzzer.cpp
+	fuzzer_main.cpp
+)
+target_link_libraries(json_fuzzer
+	ArduinoJson
+)
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323

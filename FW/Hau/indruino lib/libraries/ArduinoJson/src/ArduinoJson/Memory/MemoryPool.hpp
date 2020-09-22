@@ -51,6 +51,7 @@ class MemoryPool {
     return allocRight<VariantSlot>();
   }
 
+<<<<<<< HEAD
   template <typename TAdaptedString>
   const char* saveString(const TAdaptedString& str) {
     if (str.isNull())
@@ -88,6 +89,34 @@ class MemoryPool {
     _left += len;
     checkInvariants();
     return str;
+=======
+  char* allocFrozenString(size_t n) {
+    if (!canAlloc(n))
+      return 0;
+    char* s = _left;
+    _left += n;
+    checkInvariants();
+    return s;
+  }
+
+  StringSlot allocExpandableString() {
+    StringSlot s;
+    s.value = _left;
+    s.size = size_t(_right - _left);
+    _left = _right;
+    checkInvariants();
+    return s;
+  }
+
+  void freezeString(StringSlot& s, size_t newSize) {
+    _left -= (s.size - newSize);
+    s.size = newSize;
+    checkInvariants();
+  }
+
+  void reclaimLastString(const char* s) {
+    _left = const_cast<char*>(s);
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   }
 
   void clear() {
@@ -103,6 +132,21 @@ class MemoryPool {
     return _begin <= p && p < _end;
   }
 
+<<<<<<< HEAD
+=======
+  template <typename T>
+  T* allocRight() {
+    return reinterpret_cast<T*>(allocRight(sizeof(T)));
+  }
+
+  void* allocRight(size_t bytes) {
+    if (!canAlloc(bytes))
+      return 0;
+    _right -= bytes;
+    return _right;
+  }
+
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   // Workaround for missing placement new
   void* operator new(size_t, void* p) {
     return p;
@@ -154,6 +198,7 @@ class MemoryPool {
     ARDUINOJSON_ASSERT(isAligned(_right));
   }
 
+<<<<<<< HEAD
 #if ARDUINOJSON_ENABLE_STRING_DEDUPLICATION
   template <typename TIterator>
   const char* findString(TIterator str) {
@@ -194,6 +239,8 @@ class MemoryPool {
     return _right;
   }
 
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   char *_begin, *_left, *_right, *_end;
 };
 

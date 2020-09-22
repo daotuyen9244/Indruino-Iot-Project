@@ -1,6 +1,7 @@
 ArduinoJson: change log
 =======================
 
+<<<<<<< HEAD
 v6.16.1 (2020-08-04)
 -------
 
@@ -18,6 +19,8 @@ v6.16.0 (2020-08-01)
 * Fixed excessive stack usage when compiled with `-Og` (issues #1210 and #1314)
 * Fixed `Warning[Pa093]: implicit conversion from floating point to integer` on IAR compiler (PR #1328 by @stawiski)
 
+=======
+>>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 v6.15.2 (2020-05-15)
 -------
 
