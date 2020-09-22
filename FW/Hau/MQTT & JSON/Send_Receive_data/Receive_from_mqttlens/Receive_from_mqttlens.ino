@@ -23,13 +23,14 @@ void decodeJson()
 {
   DynamicJsonDocument doc(125);
   deserializeJson(doc, output);
-  
-  id = doc["id"].as<String>();
+  //"code":"0+0","mNumSlv"":0, "idSlv":0,"codeFunc":200,"A0":213,"A1":150,"A2":360,"A3":1000,"A4":30,"A5":999,"A6":69,"A7":23,"IN_P":230
+  id = doc["code"].as<String>();
   data1 = doc["data1"].as<float>();
   data2 = doc["data2"].as<int>();
   data3 = doc["data3"].as<boolean>();
   data4 = doc["data4"].as<String>();
 }
+
 void setup_wifi()
 {
   WiFi.mode(WIFI_STA);
