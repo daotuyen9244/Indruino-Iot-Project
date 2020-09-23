@@ -3,6 +3,7 @@
 #include <PubSubClient.h>
 #include "SimpleModbusMaster_DUE.h"
 
+#include "ModbusRtu.h"
 #include "indruino_data.h"
 
 const char *ssid = "Indruino_Student";
@@ -10,37 +11,48 @@ const char *password = "Indruino2019";
 const char *mqttServer = "45.77.45.244";
 const int mqttPort = 1883;
 
+Modbus master(0, 0);
+
+modbus_t telegram[10];
+
+unsigned long u32wait;
+unsigned long value;
+
+
 #define baud 9600      //baudrate
 #define timeout 5000   //timeout
-#define polling 200    // the scan rate
+#define polling 300   // the scan rate
 #define retry_count 10 //count scan
 #define TOTAL_NO_OF_REGISTERS 1
 
 //data recive
 String code = "";
 volatile byte mNumSlv;
-volatile int idSlv;
+volatile uint16_t idSlv;
 volatile byte codeFunc;
-volatile int _A0, _A1, _A2, _A3, _A4, _A5, _A6, _A7;
+volatile uint16_t _A0, _A1, _A2, _A3, _A4, _A5, _A6, _A7;
 volatile byte OUT_P;
 //data recive
 
 Indruino indurino;
 
-enum
-{
-  PACKET1,
-  PACKET2,
-  //PACKET3,
-  TOTAL_NO_OF_PACKETS // leave this last entry
-};
-Packet packets[TOTAL_NO_OF_PACKETS]; //Packet to confiured
-unsigned int *regs = nullptr;
+// enum
+// {
+//   PACKET1,
+//   PACKET2,
+//   //PACKET3,
+//   TOTAL_NO_OF_PACKETS // leave this last entry
+// };
+// Packet packets[TOTAL_NO_OF_PACKETS]; //Packet to confiured
+
+uint16_t *regs = nullptr;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 
 String data_receive = "";
+
+SRAM myRam;
 //modbus
 
 
@@ -61,18 +73,26 @@ void callback(char *topic, byte *message, unsigned int length)
   }
 }
 
+ typedef union convert
+{
+  byte *_byteAr;
+  uint16_t*_uintAr;
+} CONVERT;
 
-
+CONVERT cv_data;
+uint8_t u8state = 0;
+uint8_t u8query = 0;
 void setup()
 {
 
   indurino.init();
-  regs = (unsigned int *)indurino.myRam()->array(0); //setup ram for modbus
+  regs = (uint16_t*)indurino.myRam()->array(0); //setup ram for modbus
+  cv_data._uintAr = regs;
   //Serial.begin(115200);
   //Serial.println();
 
-  modbus_construct(&packets[PACKET1], 1, PRESET_MULTIPLE_REGISTERS, 0, 120, 0);
-  modbus_configure(&Serial, baud, timeout, polling, retry_count, packets, TOTAL_NO_OF_PACKETS, regs);
+  //modbus_construct(&packets[PACKET1], 1, PRESET_MULTIPLE_REGISTERS, 0, 100, 0);
+  //modbus_configure(&Serial, baud, timeout, polling, retry_count, 7 ,packets, TOTAL_NO_OF_PACKETS, regs);
 
   WiFi.begin(ssid, password);
   //Wifi_connect
@@ -105,11 +125,48 @@ void setup()
       delay(2000);
     }
   }
+
+//read
+  telegram[0].u8id = 1;
+  telegram[0].u8fct= 3;
+  telegram[0].u16CoilsNo = 100;
+  telegram[0].u16RegAdd = 0;
+  telegram[0].au16reg = regs;
+//read
+  telegram[1].u8id = 1;
+  telegram[1].u8fct = 6;
+  telegram[1].u16CoilsNo=1;
+  telegram[1].u16RegAdd= 14;
+  telegram[1].au16reg = regs+14;
+
+  master.begin(9600);
+  master.setTimeOut(1000);
+  
 }
 unsigned long time_last = 0;
 void loop()
 {
-  modbus_update();
+  //modbus_update();
+  
+  switch (u8state)
+  {
+  case 0:
+    if (millis() > u32wait)
+      u8state++; // wait state
+    break;
+  case 1:
+    master.query(telegram[1]); // send query (only once)
+  case 2:
+     // check incoming messages
+     master.poll();
+    if (master.getState() == COM_IDLE)
+    {
+      u8state = 0;
+      u32wait = millis() + 1000;
+    }
+    break;
+  }
+
   if (millis() - time_last > 1000)
   {
     encode_data4sensor_s();
@@ -165,19 +222,23 @@ void decode() //send data
 
   code = doc["code"].as<String>();
   mNumSlv = doc["mNumSlv"].as<byte>();
-  idSlv = doc["idSlv"].as<int>();
+  idSlv = doc["idSlv"].as<uint16_t>();
   codeFunc = doc["codeFunc"].as<byte>();
-  _A0 = doc["A0"].as<int>();
-  _A1 = doc["A1"].as<int>();
-  _A2 = doc["A2"].as<int>();
-  _A3 = doc["A3"].as<int>();
-  _A4 = doc["A4"].as<int>();
-  _A5 = doc["A5"].as<int>();
-  _A6 = doc["A6"].as<int>();
-  _A7 = doc["A7"].as<int>();
+  _A0 = doc["A0"].as<uint16_t>();
+  _A1 = doc["A1"].as<uint16_t>();
+  _A2 = doc["A2"].as<uint16_t>();
+  _A3 = doc["A3"].as<uint16_t>();
+  _A4 = doc["A4"].as<uint16_t>();
+  _A5 = doc["A5"].as<uint16_t>();
+  _A6 = doc["A6"].as<uint16_t>();
+  _A7 = doc["A7"].as<uint16_t>();
   OUT_P = doc["OUT_P"].as<byte>();
 
-  regs[0] = OUT_P;
+  cv_data._byteAr[Ram_OUT_P] = OUT_P;
+  master.query(telegram[1]);
+//  byte *ptr_value = (byte*)hreg;
+ // ptr_value[2] = OUT_P;
+  //myRam.writeByte(5, OUT_P);
   //write to register modbus
 
   //write to register modbus
