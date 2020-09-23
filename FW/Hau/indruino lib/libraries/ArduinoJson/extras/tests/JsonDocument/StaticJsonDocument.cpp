@@ -212,11 +212,7 @@ TEST_CASE("StaticJsonDocument") {
 
   SECTION("garbageCollect()") {
     StaticJsonDocument<256> doc;
-<<<<<<< HEAD
-    doc[std::string("example")] = std::string("jukebox");
-=======
     doc[std::string("example")] = std::string("example");
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     doc.remove("example");
     REQUIRE(doc.memoryUsage() == JSON_OBJECT_SIZE(1) + 16);
 

@@ -12,22 +12,12 @@ using namespace ARDUINOJSON_NAMESPACE;
 static void testCodepoint(uint32_t codepoint, std::string expected) {
   char buffer[4096];
   MemoryPool pool(buffer, 4096);
-<<<<<<< HEAD
-  StringCopier str;
-  str.startString(&pool);
-=======
   StringBuilder str(&pool);
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 
   CAPTURE(codepoint);
   Utf8::encodeCodepoint(codepoint, str);
 
-<<<<<<< HEAD
-  str.append('\0');
-  REQUIRE(str.c_str() == expected);
-=======
   REQUIRE(str.complete() == expected);
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 }
 
 TEST_CASE("Utf8::encodeCodepoint()") {

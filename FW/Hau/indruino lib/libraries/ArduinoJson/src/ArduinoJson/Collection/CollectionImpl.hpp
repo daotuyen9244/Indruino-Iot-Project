@@ -9,13 +9,6 @@
 
 namespace ARDUINOJSON_NAMESPACE {
 
-<<<<<<< HEAD
-inline bool variantEquals(const VariantData* a, const VariantData* b) {
-  return variantCompare(a, b) == COMPARE_RESULT_EQUAL;
-}
-
-=======
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 inline VariantSlot* CollectionData::addSlot(MemoryPool* pool) {
   VariantSlot* slot = pool->allocVariant();
   if (!slot)

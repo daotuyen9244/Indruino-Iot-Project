@@ -5,44 +5,11 @@
 #pragma once
 
 #include <ArduinoJson/Namespace.hpp>
-<<<<<<< HEAD
-#include <ArduinoJson/Strings/StoragePolicy.hpp>
-=======
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 
 namespace ARDUINOJSON_NAMESPACE {
 
 class StringMover {
  public:
-<<<<<<< HEAD
-  StringMover(char* ptr) : _writePtr(ptr) {}
-
-  void startString(MemoryPool*) {
-    _startPtr = _writePtr;
-  }
-
-  const char* save(MemoryPool*) const {
-    return _startPtr;
-  }
-
-  void append(char c) {
-    *_writePtr++ = c;
-  }
-
-  bool isValid() const {
-    return true;
-  }
-
-  const char* c_str() const {
-    return _startPtr;
-  }
-
-  typedef storage_policies::store_by_address storage_policy;
-
- private:
-  char* _writePtr;
-  char* _startPtr;
-=======
   class StringBuilder {
    public:
     StringBuilder(char** ptr) : _writePtr(ptr), _startPtr(*ptr) {}
@@ -74,6 +41,5 @@ class StringMover {
 
  private:
   char* _ptr;
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 };
 }  // namespace ARDUINOJSON_NAMESPACE

@@ -5,61 +5,12 @@
 #pragma once
 
 #include <ArduinoJson/Memory/MemoryPool.hpp>
-<<<<<<< HEAD
-=======
 #include <ArduinoJson/Memory/StringBuilder.hpp>
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 
 namespace ARDUINOJSON_NAMESPACE {
 
 class StringCopier {
  public:
-<<<<<<< HEAD
-  void startString(MemoryPool* pool) {
-    pool->getFreeZone(&_ptr, &_capacity);
-    _size = 0;
-  }
-
-  const char* save(MemoryPool* pool) {
-    ARDUINOJSON_ASSERT(_ptr);
-    return pool->saveStringFromFreeZone(_size);
-  }
-
-  void append(const char* s) {
-    while (*s) append(*s++);
-  }
-
-  void append(const char* s, size_t n) {
-    while (n-- > 0) append(*s++);
-  }
-
-  void append(char c) {
-    if (!_ptr)
-      return;
-
-    if (_size >= _capacity) {
-      _ptr = 0;
-      return;
-    }
-
-    _ptr[_size++] = c;
-  }
-
-  bool isValid() {
-    return _ptr != 0;
-  }
-
-  const char* c_str() {
-    return _ptr;
-  }
-
-  typedef storage_policies::store_by_copy storage_policy;
-
- private:
-  char* _ptr;
-  size_t _size;
-  size_t _capacity;
-=======
   typedef ARDUINOJSON_NAMESPACE::StringBuilder StringBuilder;
 
   StringCopier(MemoryPool* pool) : _pool(pool) {}
@@ -74,6 +25,5 @@ class StringCopier {
 
  private:
   MemoryPool* _pool;
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 };
 }  // namespace ARDUINOJSON_NAMESPACE

@@ -40,9 +40,6 @@ inline bool variantCopyFrom(VariantData *dst, const VariantData *src,
   return dst->copyFrom(*src, pool);
 }
 
-<<<<<<< HEAD
-inline int variantCompare(const VariantData *a, const VariantData *b);
-=======
 inline bool variantEquals(const VariantData *a, const VariantData *b) {
   if (a == b)
     return true;
@@ -50,7 +47,6 @@ inline bool variantEquals(const VariantData *a, const VariantData *b) {
     return false;
   return a->equals(*b);
 }
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 
 inline bool variantIsArray(const VariantData *var) {
   return var && var->isArray();
@@ -109,8 +105,6 @@ inline bool variantSetOwnedRaw(VariantData *var, SerializedValue<T> value,
   return var != 0 && var->setOwnedRaw(value, pool);
 }
 
-<<<<<<< HEAD
-=======
 inline bool variantSetLinkedString(VariantData *var, const char *value) {
   if (!var)
     return false;
@@ -118,21 +112,12 @@ inline bool variantSetLinkedString(VariantData *var, const char *value) {
   return true;
 }
 
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 inline void variantSetNull(VariantData *var) {
   if (!var)
     return;
   var->setNull();
 }
 
-<<<<<<< HEAD
-template <typename TAdaptedString>
-inline bool variantSetString(VariantData *var, TAdaptedString value,
-                             MemoryPool *pool) {
-  if (!var)
-    return false;
-  return var->setString(value, pool);
-=======
 inline bool variantSetOwnedString(VariantData *var, char *value) {
   if (!var)
     return false;
@@ -143,7 +128,6 @@ inline bool variantSetOwnedString(VariantData *var, char *value) {
 template <typename T>
 inline bool variantSetOwnedString(VariantData *var, T value, MemoryPool *pool) {
   return var != 0 && var->setOwnedString(value, pool);
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 }
 
 template <typename T>

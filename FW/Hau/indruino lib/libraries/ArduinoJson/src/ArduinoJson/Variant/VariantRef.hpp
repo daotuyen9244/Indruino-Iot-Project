@@ -9,21 +9,11 @@
 
 #include <ArduinoJson/Memory/MemoryPool.hpp>
 #include <ArduinoJson/Misc/Visitable.hpp>
-<<<<<<< HEAD
-#include <ArduinoJson/Polyfills/type_traits.hpp>
-#include <ArduinoJson/Strings/StringAdapters.hpp>
-#include <ArduinoJson/Variant/VariantAs.hpp>
-#include <ArduinoJson/Variant/VariantFunctions.hpp>
-#include <ArduinoJson/Variant/VariantOperators.hpp>
-#include <ArduinoJson/Variant/VariantRef.hpp>
-#include <ArduinoJson/Variant/VariantShortcuts.hpp>
-=======
 #include <ArduinoJson/Operators/VariantOperators.hpp>
 #include <ArduinoJson/Polyfills/type_traits.hpp>
 #include <ArduinoJson/Variant/VariantAs.hpp>
 #include <ArduinoJson/Variant/VariantFunctions.hpp>
 #include <ArduinoJson/Variant/VariantRef.hpp>
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 
 namespace ARDUINOJSON_NAMESPACE {
 
@@ -51,15 +41,8 @@ class VariantRefBase {
   // bool is<unsigned int>() const;
   // bool is<unsigned long>() const;
   template <typename T>
-<<<<<<< HEAD
-  FORCE_INLINE
-      typename enable_if<is_integral<T>::value && !is_same<bool, T>::value,
-                         bool>::type
-      is() const {
-=======
   FORCE_INLINE typename enable_if<is_integral<T>::value, bool>::type is()
       const {
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     return variantIsInteger<T>(_data);
   }
   //
@@ -158,10 +141,6 @@ class VariantRefBase {
 // - a reference to a ArrayRef or ObjectRef
 class VariantRef : public VariantRefBase<VariantData>,
                    public VariantOperators<VariantRef>,
-<<<<<<< HEAD
-                   public VariantShortcuts<VariantRef>,
-=======
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
                    public Visitable {
   typedef VariantRefBase<VariantData> base_type;
   friend class VariantConstRef;
@@ -204,12 +183,7 @@ class VariantRef : public VariantRefBase<VariantData>,
   // set(unsigned long)
   template <typename T>
   FORCE_INLINE bool set(
-<<<<<<< HEAD
-      T value, typename enable_if<is_integral<T>::value &&
-                                  !is_same<bool, T>::value>::type * = 0) const {
-=======
       T value, typename enable_if<is_integral<T>::value>::type * = 0) const {
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     return variantSetInteger<T>(_data, value);
   }
 
@@ -234,17 +208,6 @@ class VariantRef : public VariantRefBase<VariantData>,
   FORCE_INLINE bool set(
       const T &value,
       typename enable_if<IsString<T>::value>::type * = 0) const {
-<<<<<<< HEAD
-    return variantSetString(_data, adaptString(value), _pool);
-  }
-  // set(char*)
-  // set(const __FlashStringHelper*)
-  // set(const char*)
-  template <typename T>
-  FORCE_INLINE bool set(
-      T *value, typename enable_if<IsString<T *>::value>::type * = 0) const {
-    return variantSetString(_data, adaptString(value), _pool);
-=======
     return variantSetOwnedString(_data, adaptString(value), _pool);
   }
 
@@ -259,7 +222,6 @@ class VariantRef : public VariantRefBase<VariantData>,
   // set(const char*);
   FORCE_INLINE bool set(const char *value) const {
     return variantSetLinkedString(_data, value);
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   }
 
   // set(VariantRef)
@@ -280,17 +242,6 @@ class VariantRef : public VariantRefBase<VariantData>,
     return variantSetInteger(_data, static_cast<Integer>(value));
   }
 
-<<<<<<< HEAD
-#if ARDUINOJSON_HAS_NULLPTR
-  // set(nullptr_t)
-  FORCE_INLINE bool set(decltype(nullptr)) const {
-    variantSetNull(_data);
-    return true;
-  }
-#endif
-
-=======
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   template <typename T>
   FORCE_INLINE typename VariantAs<T>::type as() const {
     return variantAs<typename VariantAs<T>::type>(_data, _pool);
@@ -306,8 +257,6 @@ class VariantRef : public VariantRefBase<VariantData>,
     variantAccept(_data, visitor);
   }
 
-<<<<<<< HEAD
-=======
   FORCE_INLINE bool operator==(VariantRef lhs) const {
     return variantEquals(_data, lhs._data);
   }
@@ -316,7 +265,6 @@ class VariantRef : public VariantRefBase<VariantData>,
     return !variantEquals(_data, lhs._data);
   }
 
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   // Change the type of the variant
   //
   // ArrayRef to<ArrayRef>()
@@ -388,10 +336,6 @@ class VariantRef : public VariantRefBase<VariantData>,
 
 class VariantConstRef : public VariantRefBase<const VariantData>,
                         public VariantOperators<VariantConstRef>,
-<<<<<<< HEAD
-                        public VariantShortcuts<VariantConstRef>,
-=======
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
                         public Visitable {
   typedef VariantRefBase<const VariantData> base_type;
   friend class VariantRef;
@@ -457,8 +401,6 @@ class VariantConstRef : public VariantRefBase<const VariantData>,
       operator[](TChar *key) const {
     return getMember(key);
   }
-<<<<<<< HEAD
-=======
 
   FORCE_INLINE bool operator==(VariantConstRef lhs) const {
     return variantEquals(_data, lhs._data);
@@ -467,6 +409,5 @@ class VariantConstRef : public VariantRefBase<const VariantData>,
   FORCE_INLINE bool operator!=(VariantConstRef lhs) const {
     return !variantEquals(_data, lhs._data);
   }
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 };
 }  // namespace ARDUINOJSON_NAMESPACE

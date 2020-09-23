@@ -3,10 +3,6 @@
 // MIT License
 
 #include <ArduinoJson/Memory/MemoryPool.hpp>
-<<<<<<< HEAD
-#include <ArduinoJson/Strings/StringAdapters.hpp>
-=======
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 #include <catch.hpp>
 
 using namespace ARDUINOJSON_NAMESPACE;
@@ -25,13 +21,8 @@ TEST_CASE("MemoryPool::clear()") {
   }
 
   SECTION("Discards allocated strings") {
-<<<<<<< HEAD
-    pool.saveString(adaptString(const_cast<char *>("123456789")));
-    REQUIRE(pool.size() == 10);
-=======
     pool.allocFrozenString(10);
     REQUIRE(pool.size() > 0);
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 
     pool.clear();
 

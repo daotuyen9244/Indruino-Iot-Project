@@ -28,10 +28,6 @@ class SizedRamStringAdapter {
     return !_str;
   }
 
-<<<<<<< HEAD
-  void copyTo(char* p, size_t n) const {
-    memcpy(p, _str, n);
-=======
   char* save(MemoryPool* pool) const {
     if (!_str)
       return NULL;
@@ -39,22 +35,13 @@ class SizedRamStringAdapter {
     if (dup)
       memcpy(dup, _str, _size);
     return dup;
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   }
 
   size_t size() const {
     return _size;
   }
 
-<<<<<<< HEAD
-  const char* begin() const {
-    return _str;
-  }
-
-  typedef storage_policies::store_by_copy storage_policy;
-=======
   typedef storage_policy::store_by_copy storage_policy;
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 
  private:
   const char* _str;

@@ -28,10 +28,6 @@
 #include "ArduinoJson/Object/MemberProxy.hpp"
 #include "ArduinoJson/Object/ObjectImpl.hpp"
 #include "ArduinoJson/Variant/VariantAsImpl.hpp"
-<<<<<<< HEAD
-#include "ArduinoJson/Variant/VariantCompare.hpp"
-=======
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 #include "ArduinoJson/Variant/VariantImpl.hpp"
 
 #include "ArduinoJson/Json/JsonDeserializer.hpp"

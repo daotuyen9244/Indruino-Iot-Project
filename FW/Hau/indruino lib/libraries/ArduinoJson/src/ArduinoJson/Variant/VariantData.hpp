@@ -4,10 +4,6 @@
 
 #pragma once
 
-<<<<<<< HEAD
-#include <ArduinoJson/Memory/MemoryPool.hpp>
-=======
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 #include <ArduinoJson/Misc/SerializedValue.hpp>
 #include <ArduinoJson/Numbers/convertNumber.hpp>
 #include <ArduinoJson/Polyfills/gsl/not_null.hpp>
@@ -104,11 +100,7 @@ class VariantData {
       case VALUE_IS_OBJECT:
         return toObject().copyFrom(src._content.asCollection, pool);
       case VALUE_IS_OWNED_STRING:
-<<<<<<< HEAD
-        return setString(RamStringAdapter(src._content.asString), pool);
-=======
         return setOwnedString(RamStringAdapter(src._content.asString), pool);
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
       case VALUE_IS_OWNED_RAW:
         return setOwnedRaw(
             serialized(src._content.asRaw.data, src._content.asRaw.size), pool);
@@ -119,8 +111,6 @@ class VariantData {
     }
   }
 
-<<<<<<< HEAD
-=======
   bool equals(const VariantData &other) const {
     // Check that variant have the same type, but ignore string ownership
     if ((type() | VALUE_IS_OWNED) != (other.type() | VALUE_IS_OWNED))
@@ -157,7 +147,6 @@ class VariantData {
     }
   }
 
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   bool isArray() const {
     return (_flags & VALUE_IS_ARRAY) != 0;
   }
@@ -238,11 +227,7 @@ class VariantData {
 
   template <typename T>
   bool setOwnedRaw(SerializedValue<T> value, MemoryPool *pool) {
-<<<<<<< HEAD
-    const char *dup = pool->saveString(adaptString(value.data(), value.size()));
-=======
     char *dup = adaptString(value.data(), value.size()).save(pool);
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     if (dup) {
       setType(VALUE_IS_OWNED_RAW);
       _content.asRaw.data = dup;
@@ -288,8 +273,6 @@ class VariantData {
     _content.asInteger = value;
   }
 
-<<<<<<< HEAD
-=======
   void setLinkedString(const char *value) {
     if (value) {
       setType(VALUE_IS_LINKED_STRING);
@@ -299,35 +282,18 @@ class VariantData {
     }
   }
 
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   void setNull() {
     setType(VALUE_IS_NULL);
   }
 
-<<<<<<< HEAD
-  void setString(not_null<const char *> s, storage_policies::store_by_copy) {
-=======
   void setOwnedString(not_null<const char *> s) {
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
     setType(VALUE_IS_OWNED_STRING);
     _content.asString = s.get();
   }
 
-<<<<<<< HEAD
-  void setString(not_null<const char *> s, storage_policies::store_by_address) {
-    setType(VALUE_IS_LINKED_STRING);
-    _content.asString = s.get();
-  }
-
-  template <typename TStoragePolicy>
-  bool setString(const char *s, TStoragePolicy storage_policy) {
-    if (s) {
-      setString(make_not_null(s), storage_policy);
-=======
   bool setOwnedString(const char *s) {
     if (s) {
       setOwnedString(make_not_null(s));
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
       return true;
     } else {
       setType(VALUE_IS_NULL);
@@ -335,37 +301,9 @@ class VariantData {
     }
   }
 
-<<<<<<< HEAD
-  template <typename TAdaptedString>
-  bool setString(TAdaptedString value, MemoryPool *pool) {
-    return setString(value, pool, typename TAdaptedString::storage_policy());
-  }
-
-  template <typename TAdaptedString>
-  inline bool setString(TAdaptedString value, MemoryPool *pool,
-                        storage_policies::decide_at_runtime) {
-    if (value.isStatic())
-      return setString(value, pool, storage_policies::store_by_address());
-    else
-      return setString(value, pool, storage_policies::store_by_copy());
-  }
-
-  template <typename TAdaptedString>
-  inline bool setString(TAdaptedString value, MemoryPool *,
-                        storage_policies::store_by_address) {
-    return setString(value.data(), storage_policies::store_by_address());
-  }
-
-  template <typename TAdaptedString>
-  inline bool setString(TAdaptedString value, MemoryPool *pool,
-                        storage_policies::store_by_copy) {
-    return setString(pool->saveString(value),
-                     storage_policies::store_by_copy());
-=======
   template <typename T>
   bool setOwnedString(T value, MemoryPool *pool) {
     return setOwnedString(value.save(pool));
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   }
 
   CollectionData &toArray() {

@@ -4,13 +4,8 @@
 
 #pragma once
 
-<<<<<<< HEAD
-#include <ArduinoJson/Polyfills/pgmspace.hpp>
-#include <ArduinoJson/Strings/FlashStringIterator.hpp>
-=======
 #include <ArduinoJson/Memory/MemoryPool.hpp>
 #include <ArduinoJson/Polyfills/pgmspace.hpp>
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 #include <ArduinoJson/Strings/IsString.hpp>
 #include <ArduinoJson/Strings/StoragePolicy.hpp>
 
@@ -38,10 +33,6 @@ class FlashStringAdapter {
     return !_str;
   }
 
-<<<<<<< HEAD
-  void copyTo(char* p, size_t n) const {
-    memcpy_P(p, reinterpret_cast<const char*>(_str), n);
-=======
   char* save(MemoryPool* pool) const {
     if (!_str)
       return NULL;
@@ -50,7 +41,6 @@ class FlashStringAdapter {
     if (dup)
       memcpy_P(dup, reinterpret_cast<const char*>(_str), n);
     return dup;
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   }
 
   size_t size() const {
@@ -59,15 +49,7 @@ class FlashStringAdapter {
     return strlen_P(reinterpret_cast<const char*>(_str));
   }
 
-<<<<<<< HEAD
-  FlashStringIterator begin() const {
-    return FlashStringIterator(_str);
-  }
-
-  typedef storage_policies::store_by_copy storage_policy;
-=======
   typedef storage_policy::store_by_copy storage_policy;
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 
  private:
   const __FlashStringHelper* _str;

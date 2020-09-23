@@ -4,10 +4,7 @@
 
 #pragma once
 
-<<<<<<< HEAD
-=======
 #include <ArduinoJson/Memory/MemoryPool.hpp>
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 #include <ArduinoJson/Strings/ConstRamStringAdapter.hpp>
 #include <ArduinoJson/Strings/IsString.hpp>
 #include <ArduinoJson/Strings/StoragePolicy.hpp>
@@ -18,13 +15,6 @@ class RamStringAdapter : public ConstRamStringAdapter {
  public:
   RamStringAdapter(const char* str) : ConstRamStringAdapter(str) {}
 
-<<<<<<< HEAD
-  void copyTo(char* p, size_t n) const {
-    memcpy(p, _str, n);
-  }
-
-  typedef ARDUINOJSON_NAMESPACE::storage_policies::store_by_copy storage_policy;
-=======
   char* save(MemoryPool* pool) const {
     if (!_str)
       return NULL;
@@ -36,7 +26,6 @@ class RamStringAdapter : public ConstRamStringAdapter {
   }
 
   typedef ARDUINOJSON_NAMESPACE::storage_policy::store_by_copy storage_policy;
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 };
 
 template <typename TChar>

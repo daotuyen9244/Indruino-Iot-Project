@@ -39,29 +39,12 @@ class ConstRamStringAdapter {
     return _str;
   }
 
-<<<<<<< HEAD
-  const char* begin() const {
-    return _str;
-  }
-
-  typedef storage_policies::store_by_address storage_policy;
-=======
   typedef storage_policy::store_by_address storage_policy;
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 
  protected:
   const char* _str;
 };
 
-<<<<<<< HEAD
-template <>
-struct IsString<const char*> : true_type {};
-
-template <int N>
-struct IsString<const char[N]> : true_type {};
-
-=======
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 inline ConstRamStringAdapter adaptString(const char* str) {
   return ConstRamStringAdapter(str);
 }

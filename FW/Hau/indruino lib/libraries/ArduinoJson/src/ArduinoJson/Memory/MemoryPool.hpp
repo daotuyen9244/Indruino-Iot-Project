@@ -51,45 +51,6 @@ class MemoryPool {
     return allocRight<VariantSlot>();
   }
 
-<<<<<<< HEAD
-  template <typename TAdaptedString>
-  const char* saveString(const TAdaptedString& str) {
-    if (str.isNull())
-      return 0;
-
-#if ARDUINOJSON_ENABLE_STRING_DEDUPLICATION
-    const char* existingCopy = findString(str.begin());
-    if (existingCopy)
-      return existingCopy;
-#endif
-
-    size_t n = str.size();
-
-    char* newCopy = allocString(n + 1);
-    if (newCopy) {
-      str.copyTo(newCopy, n);
-      newCopy[n] = 0;  // force null-terminator
-    }
-    return newCopy;
-  }
-
-  void getFreeZone(char** zoneStart, size_t* zoneSize) const {
-    *zoneStart = _left;
-    *zoneSize = size_t(_right - _left);
-  }
-
-  const char* saveStringFromFreeZone(size_t len) {
-#if ARDUINOJSON_ENABLE_STRING_DEDUPLICATION
-    const char* dup = findString(_left);
-    if (dup)
-      return dup;
-#endif
-
-    const char* str = _left;
-    _left += len;
-    checkInvariants();
-    return str;
-=======
   char* allocFrozenString(size_t n) {
     if (!canAlloc(n))
       return 0;
@@ -116,7 +77,6 @@ class MemoryPool {
 
   void reclaimLastString(const char* s) {
     _left = const_cast<char*>(s);
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   }
 
   void clear() {
@@ -132,8 +92,6 @@ class MemoryPool {
     return _begin <= p && p < _end;
   }
 
-<<<<<<< HEAD
-=======
   template <typename T>
   T* allocRight() {
     return reinterpret_cast<T*>(allocRight(sizeof(T)));
@@ -146,7 +104,6 @@ class MemoryPool {
     return _right;
   }
 
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   // Workaround for missing placement new
   void* operator new(size_t, void* p) {
     return p;
@@ -198,49 +155,6 @@ class MemoryPool {
     ARDUINOJSON_ASSERT(isAligned(_right));
   }
 
-<<<<<<< HEAD
-#if ARDUINOJSON_ENABLE_STRING_DEDUPLICATION
-  template <typename TIterator>
-  const char* findString(TIterator str) {
-    for (char* next = _begin; next < _left; ++next) {
-      char* begin = next;
-
-      // try to match
-      for (TIterator it = str; *it == *next; ++it) {
-        if (*next++ == 0)
-          return begin;
-      }
-
-      // jump to next terminator
-      while (*next) ++next;
-    }
-    return 0;
-  }
-#endif
-
-  char* allocString(size_t n) {
-    if (!canAlloc(n))
-      return 0;
-    char* s = _left;
-    _left += n;
-    checkInvariants();
-    return s;
-  }
-
-  template <typename T>
-  T* allocRight() {
-    return reinterpret_cast<T*>(allocRight(sizeof(T)));
-  }
-
-  void* allocRight(size_t bytes) {
-    if (!canAlloc(bytes))
-      return 0;
-    _right -= bytes;
-    return _right;
-  }
-
-=======
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   char *_begin, *_left, *_right, *_end;
 };
 

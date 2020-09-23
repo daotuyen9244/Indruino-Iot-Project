@@ -3,33 +3,11 @@
 // MIT License
 
 #include <ArduinoJson.h>
-<<<<<<< HEAD
-
-=======
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 #include <catch.hpp>
 #include <sstream>
 
 #include "CustomReader.hpp"
 
-<<<<<<< HEAD
-TEST_CASE("deserializeJson(char*)") {
-  StaticJsonDocument<1024> doc;
-
-  SECTION("should not duplicate strings") {
-    char input[] = "{\"hello\":\"world\"}";
-
-    DeserializationError err = deserializeJson(doc, input);
-
-    REQUIRE(err == DeserializationError::Ok);
-    CHECK(doc.memoryUsage() == JSON_OBJECT_SIZE(1));
-    CHECK(doc.as<JsonVariant>().memoryUsage() ==
-          JSON_OBJECT_SIZE(1));  // issue #1318
-  }
-}
-
-=======
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 TEST_CASE("deserializeJson(const std::string&)") {
   DynamicJsonDocument doc(4096);
 

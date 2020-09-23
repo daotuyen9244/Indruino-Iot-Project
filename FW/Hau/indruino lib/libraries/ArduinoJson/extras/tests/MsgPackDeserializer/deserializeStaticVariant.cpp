@@ -7,15 +7,9 @@
 
 template <size_t Capacity>
 static void check(const char* input, DeserializationError expected) {
-<<<<<<< HEAD
-  StaticJsonDocument<Capacity> doc;
-
-  DeserializationError error = deserializeMsgPack(doc, input);
-=======
   StaticJsonDocument<Capacity> variant;
 
   DeserializationError error = deserializeMsgPack(variant, input);
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 
   CAPTURE(input);
   REQUIRE(error == expected);
@@ -23,11 +17,7 @@ static void check(const char* input, DeserializationError expected) {
 
 template <size_t Size>
 static void checkString(const char* input, DeserializationError expected) {
-<<<<<<< HEAD
-  check<Size>(input, expected);
-=======
   check<JSON_STRING_SIZE(Size)>(input, expected);
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 }
 
 TEST_CASE("deserializeMsgPack(StaticJsonDocument&)") {

@@ -22,8 +22,6 @@ TEST_CASE("MemoryPool::size()") {
     REQUIRE(0 == pool.size());
   }
 
-<<<<<<< HEAD
-=======
   SECTION("size() == capacity() after allocExpandableString()") {
     pool.allocExpandableString();
     REQUIRE(pool.size() == pool.capacity());
@@ -47,7 +45,6 @@ TEST_CASE("MemoryPool::size()") {
     REQUIRE(pool.size() == 2 * JSON_STRING_SIZE(0));
   }
 
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
   SECTION("Doesn't grow when memory pool is full") {
     const size_t variantCount = sizeof(buffer) / sizeof(VariantSlot);
 

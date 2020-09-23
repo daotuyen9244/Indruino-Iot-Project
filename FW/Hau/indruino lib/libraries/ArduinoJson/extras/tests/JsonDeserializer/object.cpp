@@ -290,13 +290,4 @@ TEST_CASE("deserialize JSON object") {
     REQUIRE(obj.size() == 0);
     REQUIRE(doc.memoryUsage() == JSON_OBJECT_SIZE(0));
   }
-<<<<<<< HEAD
-
-  SECTION("Issue #1335") {
-    std::string json("{\"a\":{},\"b\":{}}");
-    deserializeJson(doc, json);
-    CHECK(doc.as<std::string>() == json);
-  }
-=======
->>>>>>> dce77748af3c22e162ad61f1af6ada0e8e718323
 }
