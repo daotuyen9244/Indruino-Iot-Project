@@ -62,6 +62,7 @@ void ROM::init()
         return;
 #ifdef ESP32 || ESP8266
     EEPROM.begin(_SIZE_OF_EEPROM);
+    sizeRom = _SIZE_OF_EEPROM;
 #endif
     sizeRom = _SIZE_OF_EEPROM;
 }
@@ -224,60 +225,64 @@ bool ROM::readBool(int address)
 }
 //readBool this ROM
 //readString
-size_t ROM::readString (int address, char* value, size_t maxLen)
+size_t ROM::readString(int address, char *value, size_t maxLen)
 {
- #ifdef ESP32 || ESP8266
+#ifdef ESP32 || ESP8266
     return EEPROM.readString(address, value, maxLen);
-#else  
-  uint16_t len;
-  for (len = 0; len <= sizeRom; len++)
-    if (ptr[address + len] == 0)
-      break;
+#else
+//bug
+    uint16_t len;
+    for (len = 0; len <= sizeRom; len++)
+        if (ptr[address + len] == 0)
+            break;
 
-  if (address + len > sizeRom)
-    return 0;
+    if (address + len > sizeRom)
+        return 0;
 
-  memcpy((uint8_t*) value, p + address, len);
-  value[len] = 0;
-  return len;
-  #endif
+    memcpy((uint8_t *)value, p + address, len);
+    value[len] = 0;
+    return len;
+//bug
+#endif
 }
 //readString
 //readString this ROM
-String ROM::readString (int address)
+String ROM::readString(int address)
 {
- #ifdef ESP32 || ESP8266
+#ifdef ESP32 || ESP8266
     return EEPROM.readString(address);
-#else  
-  uint16_t len;
-  for (len = 0; len <=sizeRom; len++)
-    if (ptr[address + len] == 0)
-      break;
+#else
+//bug
+    uint16_t len;
+    for (len = 0; len <= sizeRom; len++)
+        if (ptr[address + len] == 0)
+            break;
 
-  if (address + len > sizeRom)
-    return String();
+    if (address + len > sizeRom)
+        return String();
 
-  char value[len];
-  memcpy((uint8_t*) value, ptr + address, len);
-  value[len] = 0;
-  return String(value);
- #endif
+    char value[len];
+    memcpy((uint8_t *)value, ptr + address, len);
+    value[len] = 0;
+    return String(value);
+//bug
+#endif
 }
 //readString this ROM
 //
 size_t ROM::readBytes(int address, void *value, size_t maxLen)
 {
 #ifdef ESP32 || ESP8266
-    return EEPROM.readBytes(address,value,maxLen);
-#else  
+    return EEPROM.readBytes(address, value, maxLen);
+#else
     if (!value || !maxLen)
-    return 0;
+        return 0;
 
-  if (address < 0 || address + maxLen > sizeRam)
-    return 0;
+    if (address < 0 || address + maxLen > sizeRam)
+        return 0;
 
-  memcpy((void*) value, ptr + address, maxLen);
-  return maxLen;
+    memcpy((void *)value, ptr + address, maxLen);
+    return maxLen;
 #endif
 }
 //
@@ -441,29 +446,29 @@ bool ROM::writeBool(int address, bool value)
 }
 //writeBool this ROM
 //writeString
-bool ROM::writeString (int address, const char* value)
+bool ROM::writeString(int address, const char *value)
 {
 #ifdef ESP32 || ESP8266
     EEPROM.writeString(address, value);
     return EEPROM.commit();
-#else  
-  uint16_t len;
-  for (len = 0; len <= sizeRom; len++)
-    if (value[len] == 0)
-      break;
+#else
+    //bug
+    uint16_t len = sizeof(value);
+    if(len < 0 || (address + len) > _SIZE_OF_EEPROM) return false;
 
-  if (address + len > sizeRom)
-    return 0;
- memcpy(ptr + address, (const uint8_t*) value, len + 1);
- 
-  return strlen(value);
-  #endif
+    if (address + len > sizeRom)
+        return 0;
+    memcpy(ptr + address, (const uint8_t *)value, len + 1);
+
+    return strlen(value);
+//bug
+#endif
 }
 //writeString
 //
 bool ROM::writeString(int address, String value)
 {
-    return ROM::writeString (address, value.c_str());
+    return ROM::writeString(address, value.c_str());
 }
 //
 //writeBytes
@@ -472,12 +477,14 @@ bool ROM::writeBytes(int address, const void *value, size_t len)
 #ifdef ESP32 || ESP8266
     EEPROM.writeBytes(address, value, len);
     return EEPROM.commit();
-#else  
+#else
+//bug
     if (address < 0 || address + len > sizeRom)
         return 0;
 
-    memcpy(ptr + address, (const void*) value, len);
+    memcpy(ptr + address, (const void *)value, len);
     return len;
+//bug
 #endif
 }
 //writeBytes
@@ -488,12 +495,13 @@ uint16_t ROM::getSize(uint16_t size)
     return sizeRom;
 }
 
-bool ROM::clear() {
+bool ROM::clear()
+{
     uint8_t temp = 0;
-    for(uint16_t addr = 0; addr<_SIZE_OF_EEPROM; addr++)
+    for (uint16_t addr = 0; addr < _SIZE_OF_EEPROM; addr++)
     {
         writeByte(addr, temp);
-    }    
+    }
 }
 
 ROM::ROM()

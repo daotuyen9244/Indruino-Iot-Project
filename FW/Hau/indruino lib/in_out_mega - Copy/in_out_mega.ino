@@ -36,7 +36,7 @@ void setup()
   PORTA = 0x00;
 
   pinMode(A0, INPUT);
-  pinMode(A4, OUTPUT);
+  
   modbus_configure(&Serial, 9600, 1, 255, 50, au16data);
 
   cv_data.uint_arr = au16data;
@@ -49,8 +49,8 @@ byte last_value_out = 0x00;
 byte last_value_in = 0x00;
 byte value_out = 0x00;
 byte i = 0;
-unsigned long last_value_time_in = 0;
-unsigned long last_value_time_out = 0;
+unsigned long last_value = 0;
+
 
 
 
@@ -60,21 +60,19 @@ void loop()
   modbus_update();
   data_analog.data = analogRead(A0);
   //Serial.println(analogRead(A0));
+
   cv_data.byte_arr[Ram_ADC0] = data_analog.temp[0];
   cv_data.byte_arr[Ram_ADC0 + 1] = data_analog.temp[1];
   //analog read
- data_analog.temp[0] = cv_data.byte_arr[Ram_ADC4];
- data_analog.temp[1] = cv_data.byte_arr[Ram_ADC4 + 1];
-
-  analogWrite(A4, data_analog.temp[0]);
+  
 
   //debounce
   if (PINC != last_value_in)
   {
-    last_value_time_in = millis();
+    last_value = millis();
   }
 
-  if (millis() - last_value_time_in > 100)
+  if (millis() - last_value > 50)
   {
     last_value_in = PINC;
     if (PINC != 0x00)
@@ -90,14 +88,9 @@ void loop()
   //out put
   if(PINC == 0x00)
   {
-    if(cv_data.byte_arr[Ram_OUT_P]!= PORTA)
-    {
-       PORTA = cv_data.byte_arr[Ram_OUT_P];
-    }
-    
+    PORTA = cv_data.byte_arr[Ram_OUT_P];
   }
   last_value_in = PINC;
- 
   cv_data.byte_arr[Ram_IN_P] = PORTA;
 
   

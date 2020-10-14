@@ -416,3 +416,8 @@ uint8_t *SRAM::array(int address)
     if (address < 0 || address > _SIZE_OF_RAM) return nullptr;
         return ptr + address;
 }
+
+bool SRAM::setRAM(uint8_t *ptr_) {
+    ptr = ptr_;
+    return true;
+}

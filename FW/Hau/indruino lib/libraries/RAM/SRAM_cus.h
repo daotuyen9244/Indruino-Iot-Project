@@ -42,7 +42,7 @@ public:
     ~SRAM(void);
     void init(int size);
     uint16_t getSize();
-
+    bool setRAM(uint8_t *ptr_);
     //add Function
     uint8_t *array(int address);
     //add Function

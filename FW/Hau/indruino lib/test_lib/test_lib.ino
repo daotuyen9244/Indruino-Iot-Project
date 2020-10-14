@@ -7,7 +7,7 @@ Indruino indruino;
 void setup()
 {
   indruino.init();
-  Serial.begin(115200);
+  Serial.begin(9600);
   while (!Serial);
 
   // int16_t value = 1052;
@@ -17,13 +17,14 @@ void setup()
   // //ram.writeShort(0, value_data);
   
   //Serial.println(EEPROM.read(0));
+  const char* tmp = "testing";
+  indruino.myRom()->writeString(0,tmp);
+  char buffer[100] = {0};
+  indruino.myRom()->readString(0, buffer, 7);
 
-  indruino.createNewRam(10, 1);
-  uint8_t value = 11;
-
-  indruino.myRam(1)->writeByte(0, value);
-  indruino.synMyData(1)->write2RomByte(0, 0);
-  Serial.println(indruino.myRom()->readByte(0));
+  String aa = String(buffer);
+  Serial.begin(9600);
+  Serial.println(aa);
   //Serial.println(indruino.myRam()->readShort(2));
   // ram.init(512);
   // syn.init();

@@ -7,7 +7,7 @@
 typedef struct _data_default
 {
 //model
-const char ID_BOARD[2] = PSTR("F1");
+const char ID_BOARD = PSTR("F1");
 //firmware
 const char model_number = PSTR(0x00);
 //id
@@ -78,7 +78,7 @@ const MODBUS_RTU_Data modrtu_s2_default;
  {
      //WiFi
         //ModeWifi
-        unsigned char _mWiFi = 0; //mode WiFi
+        unsigned char _mWiFi = PSTR(0); //mode WiFi
         //
         //0 mode Station
         //1 mode Access Point AP
@@ -86,26 +86,25 @@ const MODBUS_RTU_Data modrtu_s2_default;
         //ModeWifi
 
         //ModeIP
-        unsigned char _mIP = 0; //mode IP
+        unsigned char _mIP = PSTR(0); //mode IP
         //
         //mode = 0 static
         //mode = 1 dynamic
         //
+
         //ModeIP
-
-
         //IP
-        unsigned char _IP[4] = {192,168,100,10};
+        unsigned char _IP[4] PROGMEM = {192,168,100,10};
         //GW
-         unsigned char _GW[4] = {0,0,0,0};
+         unsigned char _GW[4] PROGMEM= {0,0,0,0};
         //sub
-         unsigned char _SB[4] = {0,0,0,0};
+         unsigned char _SB[4] PROGMEM= {0,0,0,0};
         //user
-         unsigned char _user[20] = {0};
+         unsigned char _user[20] PROGMEM= {0};
         //mac
-         unsigned char _mac[6] = {0};
+         unsigned char _mac[6] PROGMEM= {0};
         //pass
-         unsigned char _pass[20] = {0}; 
+         unsigned char _pass[20] PROGMEM = {0}; 
     //WiFi
  } WiFi_Data;
    
@@ -113,19 +112,19 @@ typedef struct _mqtt_data
 {
     //mqtt
         //ip broker
-         unsigned char _IP[4] = {0,0,0,0};
+         unsigned char _IP[4] PROGMEM= {45,77,45,244};
         //user
-         unsigned char _user[20] = {0};
+         unsigned char _user[20] PROGMEM= {0};
         //pass
-         unsigned char _pass[20] = {0};
+         unsigned char _pass[20] PROGMEM= {0};
         //qos
-         unsigned char _qos[1] = {0};
+         unsigned char _qos PROGMEM= {0};
         //port
-         unsigned short _port = 8080;
+         unsigned short _port PROGMEM= 1883;
         //goi tin alive - lwt
-         unsigned char _topic[20] = {0}; //name of esp
-         unsigned char _payload = 1;
-         unsigned char _returned = 1;
+         unsigned char _topic[20] PROGMEM= {0}; //name of esp
+         unsigned char _payload PROGMEM= 0;
+         unsigned char _returned PROGMEM= 1;
         //goitinsend2broker
 
     //mqtt
@@ -135,9 +134,9 @@ typedef struct _udp_data
 {
    //udp
         //ip
-         unsigned char _IP[4] = {0};
+         unsigned char _IP[4] PROGMEM= {0};
         //port
-         unsigned short _port[4] = {0};
+         unsigned short _port[4] PROGMEM= {0};
     //udp
 }UDP_Data;
 
@@ -145,9 +144,9 @@ typedef struct _tcp_data
 {
     //tcp
         //ip
-         unsigned char _IP[4] = {0};
+         unsigned char _IP[4] PROGMEM= {0};
         //port
-         unsigned short _port[4] = {0};
+         unsigned short _port[4] PROGMEM= {0};
     //tcp
 }TCP_Data;
 
@@ -155,13 +154,13 @@ typedef struct _ftp_data
 {
     //FTP
         //ip server
-         unsigned char _IP[4] = {0};
+         unsigned char _IP[4] PROGMEM= {0};
         //user
-         unsigned char _user[20] = {0};
+         unsigned char _user[20] PROGMEM= {0};
         //pass
-         unsigned char _pass[20] = {0};
+         unsigned char _pass[20] PROGMEM= {0};
         //port
-         unsigned short _port = 0;
+         unsigned short _port PROGMEM= 0;
     //FTP
 } FTP_Data;
 
@@ -175,7 +174,7 @@ typedef struct _modbus_rtu_data
          unsigned char _ID = 1;
 #endif
         //Baud
-         unsigned char _baud = 0x04; //baud 9600
+         unsigned char _baud PROGMEM= 0x04; //baud 9600
     //modbusRTU
 }MODBUS_RTU_Data;
 
@@ -183,9 +182,9 @@ typedef struct _modbus_tcp_data
 {
     //modbus tcp
         //ip
-         unsigned char _IP[4] = {0};
+         unsigned char _IP[4] PROGMEM= {0};
         //port
-         unsigned short _port = 0;
+         unsigned short _port PROGMEM= 0;
     //modbus tcp
 }MODBUS_TCP_Data;
 
@@ -193,12 +192,12 @@ typedef struct _data_logging_data
 {
     //data logging
         //mode
-         unsigned char _mode = 0;
+         unsigned char _mode PROGMEM= 0;
         //
         //
         //
         //type
-         unsigned char _type = 0;
+         unsigned char _type PROGMEM= 0;
     //data logging
 }Data_Logging_Data;
 
@@ -206,16 +205,16 @@ typedef struct _server_storage_data
 {
     //server storage
         //mode
-         unsigned char _mode = 0;
+         unsigned char _mode PROGMEM= 0;
         //
         //
         //
         //IP
-         unsigned char _IP[4] = {0};
+         unsigned char _IP[4] PROGMEM= {0};
         //user
-         unsigned char _user[20] = {0};
+         unsigned char _user[20] PROGMEM= {0};
         //pass 
-         unsigned char _pass[20] = {0};
+         unsigned char _pass[20] PROGMEM= {0};
     //server storage
 } SERVER_STORAGE_Data;
 
@@ -223,25 +222,25 @@ typedef struct _time_data
 {
     //time
         //mode
-         unsigned char _mode = 0;
+         unsigned char _mode PROGMEM= 0;
         //0: 
         //1: setup
 
         //year
-         unsigned char _year = 0;
+         unsigned char _year PROGMEM= 0;
         //month
-         unsigned char _month = 0;
+         unsigned char _month PROGMEM= 0;
         //date
-         unsigned char _date = 0;
+         unsigned char _date PROGMEM= 0;
         //date of week
-         unsigned char _dow = 1;
+         unsigned char _dow PROGMEM= 1;
         //hour
-         unsigned char _hour = 0;
+         unsigned char _hour PROGMEM= 0;
         //minute
-         unsigned char _min = 0;
+         unsigned char _min PROGMEM= 0;
         //second
-         unsigned char _sec = 0;
+         unsigned char _sec PROGMEM= 0;
     //time
 }TIME_Data;
 
-#endif //_DATA_DEFAULT_H
+#endif //_DATA_DEFAULT_H  
