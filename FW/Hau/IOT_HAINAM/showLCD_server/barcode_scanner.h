@@ -15,7 +15,7 @@ char *pch = barcode_data;
 
 extern bool do_import_data_barcode(char *data);
 extern bool do_import_data_barcode(char *data);
-
+extern void refresh_btnCode_lcd(char *data);
 class KbdRptParser : public KeyboardReportParser
 {
   protected:

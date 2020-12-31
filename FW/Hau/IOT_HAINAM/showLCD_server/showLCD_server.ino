@@ -1,5 +1,4 @@
 //#define SerialDebug
-void refresh_btnCode_lcd(char *data); //need to fix it
 #include "Arduino.h"
 #include "heltec.h"
 #include "images.h"
@@ -14,6 +13,7 @@ Indruino indruino;
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
+void refresh_btnCode_lcd(char *data); //need to fix it
 bool do_import_data_barcode(char *data);
 typedef struct
 {
@@ -81,7 +81,7 @@ void setup()
 
   setupButton(); //thiet lap thoi gian debounce
 #ifdef SerialDebug
-  
+
 #endif
   Serial.begin(9600);
   if (!read_EEPROM())
@@ -344,6 +344,12 @@ void connect_wifi()
     check_btn_press();
     if (KeyCode == keySetup)
     {
+      Heltec.display->clear();
+      Heltec.display->setColor(WHITE);
+      showText(0, 0, "Go to setup esp");
+      delay(200);
+      indruino.myRom()->writeChar(Rom_check_data, 0x00);
+      ESP.restart();
       //showText(0, 30, "Setup");
     }
 #ifdef SerialDebug
