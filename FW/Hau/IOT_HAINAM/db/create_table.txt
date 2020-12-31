@@ -1,0 +1,10 @@
+CREATE TABLE ESP_Client(
+    IdBoard char(6) NOT NULL PRIMARY KEY,
+    ProductOrtherCode char(40) NOT NULL,
+    dBarcodeCode char(20),
+    dButtonCode char(5),
+    isNew boolean,
+    dTime time,
+    dDate date
+)
+    
